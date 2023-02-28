@@ -1,0 +1,170 @@
+{
+  "f3": {
+    "prefix": "f3",
+    "body": [
+      "for (${1:size_t} ${2:i} = ${3:0}; $2 < ${4:length}; $2++) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Code snippet for 'for' loop"
+  },
+  "f3r": {
+    "prefix": "f3r",
+    "body": [
+      "for (${1:size_t} ${2:i} = ${3:length} - 1; $2 >= ${4:0}; $2--) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Code snippet for reverse 'for' loop"
+  },
+  "f3i": {
+    "prefix": "f3i",
+    "body": [
+      "for (${1:auto} ${2:it} = ${3:container}.begin(); $2 != $3.end(); $2++) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Code snippet for iterator 'for' loop"
+  },
+  "f3ir": {
+    "prefix": "f3ir",
+    "body": [
+      "for (${1:auto} ${2:it} = ${3:container}.rbegin(); $2 != $3.rend(); $2++) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Code snippet for iterator 'for' loop"
+  },
+  "frc": {
+    "prefix": "frc",
+    "body": [
+      "for (const ${1:auto} &${2:var} : ${3:variable}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Code snippet for reverse 'for(const auto &v : c)' loop"
+  },
+  "fr": {
+    "prefix": "fr",
+    "body": [
+      "for (${1:auto} &${2:var} : ${3:variable}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Code snippet for reverse 'for(auto &v : c )' loop"
+  },
+  "f2": {
+    "prefix": "f2",
+    "body": [
+      "for (${1:auto} ${2:var} : ${3:variable}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Code snippet for 'for(auto v : c )' loop"
+  },
+  "do": {
+    "prefix": "do",
+    "body": ["do", "{", "\t$0", "} while($1);"],
+    "description": "Code snippet for do...while loop"
+  },
+  "while": {
+    "prefix": "while",
+    "body": ["while ($1)", "{", "\t$2", "}"],
+    "description": ""
+  },
+  "if": {
+    "prefix": "if",
+    "body": ["if ($1) {", "\t$0", "}"],
+    "description": "Code snippet for if statement"
+  },
+  "else": {
+    "prefix": "else",
+    "body": ["else {", "\t$0", "}"],
+    "description": "Code snippet for else statement"
+  },
+  "else if": {
+    "prefix": "else if",
+    "body": ["else if ($1) {", "\t$0", "}"],
+    "description": "Code snippet for else-if statement"
+  },
+  "class": {
+    "prefix": "class",
+    "body": [
+      "class ${1:MyClass}",
+      "{",
+      "public:",
+      "\t$1();",
+      "\t$2",
+      "private:",
+      "\t$3",
+      "};",
+      ""
+    ],
+    "description": "Code snippet for class"
+  },
+  "enum": {
+    "prefix": "enum",
+    "body": ["enum ${1:MyEnum} {", "\t$0", "};"],
+    "description": "Code snippet for enum"
+  },
+  "enum class": {
+    "prefix": "enum class",
+    "body": ["enum class ${1:MyClass} {$0};"],
+    "description": "Code snippet for enum class (c++11)"
+  },
+  "struct": {
+    "prefix": "struct",
+    "body": ["struct ${1:MyStruct}", "{", "\t$0", "};"],
+    "description": "Code snippet for struct"
+  },
+  "switch": {
+    "prefix": "switch",
+    "body": ["switch (${1:switch_on}) {", "\tdefault:", "\t\t$0", "\t\tbreak;", "}"],
+    "description": "Code snippet for switch statement"
+  },
+  "try": {
+    "prefix": "try",
+    "body": [
+      "try {",
+      "\t",
+      "}",
+      "catch (const std::exception&) {",
+      "\t$1",
+      "}"
+    ],
+    "description": "Code snippet for try catch"
+  },
+  "union": {
+    "prefix": "union",
+    "body": ["union ${1:MyUnion}", "{", "\t$0", "};"],
+    "description": "Code snippet for union"
+  },
+  "incl": {
+    "prefix": "incl",
+    "body": ["#include \"$0\""],
+    "description": "Code snippet for #include \" \""
+  },
+  "inc": {
+    "prefix": "inc",
+    "body": ["#include <$0>"],
+    "description": "Code snippet for #include < >"
+  },
+  "Main function template": {
+    "prefix": "main",
+    "body": [
+      "int main (int argc, char *argv[])",
+      "{",
+      "\t$1",
+      "\treturn 0;",
+      "}"
+    ],
+    "description": "A standard main function for a C++ program"
+  },
+  "ben": {
+    "prefix": "ben",
+    "body": [
+      "${1}.begin(),$1.end()${0}"
+    ],
+    "description": "A.begin(),A.end()"
+  }
+}
