@@ -1,0 +1,11 @@
+export PATH="$PATH:/home/weissle/.local/bin"
+
+alias lz=lazygit
+
+# Debian or ubuntun
+source /usr/share/doc/fzf/examples/key-bindings.bash
+source /usr/share/doc/fzf/examples/completion.bash
+
+. /usr/share/autojump/autojump.sh
+
+
