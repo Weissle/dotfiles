@@ -5,6 +5,7 @@ alias lz=lazygit
 # Debian or ubuntun
 source /usr/share/doc/fzf/examples/key-bindings.bash
 source /usr/share/doc/fzf/examples/completion.bash
+export FZF_COMPLETION_TRIGGER='\'
 
 . /usr/share/autojump/autojump.sh
 
