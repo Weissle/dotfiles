@@ -8,4 +8,6 @@ source /usr/share/doc/fzf/examples/completion.bash
 
 . /usr/share/autojump/autojump.sh
 
+# No repeated history 
+export HISTCONTROL=ignoreboth:erasedups
 
