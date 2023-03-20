@@ -1,3 +1,4 @@
+# https://github.com/4z3/fzf-plugins
 __fzf_history__() (
   shopt -u nocaseglob nocasematch
   edit_key=${FZF_CTRL_R_EDIT_KEY:-enter}
