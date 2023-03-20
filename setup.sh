@@ -5,6 +5,7 @@ TMUX_CONFIG_PATH=/home/$USER/.tmux.conf
 
 BIN_PATH=/home/$USER/.local/bin
 LAZYGIT_PATH=$BIN_PATH/lazygit
+FZF_TAB_COMPLETION_PATH=$BIN_PATH/fzf-tab-completion
 
 if [ ! -d "$NVIM_CONFIG_PATH" ]; then
     echo "nvim: soft link for nvim config is created."
@@ -21,12 +22,13 @@ else
 fi
 
 if [ ! -f $LAZYGIT_PATH ]; then
-    echo "lazygit: Downloading lazygit"
+    echo "lazygit: Downloading..."
     cd $BIN_PATH
-    wget --output-document lazygit.tar.gz https://github.com/jesseduffield/lazygit/releases/download/v0.37.0/lazygit_0.37.0_Linux_x86_64.tar.gz && mkdir lazygit_folder && tar xf lazygit.tar.gz --directory=lazygit_folder && ln -s $BIN_PATH/lazygit_folder/lazygit .
+    wget --output-document lazygit.tar.gz https://github.com/jesseduffield/lazygit/releases/download/v0.37.0/lazygit_0.37.0_Linux_x86_64.tar.gz && mkdir lazygit_folder && tar xf lazygit.tar.gz --directory=lazygit_folder && cp $BIN_PATH/lazygit_folder/lazygit . && rm -r lazygit.tar.gz lazygit_folder
+    cd $PWD
 else
-    echo "lazygit: Lazygit exists. Skip."
+    echo "lazygit: Exists and skip."
 fi
 
-# echo "source $PWD/.bashrc " >> /home/$USER/.bashrc
+echo "source $PWD/.bashrc " >> /home/$USER/.bashrc
 
