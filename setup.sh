@@ -1,5 +1,5 @@
 PWD=`pwd`
-
+git --version
 BIN_PATH=/home/$USER/.local/bin/spec
 BIN_SYMBOL_PATH=/home/$USER/.local/bin
 mkdir -p $BIN_PATH
@@ -25,14 +25,14 @@ prepare_binary(){
         return;
     fi
     URL=$4
-    SUFFIX=${5:-tar.gz}
-    FILE=tmp.$SUFFIX
+    FILE=`basename $URL`
+    EXT_TAR_PARAMETERS=${5:-""}
     echo "$NAME: Downloading ..."
     {
         ALL_RIGHT=0 && \
         cd $BIN_PATH && \
         wget --output-document $FILE $URL && \
-        tar xf $FILE && \
+        tar xf $FILE $EXT_TAR_PARAMETERS && \
         rm $FILE && \
         ln -s $SOURCE $TARGET && \
         cd - && \
@@ -42,6 +42,18 @@ prepare_binary(){
         echo "$NAME: Binary is ready"
     else
         echo "$NAME: Failed to prepare the binary"
+    fi
+}
+
+clone_repo(){
+    NAME=$1
+    REPO_URL=$2
+    REPO_PATH=$3
+    if [ ! -e "$PATH" ]; then
+        echo "$NAME: Cloning repo ..."
+        git clone "$REPO_URL" "$REPO_PATH" > /dev/null 2>&1 && echo "$NAME: Clone finished." || echo "$NAME: Failed to clone the repo."
+    else
+        echo "$NAME: Existing and is skipped"
     fi
 }
 
@@ -72,4 +84,23 @@ FD_BIN_PATH=$BIN_PATH/fd-v8.7.0-x86_64-unknown-linux-gnu/fd
 FD_SYMBOL_PATH=$BIN_SYMBOL_PATH/fd
 prepare_binary "fd" "$FD_BIN_PATH" "$FD_SYMBOL_PATH" "$FD_DOWNLOAD_URL"
 
-echo "source $PWD/.bashrc " >> /home/$USER/.bashrc
+FZF_DOWNLOAD_URL="https://github.com/junegunn/fzf/releases/download/0.38.0/fzf-0.38.0-linux_amd64.tar.gz"
+FZF_BIN_PATH=$BIN_PATH/fzf
+FZF_SYMBOL_PATH=$BIN_SYMBOL_PATH/fzf
+FZF_REPO_URL=https://github.com/junegunn/fzf.git
+FZF_REPO_PATH=$BIN_PATH/fzf-repo
+prepare_binary "fzf" "$FZF_BIN_PATH" "$FZF_SYMBOL_PATH" "$FZF_DOWNLOAD_URL"
+clone_repo "fzf-repo" "$FZF_REPO_URL" "$FZF_REPO_PATH"
+
+FZF_PLUGIN_EXEC_HISTORY_URL=https://github.com/4z3/fzf-plugins.git
+FZF_PLUGIN_EXEC_HISTORY_PATH=$BIN_PATH/fzf-exec-history
+clone_repo "fzf-exec-history" "$FZF_PLUGIN_EXEC_HISTORY_URL" "$FZF_PLUGIN_EXEC_HISTORY_PATH"
+
+ZOXIDE_DOWNLOAD_URL=https://github.com/ajeetdsouza/zoxide/releases/download/v0.9.0/zoxide-0.9.0-x86_64-unknown-linux-musl.tar.gz
+ZOXIDE_FOLDER=$BIN_PATH/zoxide
+mkdir -p $ZOXIDE_FOLDER
+ZOXIDE_BIN_PATH=$ZOXIDE_FOLDER/zoxide
+ZOXIDE_SYMBOL_PATH=$BIN_SYMBOL_PATH/zoxide
+prepare_binary "zoxide" "$ZOXIDE_BIN_PATH" "$ZOXIDE_SYMBOL_PATH" "$ZOXIDE_DOWNLOAD_URL" "--directory=$ZOXIDE_FOLDER"
+
+# echo "source $PWD/.bashrc " >> /home/$USER/.bashrc

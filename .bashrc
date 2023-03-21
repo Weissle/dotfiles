@@ -1,21 +1,21 @@
 export PATH="/home/$USER/.local/bin:$PATH"
 
+BIN_PATH=/home/$USER/.local/bin/spec
 alias lz=lazygit
+alias v=nvim
 
 # fzf: Debian or ubuntun
 export FZF_COMPLETION_TRIGGER='\'
 FZF_CTRL_R_EDIT_KEY=ctrl-e
 FZF_CTRL_R_EXEC_KEY=enter
-source /usr/share/doc/fzf/examples/key-bindings.bash
-source /usr/share/doc/fzf/examples/completion.bash
-source /home/$USER/.config/dotfiles/exec-history.bash
+source $BIN_PATH/fzf-repo/shell/key-bindings.bash
+source $BIN_PATH/fzf-repo/shell/completion.bash
+source $BIN_PATH/fzf-exec-history/history-exec.bash
 
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
 
-# autojump
-. /usr/share/autojump/autojump.sh
-
 # No repeated history 
 export HISTCONTROL=ignoreboth:erasedups
 
+eval "$(zoxide init bash)"
