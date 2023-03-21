@@ -1,18 +1,31 @@
 PWD=`pwd`
-git --version
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
 BIN_PATH=/home/$USER/.local/bin/spec
 BIN_SYMBOL_PATH=/home/$USER/.local/bin
 mkdir -p $BIN_PATH
 mkdir -p $BIN_SYMBOL_PATH
 
+echo_info(){
+    echo "$BLUE$1$NC"
+}
+echo_good(){
+    echo "$GREEN$1$NC"
+}
+echo_error(){
+    echo "$RED$1$NC"
+}
 link_config_file(){
     NAME=$1
     SOURCE=$2
     TARGET=$3
     if [ ! -e "$TARGET" ]; then
-        ln -s $SOURCE $TARGET && echo "$NAME: soft link is created"
+        ln -s $SOURCE $TARGET && echo_good "$NAME: Soft link is created."
     else
-        echo "$NAME: Existing and is skipped."
+        echo_good "$NAME: Existing and is skipped."
     fi
 }
 
@@ -21,39 +34,32 @@ prepare_binary(){
     SOURCE=$2
     TARGET=$3
     if [ -e "$TARGET" ]; then
-        echo "$NAME: Existing and is skipped."
+        echo_good "$NAME: Existing and is skipped."
         return;
     fi
     URL=$4
     FILE=`basename $URL`
     EXT_TAR_PARAMETERS=${5:-""}
-    echo "$NAME: Downloading ..."
-    {
-        ALL_RIGHT=0 && \
-        cd $BIN_PATH && \
-        wget --output-document $FILE $URL && \
-        tar xf $FILE $EXT_TAR_PARAMETERS && \
-        rm $FILE && \
-        ln -s $SOURCE $TARGET && \
-        cd - && \
-        ALL_RIGHT=1
-    } > /dev/null 2>&1
-    if [ $ALL_RIGHT -eq 1 ]; then
-        echo "$NAME: Binary is ready"
-    else
-        echo "$NAME: Failed to prepare the binary"
-    fi
+    echo_info "$NAME: Downloading ..."
+    cd $BIN_PATH && \
+    wget --output-document $FILE $URL && \
+    tar xf $FILE $EXT_TAR_PARAMETERS && \
+    rm $FILE && \
+    ln -s $SOURCE $TARGET && \
+    cd - && \
+    echo_good "$NAME: Binary is ready." || \
+    echo_error "$NAME: Failed to prepare the binary."
 }
 
 clone_repo(){
     NAME=$1
     REPO_URL=$2
     REPO_PATH=$3
-    if [ ! -e "$PATH" ]; then
-        echo "$NAME: Cloning repo ..."
-        git clone "$REPO_URL" "$REPO_PATH" > /dev/null 2>&1 && echo "$NAME: Clone finished." || echo "$NAME: Failed to clone the repo."
+    if [ ! -e "$REPO_PATH" ]; then
+        echo_info "$NAME: Cloning repo ..."
+        git clone "$REPO_URL" "$REPO_PATH" && echo_good "$NAME: Clone finished." || echo_error "$NAME: Failed to clone the repo."
     else
-        echo "$NAME: Existing and is skipped"
+        echo_good "$NAME: Existing and is skipped."
     fi
 }
 
@@ -103,4 +109,5 @@ ZOXIDE_BIN_PATH=$ZOXIDE_FOLDER/zoxide
 ZOXIDE_SYMBOL_PATH=$BIN_SYMBOL_PATH/zoxide
 prepare_binary "zoxide" "$ZOXIDE_BIN_PATH" "$ZOXIDE_SYMBOL_PATH" "$ZOXIDE_DOWNLOAD_URL" "--directory=$ZOXIDE_FOLDER"
 
-# echo "source $PWD/.bashrc " >> /home/$USER/.bashrc
+cd $PWD
+echo "source $PWD/.bashrc " >> /home/$USER/.bashrc
