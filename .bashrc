@@ -1,4 +1,4 @@
-export PATH="$PATH:/home/$USER/.local/bin"
+export PATH="/home/$USER/.local/bin:$PATH"
 
 alias lz=lazygit
 
