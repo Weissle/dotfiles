@@ -13,7 +13,7 @@ mkdir -p $BIN_SYMBOL_PATH
 echo_c(){
     MSG_TYPE=$1
     MSG=$2
-    case "$MSG_TYPE" in 
+    case "$MSG_TYPE" in
         "info") echo -n "$BLUE" ;;
         "good") echo -n "$GREEN" ;;
         "error") echo -n "$RED" ;;
@@ -48,11 +48,11 @@ prepare_binary(){
     echo_c "info" "$NAME: Downloading ..."
     cd $EXTRACT_PATH
     wget --output-document $FILE $URL && \
-    $TAR_PARAMETERS $FILE && \
-    rm $FILE && \
-    ln -s $SOURCE $TARGET && \
-    echo_c "good" "$NAME: Binary is ready." || \
-    echo_c "error" "$NAME: Failed to prepare the binary."
+        $TAR_PARAMETERS $FILE && \
+        rm $FILE && \
+        ln -s $SOURCE $TARGET && \
+        echo_c "good" "$NAME: Binary is ready." || \
+        echo_c "error" "$NAME: Failed to prepare the binary."
     cd -
 }
 
@@ -115,7 +115,7 @@ ZOXIDE_SYMBOL_PATH=$BIN_SYMBOL_PATH/zoxide
 prepare_binary "zoxide" "$ZOXIDE_BIN_PATH" "$ZOXIDE_SYMBOL_PATH" "$ZOXIDE_DOWNLOAD_URL" "tar xf" "$ZOXIDE_FOLDER"
 
 cd $PWD
-BASH_COMMAND="source $PWD/.bashrc" 
+BASH_COMMAND="source $PWD/.bashrc"
 BASHRC_PATH=/home/$USER/.bashrc
 if ! grep -q "$BASH_COMMAND" "$BASHRC_PATH"; then
     echo "$BASH_COMMAND">> $BASHRC_PATH

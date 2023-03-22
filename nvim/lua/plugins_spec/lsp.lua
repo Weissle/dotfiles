@@ -9,6 +9,7 @@ return {
 				sources = {
 					builtins.formatting.clang_format,
 					builtins.formatting.stylua,
+                    builtins.formatting.beautysh,
 				},
 				on_attach = function(client, bufnr)
 					client.server_capabilities.completionProvider = false
@@ -22,7 +23,7 @@ return {
 		config = function()
 			local M = {}
 
-			local lsp_servers = { "clangd", "pyright", "lua_ls" }
+			local lsp_servers = { "clangd", "pyright", "lua_ls", "bashls" }
 			local clients_format_disabled = { clangd = true, lua_ls = true }
 
 			-- if null-ls provides the format feature.
