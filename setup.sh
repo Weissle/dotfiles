@@ -1,16 +1,16 @@
 PWD=`pwd`
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
 BIN_PATH=/home/$USER/.local/bin/spec
 BIN_SYMBOL_PATH=/home/$USER/.local/bin
 mkdir -p $BIN_PATH
 mkdir -p $BIN_SYMBOL_PATH
 
 echo_c(){
+    RED='\033[0;31m'
+    GREEN='\033[0;32m'
+    YELLOW='\033[0;33m'
+    BLUE='\033[0;34m'
+    NC='\033[0m' # No Color
     MSG_TYPE=$1
     MSG=$2
     case "$MSG_TYPE" in
