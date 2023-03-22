@@ -2,6 +2,7 @@ PWD=`pwd`
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 BIN_PATH=/home/$USER/.local/bin/spec
@@ -9,23 +10,26 @@ BIN_SYMBOL_PATH=/home/$USER/.local/bin
 mkdir -p $BIN_PATH
 mkdir -p $BIN_SYMBOL_PATH
 
-echo_info(){
-    echo "$BLUE$1$NC"
+echo_c(){
+    MSG_TYPE=$1
+    MSG=$2
+    case "$MSG_TYPE" in 
+        "info") echo -n "$BLUE" ;;
+        "good") echo -n "$GREEN" ;;
+        "error") echo -n "$RED" ;;
+        "warn") echo -n "$YELLOW" ;;
+    esac
+    echo "$2$NC"
 }
-echo_good(){
-    echo "$GREEN$1$NC"
-}
-echo_error(){
-    echo "$RED$1$NC"
-}
+
 link_config_file(){
     NAME=$1
     SOURCE=$2
     TARGET=$3
     if [ ! -e "$TARGET" ]; then
-        ln -s $SOURCE $TARGET && echo_good "$NAME: Soft link is created."
+        ln -s $SOURCE $TARGET && echo_c "good" "$NAME: Soft link is created."
     else
-        echo_good "$NAME: Existing and is skipped."
+        echo_c "warn" "$NAME: Existing and is skipped."
     fi
 }
 
@@ -34,21 +38,21 @@ prepare_binary(){
     SOURCE=$2
     TARGET=$3
     if [ -e "$TARGET" ]; then
-        echo_good "$NAME: Existing and is skipped."
+        echo_c "warn" "$NAME: Existing and is skipped."
         return;
     fi
     URL=$4
     FILE=`basename $URL`
     EXT_TAR_PARAMETERS=${5:-""}
-    echo_info "$NAME: Downloading ..."
+    echo_c "info" "$NAME: Downloading ..."
     cd $BIN_PATH && \
     wget --output-document $FILE $URL && \
     tar xf $FILE $EXT_TAR_PARAMETERS && \
     rm $FILE && \
     ln -s $SOURCE $TARGET && \
     cd - && \
-    echo_good "$NAME: Binary is ready." || \
-    echo_error "$NAME: Failed to prepare the binary."
+    echo_c "good" "$NAME: Binary is ready." || \
+    echo_c "error" "$NAME: Failed to prepare the binary."
 }
 
 clone_repo(){
@@ -56,10 +60,10 @@ clone_repo(){
     REPO_URL=$2
     REPO_PATH=$3
     if [ ! -e "$REPO_PATH" ]; then
-        echo_info "$NAME: Cloning repo ..."
-        git clone "$REPO_URL" "$REPO_PATH" && echo_good "$NAME: Clone finished." || echo_error "$NAME: Failed to clone the repo."
+        echo_c "info" "$NAME: Cloning repo ..."
+        git clone "$REPO_URL" "$REPO_PATH" && echo_c "good" "$NAME: Clone finished." || echo_c "error" "$NAME: Failed to clone the repo."
     else
-        echo_good "$NAME: Existing and is skipped."
+        echo_c "warn" "$NAME: Existing and is skipped."
     fi
 }
 

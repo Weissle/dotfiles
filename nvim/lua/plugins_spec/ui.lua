@@ -131,7 +131,6 @@ return {
 		opts = {
 			highlight_on_key = true,
 			dim = true,
-		},
-        commit = "e1df20b",
+		}
 	},
 }
