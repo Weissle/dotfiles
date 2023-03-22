@@ -22,7 +22,7 @@ echo_c(){
     echo "$2$NC"
 }
 
-link_config_file(){
+link_file(){
     NAME=$1
     SOURCE=$2
     TARGET=$3
@@ -43,16 +43,17 @@ prepare_binary(){
     fi
     URL=$4
     FILE=`basename $URL`
-    EXT_TAR_PARAMETERS=${5:-""}
+    TAR_PARAMETERS=${5:-"tar xf"}
+    EXTRACT_PATH=${6:-$BIN_PATH}
     echo_c "info" "$NAME: Downloading ..."
-    cd $BIN_PATH && \
+    cd $EXTRACT_PATH
     wget --output-document $FILE $URL && \
-    tar xf $FILE $EXT_TAR_PARAMETERS && \
+    $TAR_PARAMETERS $FILE && \
     rm $FILE && \
     ln -s $SOURCE $TARGET && \
-    cd - && \
     echo_c "good" "$NAME: Binary is ready." || \
     echo_c "error" "$NAME: Failed to prepare the binary."
+    cd -
 }
 
 clone_repo(){
@@ -73,11 +74,11 @@ NVIM_SYMBOL_PATH=$BIN_SYMBOL_PATH/nvim
 NVIM_CONFIG_PATH=$PWD/nvim
 NVIM_CONFIG_SYMBOL_PATH=/home/$USER/.config/nvim
 prepare_binary "Nvim" "$NVIM_BIN_PATH" "$NVIM_SYMBOL_PATH" "$NVIM_DOWNLOAD_URL"
-link_config_file "Nvim config" "$NVIM_CONFIG_PATH" "$NVIM_CONFIG_SYMBOL_PATH"
+link_file "Nvim config" "$NVIM_CONFIG_PATH" "$NVIM_CONFIG_SYMBOL_PATH"
 
 TMUX_CONFIG_PATH=$PWD/.tmux.conf
 TMUX_CONFIG_SYMBOL_PATH=/home/$USER/.tmux.conf
-link_config_file  "Tmux config" "$TMUX_CONFIG_PATH" "$TMUX_CONFIG_SYMBOL_PATH"
+link_file "Tmux config" "$TMUX_CONFIG_PATH" "$TMUX_CONFIG_SYMBOL_PATH"
 
 LAZYGIT_DOWNLOAD_URL="https://github.com/jesseduffield/lazygit/releases/download/v0.37.0/lazygit_0.37.0_Linux_x86_64.tar.gz"
 LAZYGIT_BIN_PATH=$BIN_PATH/lazygit
@@ -111,7 +112,11 @@ ZOXIDE_FOLDER=$BIN_PATH/zoxide
 mkdir -p $ZOXIDE_FOLDER
 ZOXIDE_BIN_PATH=$ZOXIDE_FOLDER/zoxide
 ZOXIDE_SYMBOL_PATH=$BIN_SYMBOL_PATH/zoxide
-prepare_binary "zoxide" "$ZOXIDE_BIN_PATH" "$ZOXIDE_SYMBOL_PATH" "$ZOXIDE_DOWNLOAD_URL" "--directory=$ZOXIDE_FOLDER"
+prepare_binary "zoxide" "$ZOXIDE_BIN_PATH" "$ZOXIDE_SYMBOL_PATH" "$ZOXIDE_DOWNLOAD_URL" "tar xf" "$ZOXIDE_FOLDER"
 
 cd $PWD
-echo "source $PWD/.bashrc " >> /home/$USER/.bashrc
+BASH_COMMAND="source $PWD/.bashrc" 
+BASHRC_PATH=/home/$USER/.bashrc
+if ! grep -q "$BASH_COMMAND" "$BASHRC_PATH"; then
+    echo "$BASH_COMMAND">> $BASHRC_PATH
+fi
