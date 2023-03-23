@@ -73,8 +73,8 @@ NVIM_BIN_PATH=$BIN_PATH/nvim-linux64/bin/nvim
 NVIM_SYMBOL_PATH=$BIN_SYMBOL_PATH/nvim
 NVIM_CONFIG_PATH=$PWD/nvim
 NVIM_CONFIG_SYMBOL_PATH=/home/$USER/.config/nvim
-prepare_binary "Nvim" "$NVIM_BIN_PATH" "$NVIM_SYMBOL_PATH" "$NVIM_DOWNLOAD_URL"
-link_file "Nvim config" "$NVIM_CONFIG_PATH" "$NVIM_CONFIG_SYMBOL_PATH"
+prepare_binary "nvim" "$NVIM_BIN_PATH" "$NVIM_SYMBOL_PATH" "$NVIM_DOWNLOAD_URL"
+link_file "nvim config" "$NVIM_CONFIG_PATH" "$NVIM_CONFIG_SYMBOL_PATH"
 
 TMUX_CONFIG_PATH=$PWD/.tmux.conf
 TMUX_CONFIG_SYMBOL_PATH=/home/$USER/.tmux.conf
@@ -113,6 +113,17 @@ mkdir -p $ZOXIDE_FOLDER
 ZOXIDE_BIN_PATH=$ZOXIDE_FOLDER/zoxide
 ZOXIDE_SYMBOL_PATH=$BIN_SYMBOL_PATH/zoxide
 prepare_binary "zoxide" "$ZOXIDE_BIN_PATH" "$ZOXIDE_SYMBOL_PATH" "$ZOXIDE_DOWNLOAD_URL" "tar xf" "$ZOXIDE_FOLDER"
+
+STARSHIP_DOWNLOAD_URL=https://github.com/starship/starship/releases/download/v1.13.1/starship-x86_64-unknown-linux-gnu.tar.gz
+STARSHIP_BIN_PATH=$BIN_PATH/starship
+STARSHIP_SYMBOL_PATH=$BIN_SYMBOL_PATH/starship
+STARSHIP_CONFIG_PATH=$PWD/starship.toml
+STARSHIP_CONFIG_SYMBOL_PATH=/home/$USER/.config/starship.toml
+prepare_binary "starship" "$STARSHIP_BIN_PATH" "$STARSHIP_SYMBOL_PATH" "$STARSHIP_DOWNLOAD_URL"
+link_file "starship config" "$STARSHIP_CONFIG_PATH" "$STARSHIP_CONFIG_SYMBOL_PATH"
+
+
+
 
 cd $PWD
 BASH_COMMAND="source $PWD/.bashrc"

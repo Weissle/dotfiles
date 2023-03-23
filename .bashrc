@@ -31,3 +31,7 @@ export HISTCONTROL=ignoreboth:erasedups
 if check_executable "zoxide"; then
     eval "$(zoxide init bash)"
 fi
+
+if check_executable "starship"; then
+    eval "$(starship init bash)"
+fi
