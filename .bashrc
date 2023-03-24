@@ -30,8 +30,20 @@ export HISTCONTROL=ignoreboth:erasedups
 
 if check_executable "zoxide"; then
     eval "$(zoxide init bash)"
+    alias cd=z
 fi
 
 if check_executable "starship"; then
     eval "$(starship init bash)"
+fi
+
+if check_executable "bat"; then
+    alias cat=bat
+    alias cata="bat --paging=never"
+fi
+
+if check_executable "exa"; then
+    alias ls="exa"
+    alias la="exa -a"
+    alias ll="exa -alF"
 fi

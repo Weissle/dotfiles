@@ -41,19 +41,21 @@ prepare_binary(){
         echo_c "warn" "$NAME: Existing and is skipped."
         return;
     fi
+    CUR_DIR=`pwd`
     URL=$4
     FILE=`basename $URL`
     TAR_PARAMETERS=${5:-"tar xf"}
     EXTRACT_PATH=${6:-$BIN_PATH}
     echo_c "info" "$NAME: Downloading ..."
-    cd $EXTRACT_PATH
-    wget --output-document $FILE $URL && \
+    mkdir -p $EXTRACT_PATH &&\
+        cd $EXTRACT_PATH &&\
+        wget --output-document $FILE $URL && \
         $TAR_PARAMETERS $FILE && \
         rm $FILE && \
         ln -s $SOURCE $TARGET && \
         echo_c "good" "$NAME: Binary is ready." || \
         echo_c "error" "$NAME: Failed to prepare the binary."
-    cd -
+    cd $CUR_DIR
 }
 
 clone_repo(){
@@ -81,9 +83,10 @@ TMUX_CONFIG_SYMBOL_PATH=/home/$USER/.tmux.conf
 link_file "Tmux config" "$TMUX_CONFIG_PATH" "$TMUX_CONFIG_SYMBOL_PATH"
 
 LAZYGIT_DOWNLOAD_URL="https://github.com/jesseduffield/lazygit/releases/download/v0.37.0/lazygit_0.37.0_Linux_x86_64.tar.gz"
-LAZYGIT_BIN_PATH=$BIN_PATH/lazygit
+LAZYGIT_FOLDER=$BIN_PATH/lazygit
+LAZYGIT_BIN_PATH=$LAZYGIT_FOLDER/lazygit
 LAZYGIT_SYMBOL_PATH=$BIN_SYMBOL_PATH/lazygit
-prepare_binary "Lazygit" "$LAZYGIT_BIN_PATH" "$LAZYGIT_SYMBOL_PATH" "$LAZYGIT_DOWNLOAD_URL"
+prepare_binary "Lazygit" "$LAZYGIT_BIN_PATH" "$LAZYGIT_SYMBOL_PATH" "$LAZYGIT_DOWNLOAD_URL" "tar xf" "$LAZYGIT_FOLDER"
 
 RIPGREP_DOWNLOAD_URL="https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep-13.0.0-x86_64-unknown-linux-musl.tar.gz"
 RIPGREP_BIN_PATH=$BIN_PATH/ripgrep-13.0.0-x86_64-unknown-linux-musl/rg
@@ -109,7 +112,6 @@ clone_repo "fzf-exec-history" "$FZF_PLUGIN_EXEC_HISTORY_URL" "$FZF_PLUGIN_EXEC_H
 
 ZOXIDE_DOWNLOAD_URL=https://github.com/ajeetdsouza/zoxide/releases/download/v0.9.0/zoxide-0.9.0-x86_64-unknown-linux-musl.tar.gz
 ZOXIDE_FOLDER=$BIN_PATH/zoxide
-mkdir -p $ZOXIDE_FOLDER
 ZOXIDE_BIN_PATH=$ZOXIDE_FOLDER/zoxide
 ZOXIDE_SYMBOL_PATH=$BIN_SYMBOL_PATH/zoxide
 prepare_binary "zoxide" "$ZOXIDE_BIN_PATH" "$ZOXIDE_SYMBOL_PATH" "$ZOXIDE_DOWNLOAD_URL" "tar xf" "$ZOXIDE_FOLDER"
@@ -122,8 +124,16 @@ STARSHIP_CONFIG_SYMBOL_PATH=/home/$USER/.config/starship.toml
 prepare_binary "starship" "$STARSHIP_BIN_PATH" "$STARSHIP_SYMBOL_PATH" "$STARSHIP_DOWNLOAD_URL"
 link_file "starship config" "$STARSHIP_CONFIG_PATH" "$STARSHIP_CONFIG_SYMBOL_PATH"
 
+BAT_DOWNLOAD_URL=https://github.com/sharkdp/bat/releases/download/v0.22.1/bat-v0.22.1-x86_64-unknown-linux-gnu.tar.gz
+BAT_BIN_PATH=$BIN_PATH/bat-v0.22.1-x86_64-unknown-linux-gnu/bat
+BAT_SYMBOL_PATH=$BIN_SYMBOL_PATH/bat
+prepare_binary "bat" "$BAT_BIN_PATH" "$BAT_SYMBOL_PATH" "$BAT_DOWNLOAD_URL"
 
-
+EXA_DOWNLOAD_URL=https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v0.10.1.zip
+EXA_FOLDER=$BIN_PATH/exa
+EXA_BIN_PATH=$EXA_FOLDER/bin/exa
+EXA_SYMBOL_PATH=$BIN_SYMBOL_PATH/exa
+prepare_binary "exa" "$EXA_BIN_PATH" "$EXA_SYMBOL_PATH" "$EXA_DOWNLOAD_URL" "unzip" "$EXA_FOLDER"
 
 cd $PWD
 BASH_COMMAND="source $PWD/.bashrc"
