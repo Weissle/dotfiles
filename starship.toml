@@ -26,7 +26,7 @@ detect_files = ['CMakeLists.txt', 'CMakeCache.txt', 'Makefile']
 
 [conda]
 ignore_base = false
-format = '[\($environment\)]($style)'
+format = '[ \($environment\)]($style)'
 
 [cmd_duration]
 min_time = 1

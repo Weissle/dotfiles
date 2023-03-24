@@ -2,6 +2,7 @@ PWD=`pwd`
 
 BIN_PATH=/home/$USER/.local/bin/spec
 BIN_SYMBOL_PATH=/home/$USER/.local/bin
+
 mkdir -p $BIN_PATH
 mkdir -p $BIN_SYMBOL_PATH
 
@@ -27,35 +28,49 @@ link_file(){
     SOURCE=$2
     TARGET=$3
     if [ ! -e "$TARGET" ]; then
-        ln -s $SOURCE $TARGET && echo_c "good" "$NAME: Soft link is created."
-    else
-        echo_c "warn" "$NAME: Existing and is skipped."
+        ln -s $SOURCE $TARGET && echo_c "good" "$NAME: Soft link is created." && return;
     fi
+    REAL_TARGET=`readlink -f $TARGET`
+    if [ "$SOURCE" != "$REAL_TARGET" ]; then
+        echo_c "warn" "$NAME: Existing and they are not same."
+    else
+        echo_c "good" "$NAME: Existing and is skipped."
+    fi
+}
+
+download_extract(){
+    NAME=$1
+    FOLDER=$2
+    FOLDER=$BIN_PATH/$NAME
+    URL=$3
+    FILE_NAME=`basename $URL`
+    EXTRACT_OPT=$4
+    case "$EXTRACT_OPT" in
+        "tar") EXTRACT_CMD="tar xf $FILE_NAME -C $FOLDER" ;;
+        "tar-strip") EXTRACT_CMD="tar xf $FILE_NAME -C $FOLDER --strip-components=1" ;;
+        "unzip") EXTRACT_CMD="unzip -d $FOLDER $FILE_NAME" ;;
+    esac
+    CUR_DIR=`pwd`
+    mkdir -p $FOLDER && cd $FOLDER
+    wget $URL &&\
+        $EXTRACT_CMD &&\
+        rm $FILE_NAME &&\
+        echo_c "good" "$NAME: Download finished." || \
+        echo_c "error" "$NAME: Failed to download."
+    cd $CUR_DIR
 }
 
 prepare_binary(){
     NAME=$1
-    SOURCE=$2
-    TARGET=$3
-    if [ -e "$TARGET" ]; then
-        echo_c "warn" "$NAME: Existing and is skipped."
-        return;
-    fi
-    CUR_DIR=`pwd`
-    URL=$4
-    FILE=`basename $URL`
-    TAR_PARAMETERS=${5:-"tar xf"}
-    EXTRACT_PATH=${6:-$BIN_PATH}
-    echo_c "info" "$NAME: Downloading ..."
-    mkdir -p $EXTRACT_PATH &&\
-        cd $EXTRACT_PATH &&\
-        wget --output-document $FILE $URL && \
-        $TAR_PARAMETERS $FILE && \
-        rm $FILE && \
-        ln -s $SOURCE $TARGET && \
-        echo_c "good" "$NAME: Binary is ready." || \
-        echo_c "error" "$NAME: Failed to prepare the binary."
-    cd $CUR_DIR
+    FOLDER=$BIN_PATH/$NAME
+    TARGET_RELATIVE_PATH=$2
+    TARGET_PATH="$FOLDER/$TARGET_RELATIVE_PATH"
+    URL=$3
+    EXTRACT_OPT=${4:-"tar"}
+    SYMBOL_PATH=$BIN_SYMBOL_PATH/`basename $TARGET_PATH`
+    [ ! -e "$TARGET_PATH" ] && echo_c "info" "$NAME: Target file(s) is not found. Downloading ... " && \
+        download_extract $NAME $FOLDER $URL $EXTRACT_OPT
+    link_file $NAME $TARGET_PATH $SYMBOL_PATH
 }
 
 clone_repo(){
@@ -66,16 +81,15 @@ clone_repo(){
         echo_c "info" "$NAME: Cloning repo ..."
         git clone "$REPO_URL" "$REPO_PATH" && echo_c "good" "$NAME: Clone finished." || echo_c "error" "$NAME: Failed to clone the repo."
     else
-        echo_c "warn" "$NAME: Existing and is skipped."
+        echo_c "good" "$NAME: Existing and is skipped."
     fi
 }
 
 NVIM_DOWNLOAD_URL="https://github.com/neovim/neovim/releases/download/v0.8.3/nvim-linux64.tar.gz"
-NVIM_BIN_PATH=$BIN_PATH/nvim-linux64/bin/nvim
-NVIM_SYMBOL_PATH=$BIN_SYMBOL_PATH/nvim
+prepare_binary "nvim" "bin/nvim" "$NVIM_DOWNLOAD_URL" "tar-strip"
+
 NVIM_CONFIG_PATH=$PWD/nvim
 NVIM_CONFIG_SYMBOL_PATH=/home/$USER/.config/nvim
-prepare_binary "nvim" "$NVIM_BIN_PATH" "$NVIM_SYMBOL_PATH" "$NVIM_DOWNLOAD_URL"
 link_file "nvim config" "$NVIM_CONFIG_PATH" "$NVIM_CONFIG_SYMBOL_PATH"
 
 TMUX_CONFIG_PATH=$PWD/.tmux.conf
@@ -83,27 +97,19 @@ TMUX_CONFIG_SYMBOL_PATH=/home/$USER/.tmux.conf
 link_file "Tmux config" "$TMUX_CONFIG_PATH" "$TMUX_CONFIG_SYMBOL_PATH"
 
 LAZYGIT_DOWNLOAD_URL="https://github.com/jesseduffield/lazygit/releases/download/v0.37.0/lazygit_0.37.0_Linux_x86_64.tar.gz"
-LAZYGIT_FOLDER=$BIN_PATH/lazygit
-LAZYGIT_BIN_PATH=$LAZYGIT_FOLDER/lazygit
-LAZYGIT_SYMBOL_PATH=$BIN_SYMBOL_PATH/lazygit
-prepare_binary "Lazygit" "$LAZYGIT_BIN_PATH" "$LAZYGIT_SYMBOL_PATH" "$LAZYGIT_DOWNLOAD_URL" "tar xf" "$LAZYGIT_FOLDER"
+prepare_binary "lazygit" "lazygit" "$LAZYGIT_DOWNLOAD_URL"
 
 RIPGREP_DOWNLOAD_URL="https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep-13.0.0-x86_64-unknown-linux-musl.tar.gz"
-RIPGREP_BIN_PATH=$BIN_PATH/ripgrep-13.0.0-x86_64-unknown-linux-musl/rg
-RIPGREP_SYMBOL_PATH=$BIN_SYMBOL_PATH/rg
-prepare_binary "ripgrep" "$RIPGREP_BIN_PATH" "$RIPGREP_SYMBOL_PATH" "$RIPGREP_DOWNLOAD_URL"
+prepare_binary "ripgrep" "rg" "$RIPGREP_DOWNLOAD_URL" "tar-strip"
 
 FD_DOWNLOAD_URL="https://github.com/sharkdp/fd/releases/download/v8.7.0/fd-v8.7.0-x86_64-unknown-linux-gnu.tar.gz"
-FD_BIN_PATH=$BIN_PATH/fd-v8.7.0-x86_64-unknown-linux-gnu/fd
-FD_SYMBOL_PATH=$BIN_SYMBOL_PATH/fd
-prepare_binary "fd" "$FD_BIN_PATH" "$FD_SYMBOL_PATH" "$FD_DOWNLOAD_URL"
+prepare_binary "fd" "fd" "$FD_DOWNLOAD_URL" "tar-strip"
 
 FZF_DOWNLOAD_URL="https://github.com/junegunn/fzf/releases/download/0.38.0/fzf-0.38.0-linux_amd64.tar.gz"
-FZF_BIN_PATH=$BIN_PATH/fzf
-FZF_SYMBOL_PATH=$BIN_SYMBOL_PATH/fzf
+prepare_binary "fzf" "fzf" "$FZF_DOWNLOAD_URL"
+
 FZF_REPO_URL=https://github.com/junegunn/fzf.git
 FZF_REPO_PATH=$BIN_PATH/fzf-repo
-prepare_binary "fzf" "$FZF_BIN_PATH" "$FZF_SYMBOL_PATH" "$FZF_DOWNLOAD_URL"
 clone_repo "fzf-repo" "$FZF_REPO_URL" "$FZF_REPO_PATH"
 
 FZF_PLUGIN_EXEC_HISTORY_URL=https://github.com/4z3/fzf-plugins.git
@@ -111,29 +117,20 @@ FZF_PLUGIN_EXEC_HISTORY_PATH=$BIN_PATH/fzf-exec-history
 clone_repo "fzf-exec-history" "$FZF_PLUGIN_EXEC_HISTORY_URL" "$FZF_PLUGIN_EXEC_HISTORY_PATH"
 
 ZOXIDE_DOWNLOAD_URL=https://github.com/ajeetdsouza/zoxide/releases/download/v0.9.0/zoxide-0.9.0-x86_64-unknown-linux-musl.tar.gz
-ZOXIDE_FOLDER=$BIN_PATH/zoxide
-ZOXIDE_BIN_PATH=$ZOXIDE_FOLDER/zoxide
-ZOXIDE_SYMBOL_PATH=$BIN_SYMBOL_PATH/zoxide
-prepare_binary "zoxide" "$ZOXIDE_BIN_PATH" "$ZOXIDE_SYMBOL_PATH" "$ZOXIDE_DOWNLOAD_URL" "tar xf" "$ZOXIDE_FOLDER"
+prepare_binary "zoxide" "zoxide" "$ZOXIDE_DOWNLOAD_URL"
 
 STARSHIP_DOWNLOAD_URL=https://github.com/starship/starship/releases/download/v1.13.1/starship-x86_64-unknown-linux-gnu.tar.gz
-STARSHIP_BIN_PATH=$BIN_PATH/starship
-STARSHIP_SYMBOL_PATH=$BIN_SYMBOL_PATH/starship
+prepare_binary "starship" "starship" "$STARSHIP_DOWNLOAD_URL"
+
 STARSHIP_CONFIG_PATH=$PWD/starship.toml
 STARSHIP_CONFIG_SYMBOL_PATH=/home/$USER/.config/starship.toml
-prepare_binary "starship" "$STARSHIP_BIN_PATH" "$STARSHIP_SYMBOL_PATH" "$STARSHIP_DOWNLOAD_URL"
 link_file "starship config" "$STARSHIP_CONFIG_PATH" "$STARSHIP_CONFIG_SYMBOL_PATH"
 
 BAT_DOWNLOAD_URL=https://github.com/sharkdp/bat/releases/download/v0.22.1/bat-v0.22.1-x86_64-unknown-linux-gnu.tar.gz
-BAT_BIN_PATH=$BIN_PATH/bat-v0.22.1-x86_64-unknown-linux-gnu/bat
-BAT_SYMBOL_PATH=$BIN_SYMBOL_PATH/bat
-prepare_binary "bat" "$BAT_BIN_PATH" "$BAT_SYMBOL_PATH" "$BAT_DOWNLOAD_URL"
+prepare_binary "bat" "bat" "$BAT_DOWNLOAD_URL" "tar-strip"
 
 EXA_DOWNLOAD_URL=https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v0.10.1.zip
-EXA_FOLDER=$BIN_PATH/exa
-EXA_BIN_PATH=$EXA_FOLDER/bin/exa
-EXA_SYMBOL_PATH=$BIN_SYMBOL_PATH/exa
-prepare_binary "exa" "$EXA_BIN_PATH" "$EXA_SYMBOL_PATH" "$EXA_DOWNLOAD_URL" "unzip" "$EXA_FOLDER"
+prepare_binary "exa" "bin/exa" "$EXA_DOWNLOAD_URL" "unzip"
 
 cd $PWD
 BASH_COMMAND="source $PWD/.bashrc"
