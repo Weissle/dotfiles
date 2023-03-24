@@ -85,52 +85,23 @@ clone_repo(){
     fi
 }
 
-NVIM_DOWNLOAD_URL="https://github.com/neovim/neovim/releases/download/v0.8.3/nvim-linux64.tar.gz"
-prepare_binary "nvim" "bin/nvim" "$NVIM_DOWNLOAD_URL" "tar-strip"
+prepare_binary "nvim" "bin/nvim" "https://github.com/neovim/neovim/releases/download/v0.8.3/nvim-linux64.tar.gz" "tar-strip"
+prepare_binary "lazygit" "lazygit" "https://github.com/jesseduffield/lazygit/releases/download/v0.37.0/lazygit_0.37.0_Linux_x86_64.tar.gz"
+prepare_binary "ripgrep" "rg" "https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep-13.0.0-x86_64-unknown-linux-musl.tar.gz" "tar-strip"
+prepare_binary "fd" "fd" "https://github.com/sharkdp/fd/releases/download/v8.7.0/fd-v8.7.0-x86_64-unknown-linux-gnu.tar.gz" "tar-strip"
+prepare_binary "fzf" "fzf" "https://github.com/junegunn/fzf/releases/download/0.38.0/fzf-0.38.0-linux_amd64.tar.gz"
+prepare_binary "zoxide" "zoxide" "https://github.com/ajeetdsouza/zoxide/releases/download/v0.9.0/zoxide-0.9.0-x86_64-unknown-linux-musl.tar.gz"
+prepare_binary "starship" "starship" "https://github.com/starship/starship/releases/download/v1.13.1/starship-x86_64-unknown-linux-gnu.tar.gz"
+prepare_binary "bat" "bat" "https://github.com/sharkdp/bat/releases/download/v0.22.1/bat-v0.22.1-x86_64-unknown-linux-gnu.tar.gz" "tar-strip"
+prepare_binary "exa" "bin/exa" "https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v0.10.1.zip" "unzip"
 
-NVIM_CONFIG_PATH=$PWD/nvim
-NVIM_CONFIG_SYMBOL_PATH=/home/$USER/.config/nvim
-link_file "nvim config" "$NVIM_CONFIG_PATH" "$NVIM_CONFIG_SYMBOL_PATH"
+link_file "nvim config" "$PWD/nvim" "/home/$USER/.config/nvim"
+link_file "Tmux config" "$PWD/.tmux.conf" "/home/$USER/.tmux.conf"
+link_file "starship config" "$PWD/starship.toml" "/home/$USER/.config/starship.toml"
 
-TMUX_CONFIG_PATH=$PWD/.tmux.conf
-TMUX_CONFIG_SYMBOL_PATH=/home/$USER/.tmux.conf
-link_file "Tmux config" "$TMUX_CONFIG_PATH" "$TMUX_CONFIG_SYMBOL_PATH"
+clone_repo "fzf-repo" "https://github.com/junegunn/fzf.git" "$BIN_PATH/fzf-repo"
+clone_repo "fzf-exec-history" "https://github.com/4z3/fzf-plugins.git" "$BIN_PATH/fzf-exec-history"
 
-LAZYGIT_DOWNLOAD_URL="https://github.com/jesseduffield/lazygit/releases/download/v0.37.0/lazygit_0.37.0_Linux_x86_64.tar.gz"
-prepare_binary "lazygit" "lazygit" "$LAZYGIT_DOWNLOAD_URL"
-
-RIPGREP_DOWNLOAD_URL="https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep-13.0.0-x86_64-unknown-linux-musl.tar.gz"
-prepare_binary "ripgrep" "rg" "$RIPGREP_DOWNLOAD_URL" "tar-strip"
-
-FD_DOWNLOAD_URL="https://github.com/sharkdp/fd/releases/download/v8.7.0/fd-v8.7.0-x86_64-unknown-linux-gnu.tar.gz"
-prepare_binary "fd" "fd" "$FD_DOWNLOAD_URL" "tar-strip"
-
-FZF_DOWNLOAD_URL="https://github.com/junegunn/fzf/releases/download/0.38.0/fzf-0.38.0-linux_amd64.tar.gz"
-prepare_binary "fzf" "fzf" "$FZF_DOWNLOAD_URL"
-
-FZF_REPO_URL=https://github.com/junegunn/fzf.git
-FZF_REPO_PATH=$BIN_PATH/fzf-repo
-clone_repo "fzf-repo" "$FZF_REPO_URL" "$FZF_REPO_PATH"
-
-FZF_PLUGIN_EXEC_HISTORY_URL=https://github.com/4z3/fzf-plugins.git
-FZF_PLUGIN_EXEC_HISTORY_PATH=$BIN_PATH/fzf-exec-history
-clone_repo "fzf-exec-history" "$FZF_PLUGIN_EXEC_HISTORY_URL" "$FZF_PLUGIN_EXEC_HISTORY_PATH"
-
-ZOXIDE_DOWNLOAD_URL=https://github.com/ajeetdsouza/zoxide/releases/download/v0.9.0/zoxide-0.9.0-x86_64-unknown-linux-musl.tar.gz
-prepare_binary "zoxide" "zoxide" "$ZOXIDE_DOWNLOAD_URL"
-
-STARSHIP_DOWNLOAD_URL=https://github.com/starship/starship/releases/download/v1.13.1/starship-x86_64-unknown-linux-gnu.tar.gz
-prepare_binary "starship" "starship" "$STARSHIP_DOWNLOAD_URL"
-
-STARSHIP_CONFIG_PATH=$PWD/starship.toml
-STARSHIP_CONFIG_SYMBOL_PATH=/home/$USER/.config/starship.toml
-link_file "starship config" "$STARSHIP_CONFIG_PATH" "$STARSHIP_CONFIG_SYMBOL_PATH"
-
-BAT_DOWNLOAD_URL=https://github.com/sharkdp/bat/releases/download/v0.22.1/bat-v0.22.1-x86_64-unknown-linux-gnu.tar.gz
-prepare_binary "bat" "bat" "$BAT_DOWNLOAD_URL" "tar-strip"
-
-EXA_DOWNLOAD_URL=https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v0.10.1.zip
-prepare_binary "exa" "bin/exa" "$EXA_DOWNLOAD_URL" "unzip"
 
 cd $PWD
 BASH_COMMAND="source $PWD/.bashrc"
