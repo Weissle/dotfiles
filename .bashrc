@@ -1,8 +1,14 @@
 export PATH="/home/$USER/.local/bin:$PATH"
 
 BIN_PATH=/home/$USER/.local/bin/spec
-alias lz=lazygit
-alias v=nvim
+HISTSIZE=5000
+HISTFILESIZE=10000
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+
+# No repeated history 
+export HISTCONTROL=ignoreboth:erasedups
+
 
 function check_executable() {
   if which "$1" >/dev/null 2>&1; then
@@ -12,6 +18,8 @@ function check_executable() {
   fi
 }
 
+alias lz=lazygit
+alias v=nvim
 # fzf: Debian or ubuntun
 if check_executable "fzf"; then
     export FZF_COMPLETION_TRIGGER='\'
@@ -21,12 +29,6 @@ if check_executable "fzf"; then
     source $BIN_PATH/fzf-repo/shell/completion.bash
     source $BIN_PATH/fzf-exec-history/history-exec.bash
 fi
-
-bind '"\e[A": history-search-backward'
-bind '"\e[B": history-search-forward'
-
-# No repeated history 
-export HISTCONTROL=ignoreboth:erasedups
 
 if check_executable "zoxide"; then
     eval "$(zoxide init bash)"
