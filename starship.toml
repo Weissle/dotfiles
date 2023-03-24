@@ -21,7 +21,7 @@ error_symbol = '[ X](bold red)'
 [c]
 format = ' [\($name-$version\)]($style)'
 version_format = '${raw}'
-detect_extensions = ['c','h','cpp','hpp']
+detect_extensions = []
 detect_files = ['CMakeLists.txt', 'CMakeCache.txt', 'Makefile']
 
 [conda]
@@ -57,6 +57,7 @@ style = 'green'
 [python]
 format = '[ \(python-${version}(-$virtualenv)\)]($style)'
 version_format = '${raw}'
+disabled = true
 
 [time]
 disabled = false
