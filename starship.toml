@@ -1,20 +1,32 @@
 add_newline = false
 
-# TODO:conda ?
 format="""
-$time$conda$username@$hostname:$directory$git_branch$git_commit$git_state$c$cmd_duration 
+$time\
+$conda\
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$c\
+$python\
 $character
 """
 
 [character]
-success_symbol = '[\$](bold green)'
-error_symbol = '[X](bold red)'
+success_symbol = '[ \$](bold green)'
+error_symbol = '[ X](bold red)'
 
 [c]
 format = ' [\($name-$version\)]($style)'
+version_format = '${raw}'
 detect_extensions = ['c','h','cpp','hpp']
+detect_files = ['CMakeLists.txt', 'CMakeCache.txt', 'Makefile']
 
 [conda]
+ignore_base = false
+format = '[\($environment\)]($style)'
 
 [cmd_duration]
 min_time = 1
@@ -24,8 +36,7 @@ disabled = true
 
 [directory]
 truncation_length = 10
-format='[$path]($style)[$read_only]($read_only_style)'
-# truncation_symbol = '.../'
+format=' [$path]($style)[$read_only]($read_only_style)'
 truncate_to_repo = false
 
 [git_branch]
@@ -37,13 +48,16 @@ format = ' [\($hash$tag\)]($style)'
 
 [username]
 format='[$user]($style)'
-show_always = true
 
 [hostname]
-ssh_only = false
-format='[$hostname]($style)'
+ssh_only = true
+format='@[$hostname]($style)'
 style = 'green'
+
+[python]
+format = '[ \(python-${version}(-$virtualenv)\)]($style)'
+version_format = '${raw}'
 
 [time]
 disabled = false
-format = '[\[$time\]]($style) '
+format = '[\[$time\]]($style)'
