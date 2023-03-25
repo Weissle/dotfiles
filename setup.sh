@@ -98,6 +98,7 @@ prepare_binary "exa" "bin/exa" "https://github.com/ogham/exa/releases/download/v
 link_file "nvim config" "$PWD/nvim" "/home/$USER/.config/nvim"
 link_file "Tmux config" "$PWD/.tmux.conf" "/home/$USER/.tmux.conf"
 link_file "starship config" "$PWD/starship.toml" "/home/$USER/.config/starship.toml"
+link_file ".shell_common" "$PWD/.shell_common" "/home/$USER/.shell_common"
 
 clone_repo "fzf-repo" "https://github.com/junegunn/fzf.git" "$BIN_PATH/fzf-repo"
 clone_repo "fzf-exec-history" "https://github.com/4z3/fzf-plugins.git" "$BIN_PATH/fzf-exec-history"
