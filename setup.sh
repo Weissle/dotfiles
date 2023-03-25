@@ -98,15 +98,22 @@ prepare_binary "exa" "bin/exa" "https://github.com/ogham/exa/releases/download/v
 link_file "nvim config" "$PWD/nvim" "/home/$USER/.config/nvim"
 link_file "Tmux config" "$PWD/.tmux.conf" "/home/$USER/.tmux.conf"
 link_file "starship config" "$PWD/starship.toml" "/home/$USER/.config/starship.toml"
-link_file ".shell_common" "$PWD/.shell_common" "/home/$USER/.shell_common"
+link_file ".shell_common" "$PWD/shell/.shell_common" "/home/$USER/.shell_common"
+link_file "lazygit config" "$PWD/lazygit/config.yml" "/home/$USER/.config/lazygit/config.yml"
+# link_file ".zshrc" "$PWD/shell/.zshrc" "/home/$USER/.zshrc"
+
 
 clone_repo "fzf-repo" "https://github.com/junegunn/fzf.git" "$BIN_PATH/fzf-repo"
 clone_repo "fzf-exec-history" "https://github.com/4z3/fzf-plugins.git" "$BIN_PATH/fzf-exec-history"
 
 
 cd $PWD
-BASH_COMMAND="source $PWD/.bashrc"
-BASHRC_PATH=/home/$USER/.bashrc
-if ! grep -q "$BASH_COMMAND" "$BASHRC_PATH"; then
-    echo "$BASH_COMMAND">> $BASHRC_PATH
-fi
+append_if_not_exist(){
+    TEXT=$1
+    FILE=$2
+    if ! grep -q "$TEXT" "$FILE"; then
+        echo "$TEXT">> $FILE
+    fi
+}
+
+append_if_not_exist "source $PWD/.bashrc" "/home/$USER/.bashrc"

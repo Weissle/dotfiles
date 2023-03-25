@@ -34,7 +34,7 @@ if check_executable "zoxide"; then
             cd "$dir"
         fi
     }
-    eval "$(zoxide init bash --cmd cd)"
+    eval "$(zoxide init $SHELL_TYPE --cmd cd)"
 fi
 
 if check_executable "starship"; then
