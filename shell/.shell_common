@@ -11,7 +11,7 @@ function check_executable() {
 SHELL_TYPE=$1
 
 # Assuming check_executable USER_BIN_PATH is set
-alias lz=lazygit
+alias lg=lazygit
 alias v=nvim
 # fzf: Debian or ubuntun
 if check_executable "fzf"; then
