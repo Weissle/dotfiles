@@ -99,6 +99,10 @@ link_file "nvim config" "$PWD/nvim" "/home/$USER/.config/nvim"
 link_file "Tmux config" "$PWD/.tmux.conf" "/home/$USER/.tmux.conf"
 link_file "starship config" "$PWD/starship.toml" "/home/$USER/.config/starship.toml"
 link_file ".shell_common" "$PWD/shell/.shell_common" "/home/$USER/.shell_common"
+if [ `wc -l /home/$USER/.config/lazygit/config.yml | awk '{print $1}'` -eq 0 ]; then
+    echo_c "info" "lazygit config is empty. Removing it and create a softlink to ./lazygit/config.yml"
+    rm /home/$USER/.config/lazygit/config.yml
+fi
 link_file "lazygit config" "$PWD/lazygit/config.yml" "/home/$USER/.config/lazygit/config.yml"
 # link_file ".zshrc" "$PWD/shell/.zshrc" "/home/$USER/.zshrc"
 
@@ -116,4 +120,4 @@ append_if_not_exist(){
     fi
 }
 
-append_if_not_exist "source $PWD/.bashrc" "/home/$USER/.bashrc"
+append_if_not_exist "source $PWD/shell/.bashrc" "/home/$USER/.bashrc"
