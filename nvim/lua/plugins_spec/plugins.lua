@@ -285,15 +285,11 @@ return {
 		keys = {
 			{
 				"<leader>bo",
-				function()
-					require("portal").jump_backward()
-				end,
+                "<cmd>Portal jumplist backward<cr>"
 			},
 			{
 				"<leader>bi",
-				function()
-					require("portal").jump_forward()
-				end,
+                "<cmd>Portal jumplist forward<cr>"
 			},
 		},
 		name = "portal",

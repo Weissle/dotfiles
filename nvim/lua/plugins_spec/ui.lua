@@ -83,46 +83,6 @@ return {
 		opts = { mappings = { "<C-u>", "<C-d>", "<C-y>", "<C-e>", "<C-b>", "<C-f>" } },
 	},
 	{
-		enabled = false,
-		"rcarriga/nvim-notify",
-		dependencies = { "telescope" },
-		config = function(_, opts)
-			require("notify").setup(opts)
-			require("telescope").load_extension("notify")
-			-- notify
-			vim.keymap.set("n", "<leader>fn", "<cmd>Telescope notify<cr>", opts)
-			vim.keymap.set("n", "<leader>md", "<cmd>lua require('notify').dismiss()<cr>", opts)
-		end,
-		opts = { level = vim.log.levels.WARN },
-	},
-	{
-		enabled = false,
-		"folke/noice.nvim",
-		name = "noice",
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-			"rcarriga/nvim-notify",
-		},
-		opts = {
-			lsp = {
-				-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-				override = {
-					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-					["vim.lsp.util.stylize_markdown"] = true,
-					["cmp.entry.get_documentation"] = true,
-				},
-			},
-			-- you can enable a preset for easier configuration
-			presets = {
-				bottom_search = true, -- use a classic bottom cmdline for search
-				command_palette = true, -- position the cmdline and popupmenu together
-				long_message_to_split = true, -- long messages will be sent to a split
-				inc_rename = false, -- enables an input dialog for inc-rename.nvim
-				lsp_doc_border = false, -- add a border to hover docs and signature help
-			},
-		},
-	},
-	{
 		"stevearc/dressing.nvim",
 		opts = {},
 	},

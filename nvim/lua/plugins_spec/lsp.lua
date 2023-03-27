@@ -9,7 +9,7 @@ return {
 				sources = {
 					builtins.formatting.clang_format,
 					builtins.formatting.stylua,
-                    builtins.formatting.beautysh,
+					builtins.formatting.beautysh,
 				},
 				on_attach = function(client, bufnr)
 					client.server_capabilities.completionProvider = false
@@ -53,6 +53,7 @@ return {
 					},
 					workspace = {
 						library = vim.api.nvim_get_runtime_file("", true),
+						checkThirdParty = false,
 					},
 					telemetry = {
 						enable = false,
