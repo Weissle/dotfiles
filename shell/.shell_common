@@ -13,7 +13,7 @@ SHELL_TYPE=$1
 # Assuming check_executable USER_BIN_PATH is set
 alias lg=lazygit
 alias v=nvim
-# fzf: Debian or ubuntun
+
 if check_executable "fzf"; then
     export FZF_COMPLETION_TRIGGER='\'
     source $USER_BIN_PATH/fzf-repo/shell/key-bindings.$SHELL_TYPE

@@ -1,4 +1,12 @@
 PWD=`pwd`
+LOG_SKIP=false
+
+for arg in "$@"
+do
+    case "$arg" in
+        "-s") LOG_SKIP=true && echo "$LOG_SKIP";;
+    esac
+done
 
 BIN_PATH=/home/$USER/.local/bin/spec
 BIN_SYMBOL_PATH=/home/$USER/.local/bin
@@ -11,16 +19,19 @@ echo_c(){
     GREEN='\033[0;32m'
     YELLOW='\033[0;33m'
     BLUE='\033[0;34m'
+    CYAN='\033[0;36m'
     NC='\033[0m' # No Color
     MSG_TYPE=$1
     MSG=$2
+    MSG_COLOR=
     case "$MSG_TYPE" in
-        "info") echo -n "$BLUE" ;;
-        "good") echo -n "$GREEN" ;;
-        "error") echo -n "$RED" ;;
-        "warn") echo -n "$YELLOW" ;;
+        "info") MSG_COLOR="$BLUE" ;;
+        "good") MSG_COLOR="$GREEN" ;;
+        "error") MSG_COLOR="$RED" ;;
+        "warn") MSG_COLOR="$YELLOW" ;;
+        "skip") [ "$LOG_SKIP" = false ] && return || MSG_COLOR="$CYAN" ;;
     esac
-    echo "$2$NC"
+    echo "$MSG_COLOR$2$NC"
 }
 
 link_file(){
@@ -34,7 +45,7 @@ link_file(){
     if [ "$SOURCE" != "$REAL_TARGET" ]; then
         echo_c "warn" "$NAME: Existing and they are not same."
     else
-        echo_c "good" "$NAME: Existing and is skipped."
+        echo_c "skip" "$NAME: Existing and is skipped."
     fi
 }
 
@@ -81,7 +92,7 @@ clone_repo(){
         echo_c "info" "$NAME: Cloning repo ..."
         git clone "$REPO_URL" "$REPO_PATH" && echo_c "good" "$NAME: Clone finished." || echo_c "error" "$NAME: Failed to clone the repo."
     else
-        echo_c "good" "$NAME: Existing and is skipped."
+        echo_c "skip" "$NAME: Existing and is skipped."
     fi
 }
 
@@ -126,9 +137,14 @@ cd $PWD
 append_if_not_exist(){
     TEXT=$1
     FILE=$2
+    [ ! -e "$FILE" ] && echo_c "error" "$FILE not exists. Append cancel." && return
     if ! grep -q "$TEXT" "$FILE"; then
-        echo "$TEXT">> $FILE
+        echo_c "info" "Append \"$TEXT\" to $FILE"
+        echo "$TEXT" >> $FILE
+    else
+        echo_c "skip" "$TEXT exists in $FILE, skip"
     fi
 }
 
 append_if_not_exist "source $PWD/shell/.bashrc" "/home/$USER/.bashrc"
+append_if_not_exist "changeps1: false" "/home/$USER/.condarc"
