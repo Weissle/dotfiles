@@ -153,7 +153,6 @@ return {
 				["mini.bufremove"] = {
 					after = { create_bufremove_command },
 				},
-				["mini.pairs"] = {},
 				["mini.surround"] = {
 					config = {
 						mappings = {

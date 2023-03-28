@@ -154,20 +154,12 @@ return {
 				},
 			}
 
-			M.setup_insert_mode = function()
-				cmp.setup(M.insert_config)
-			end
-
 			M.search_config = {
 				mapping = cmp.mapping.preset.cmdline(),
 				sources = {
 					{ name = "buffer" },
 				},
 			}
-
-			M.setup_search_mode = function()
-				cmp.setup.cmdline("/", M.search_config)
-			end
 
 			M.command_config = {
 				mapping = cmp.mapping.preset.cmdline(),
@@ -177,27 +169,19 @@ return {
 				}),
 			}
 
-			M.setup_command_mode = function()
-				cmp.setup.cmdline(":", M.search_config)
-			end
-
-			-- M.remove_redundant_quota = function()
-			-- 	cmp.event:on("confirm_done", function()
-			-- 		local r, c = unpack(vim.api.nvim_win_get_cursor(0))
-			-- 		local line = vim.api.nvim_buf_get_lines(0, r - 1, r, true)[1]
-			-- 		local ch1, ch2 = string.sub(line, c, c), string.sub(line, c + 1, c + 1)
-			-- 		if ch1 == ch2 and (ch1 == '"' or ch1 == "'") then
-			-- 			line = string.sub(line, 0, c - 1) .. string.sub(line, c + 1) .. " "
-			-- 			vim.api.nvim_buf_set_lines(0, r - 1, r, true, { line })
-			-- 		end
-			-- 	end)
-			-- end
-
-			for _, v in pairs(M) do
-				if (type(v)) == "function" then
-					v()
-				end
-			end
+			cmp.setup(M.insert_config)
+			cmp.setup.cmdline(":", M.search_config)
+			cmp.setup.cmdline("/", M.search_config)
 		end,
+	},
+	{
+		"windwp/nvim-autopairs",
+		opts = {
+			fast_wrap = {},
+			disable_filetype = { "TelescopePrompt", "vim" },
+			config = function(_, opts)
+				require("cmp").event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done)
+			end,
+		},
 	},
 }
