@@ -74,6 +74,7 @@ ZSH_CUSTOM=$USER_BIN_PATH/omz-custom
 plugins=(
     fd
     ripgrep
+    dirhistory
     fast-syntax-highlighting
     zsh-autosuggestions
 )
