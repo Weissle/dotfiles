@@ -104,8 +104,14 @@ if [ `wc -l /home/$USER/.config/lazygit/config.yml | awk '{print $1}'` -eq 0 ]; 
     rm /home/$USER/.config/lazygit/config.yml
 fi
 link_file "lazygit config" "$PWD/lazygit/config.yml" "/home/$USER/.config/lazygit/config.yml"
-link_file ".zshrc" "$PWD/shell/.zshrc" "/home/$USER/.zshrc"
 
+# oh my zsh
+if [ ! -e "/home/$USER/.oh-my-zsh" ]; then
+    echo_c "info" "Installing oh-my-zsh"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    rm ~/.zshrc
+fi
+link_file ".zshrc" "$PWD/shell/.zshrc" "/home/$USER/.zshrc"
 
 clone_repo "fzf-repo" "https://github.com/junegunn/fzf.git" "$BIN_PATH/fzf-repo"
 clone_repo "fzf-exec-history" "https://github.com/4z3/fzf-plugins.git" "$BIN_PATH/fzf-exec-history"
@@ -114,6 +120,7 @@ OMZ_CUSTOM_PATH=$BIN_PATH/omz-custom
 mkdir -p $OMZ_CUSTOM_PATH/plugins
 clone_repo "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions.git" "$OMZ_CUSTOM_PATH/plugins/zsh-autosuggestions"
 clone_repo "fast-syntax-highlighting" "https://github.com/zdharma-continuum/fast-syntax-highlighting.git" "$OMZ_CUSTOM_PATH/plugins/fast-syntax-highlighting"
+
 
 cd $PWD
 append_if_not_exist(){
