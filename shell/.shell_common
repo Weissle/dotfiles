@@ -14,6 +14,15 @@ SHELL_TYPE=$1
 alias lg=lazygit
 alias v=nvim
 
+# For tmux
+alias tm=tmux
+alias tma="tmux a"
+alias tmat="tmux a -t "
+alias tmls="tmux list-sessions"
+
+# For git
+alias gp="git pull"
+
 if check_executable "fzf"; then
     export FZF_COMPLETION_TRIGGER='\'
     source $USER_BIN_PATH/fzf-repo/shell/key-bindings.$SHELL_TYPE

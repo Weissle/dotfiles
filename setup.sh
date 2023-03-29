@@ -130,7 +130,7 @@ clone_repo "fzf-exec-history" "https://github.com/4z3/fzf-plugins.git" "$BIN_PAT
 OMZ_CUSTOM_PATH=$BIN_PATH/omz-custom
 mkdir -p $OMZ_CUSTOM_PATH/plugins
 clone_repo "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions.git" "$OMZ_CUSTOM_PATH/plugins/zsh-autosuggestions"
-clone_repo "fast-syntax-highlighting" "https://github.com/zdharma-continuum/fast-syntax-highlighting.git" "$OMZ_CUSTOM_PATH/plugins/fast-syntax-highlighting"
+clone_repo "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting.git" "$OMZ_CUSTOM_PATH/plugins/zsh-syntax-highlighting"
 
 
 cd $PWD

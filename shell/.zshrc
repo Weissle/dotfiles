@@ -75,7 +75,8 @@ plugins=(
     fd
     ripgrep
     dirhistory
-    fast-syntax-highlighting
+    # fast-syntax-highlighting this is slow when pasting text from clipboard.
+    zsh-syntax-highlighting
     zsh-autosuggestions
 )
 
