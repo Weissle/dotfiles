@@ -1,6 +1,4 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-source /home/$USER/.shell_common "zsh"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -75,12 +73,14 @@ plugins=(
     fd
     ripgrep
     dirhistory
+    fzf
     # fast-syntax-highlighting this is slow when pasting text from clipboard.
     zsh-syntax-highlighting
     zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
+source /home/$USER/.shell_common "zsh"
 
 # User configuration
 

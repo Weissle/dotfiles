@@ -1,4 +1,4 @@
-PWD=`pwd`
+DOTFILES_PATH=`pwd`
 LOG_SKIP=false
 
 for arg in "$@"
@@ -10,7 +10,7 @@ done
 
 BIN_PATH=/home/$USER/.local/bin/spec
 BIN_SYMBOL_PATH=/home/$USER/.local/bin
-
+NO_OUTPUT_TO_TERM=" > /dev/null 2>&1"
 mkdir -p $BIN_PATH
 mkdir -p $BIN_SYMBOL_PATH
 
@@ -61,14 +61,13 @@ download_extract(){
         "tar-strip") EXTRACT_CMD="tar xf $FILE_NAME -C $FOLDER --strip-components=1" ;;
         "unzip") EXTRACT_CMD="unzip -d $FOLDER $FILE_NAME" ;;
     esac
-    CUR_DIR=`pwd`
     mkdir -p $FOLDER && cd $FOLDER
     wget $URL &&\
         $EXTRACT_CMD &&\
         rm $FILE_NAME &&\
         echo_c "good" "$NAME: Download finished." || \
         echo_c "error" "$NAME: Failed to download."
-    cd $CUR_DIR
+    cd $DOTFILES_PATH
 }
 
 prepare_binary(){
@@ -91,8 +90,18 @@ clone_repo(){
     if [ ! -e "$REPO_PATH" ]; then
         echo_c "info" "$NAME: Cloning repo ..."
         git clone "$REPO_URL" "$REPO_PATH" && echo_c "good" "$NAME: Clone finished." || echo_c "error" "$NAME: Failed to clone the repo."
+        return
     else
-        echo_c "skip" "$NAME: Existing and is skipped."
+        cd $REPO_PATH
+        THX_REPO_URL=`git remote get-url origin`
+        if [ "$?" -eq 128 ]; then
+            echo_c "error" "$NAME: $REPO_PATH exists and it is not a git repo."
+        elif [ "$THX_REPO_URL" != "$REPO_URL" ]; then
+            echo_c "error" "$NAME: $REPO_PATH exists and it's origin URL is not target URL."
+        else
+            echo_c "skip" "$NAME: Existing and is skipped."
+        fi
+        cd $DOTFILES_PATH
     fi
 }
 
@@ -106,15 +115,15 @@ prepare_binary "starship" "starship" "https://github.com/starship/starship/relea
 prepare_binary "bat" "bat" "https://github.com/sharkdp/bat/releases/download/v0.22.1/bat-v0.22.1-x86_64-unknown-linux-gnu.tar.gz" "tar-strip"
 prepare_binary "exa" "bin/exa" "https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v0.10.1.zip" "unzip"
 
-link_file "nvim config" "$PWD/nvim" "/home/$USER/.config/nvim"
-link_file "Tmux config" "$PWD/.tmux.conf" "/home/$USER/.tmux.conf"
-link_file "starship config" "$PWD/starship.toml" "/home/$USER/.config/starship.toml"
-link_file ".shell_common" "$PWD/shell/.shell_common" "/home/$USER/.shell_common"
+link_file "nvim config" "$DOTFILES_PATH/nvim" "/home/$USER/.config/nvim"
+link_file "Tmux config" "$DOTFILES_PATH/.tmux.conf" "/home/$USER/.tmux.conf"
+link_file "starship config" "$DOTFILES_PATH/starship.toml" "/home/$USER/.config/starship.toml"
+link_file ".shell_common" "$DOTFILES_PATH/shell/.shell_common" "/home/$USER/.shell_common"
 if [ `wc -l /home/$USER/.config/lazygit/config.yml | awk '{print $1}'` -eq 0 ]; then
     echo_c "info" "lazygit config is empty. Removing it and create a softlink to ./lazygit/config.yml"
     rm /home/$USER/.config/lazygit/config.yml
 fi
-link_file "lazygit config" "$PWD/lazygit/config.yml" "/home/$USER/.config/lazygit/config.yml"
+link_file "lazygit config" "$DOTFILES_PATH/lazygit/config.yml" "/home/$USER/.config/lazygit/config.yml"
 
 # oh my zsh
 if [ ! -e "/home/$USER/.oh-my-zsh" ]; then
@@ -122,7 +131,7 @@ if [ ! -e "/home/$USER/.oh-my-zsh" ]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     rm ~/.zshrc
 fi
-link_file ".zshrc" "$PWD/shell/.zshrc" "/home/$USER/.zshrc"
+link_file ".zshrc" "$DOTFILES_PATH/shell/.zshrc" "/home/$USER/.zshrc"
 
 clone_repo "fzf-repo" "https://github.com/junegunn/fzf.git" "$BIN_PATH/fzf-repo"
 clone_repo "fzf-exec-history" "https://github.com/4z3/fzf-plugins.git" "$BIN_PATH/fzf-exec-history"
@@ -133,7 +142,7 @@ clone_repo "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestio
 clone_repo "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting.git" "$OMZ_CUSTOM_PATH/plugins/zsh-syntax-highlighting"
 
 
-cd $PWD
+cd $DOTFILES_PATH
 append_if_not_exist(){
     TEXT=$1
     FILE=$2
@@ -146,5 +155,5 @@ append_if_not_exist(){
     fi
 }
 
-append_if_not_exist "source $PWD/shell/.bashrc" "/home/$USER/.bashrc"
+append_if_not_exist "source $DOTFILES_PATH/shell/.bashrc" "/home/$USER/.bashrc"
 append_if_not_exist "changeps1: false" "/home/$USER/.condarc"
