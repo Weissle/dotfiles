@@ -1,4 +1,6 @@
 # If you come from bash you might have to change your $PATH.
+export USER_BIN_PATH=/home/$USER/.local/bin/spec
+export USER_BIN_SYMBOL_PATH=/home/$USER/.local/bin
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"

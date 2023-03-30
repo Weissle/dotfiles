@@ -1,18 +1,8 @@
 DOTFILES_PATH=`pwd`
+EXP_DOTFILES_PATH="/home/$USER/.config/dotfiles"
 LOG_SKIP=false
-
-for arg in "$@"
-do
-    case "$arg" in
-        "-s") LOG_SKIP=true && echo "$LOG_SKIP";;
-    esac
-done
-
 BIN_PATH=/home/$USER/.local/bin/spec
 BIN_SYMBOL_PATH=/home/$USER/.local/bin
-NO_OUTPUT_TO_TERM=" > /dev/null 2>&1"
-mkdir -p $BIN_PATH
-mkdir -p $BIN_SYMBOL_PATH
 
 echo_c(){
     RED='\033[0;31m'
@@ -104,6 +94,21 @@ clone_repo(){
         cd $DOTFILES_PATH
     fi
 }
+
+for arg in "$@"
+do
+    case "$arg" in
+        "-s") LOG_SKIP=true && echo "$LOG_SKIP";;
+    esac
+done
+
+if [ "$DOTFILES_PATH" != "$EXP_DOTFILES_PATH" ]; then
+    echo_c "error" "You should place the dotfile in \"$EXP_DOTFILES_PATH\"" 
+    exit 1
+fi
+
+mkdir -p $BIN_PATH
+mkdir -p $BIN_SYMBOL_PATH
 
 prepare_binary "nvim" "bin/nvim" "https://github.com/neovim/neovim/releases/download/v0.8.3/nvim-linux64.tar.gz" "tar-strip"
 prepare_binary "lazygit" "lazygit" "https://github.com/jesseduffield/lazygit/releases/download/v0.37.0/lazygit_0.37.0_Linux_x86_64.tar.gz"
