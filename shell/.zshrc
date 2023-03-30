@@ -82,6 +82,13 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 source /home/$USER/.shell_common "zsh"
 
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_FIND_NO_DUPS
+setopt HIST_SAVE_NO_DUPS
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"

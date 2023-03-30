@@ -151,7 +151,7 @@ append_if_not_exist(){
         echo_c "info" "Append \"$TEXT\" to $FILE"
         echo "$TEXT" >> $FILE
     else
-        echo_c "skip" "$TEXT exists in $FILE, skip"
+        echo_c "skip" "\"$TEXT\" exists in $FILE, skip"
     fi
 }
 
