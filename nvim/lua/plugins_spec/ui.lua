@@ -49,7 +49,7 @@ return {
 	},
 	{
 		"akinsho/bufferline.nvim",
-		tag = "v3.1.0",
+		tag = "v3.5.0",
 		config = function()
 			vim.keymap.set("n", "<leader>bj", "<cmd>BufferLinePick<cr>")
 			vim.keymap.set("n", "<leader>bn", "<cmd>BufferLineCycleNext<cr>")
