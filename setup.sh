@@ -145,6 +145,7 @@ OMZ_CUSTOM_PATH=$BIN_PATH/omz-custom
 mkdir -p $OMZ_CUSTOM_PATH/plugins
 clone_repo "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions.git" "$OMZ_CUSTOM_PATH/plugins/zsh-autosuggestions"
 clone_repo "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting.git" "$OMZ_CUSTOM_PATH/plugins/zsh-syntax-highlighting"
+clone_repo "tpm" "https://github.com/tmux-plugins/tpm.git" "/home/$USER/.tmux/plugins/tpm"
 
 
 cd $DOTFILES_PATH
