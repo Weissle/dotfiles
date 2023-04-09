@@ -4,26 +4,6 @@ LOG_SKIP=false
 BIN_PATH=/home/$USER/.local/bin/spec
 BIN_SYMBOL_PATH=/home/$USER/.local/bin
 
-echo_c(){
-    RED='\033[0;31m'
-    GREEN='\033[0;32m'
-    YELLOW='\033[0;33m'
-    BLUE='\033[0;34m'
-    CYAN='\033[0;36m'
-    NC='\033[0m' # No Color
-    MSG_TYPE=$1
-    MSG=$2
-    MSG_COLOR=
-    case "$MSG_TYPE" in
-        "info") MSG_COLOR="$BLUE" ;;
-        "good") MSG_COLOR="$GREEN" ;;
-        "error") MSG_COLOR="$RED" ;;
-        "warn") MSG_COLOR="$YELLOW" ;;
-        "skip") [ "$LOG_SKIP" = false ] && return || MSG_COLOR="$CYAN" ;;
-    esac
-    echo "$MSG_COLOR$2$NC"
-}
-
 link_file(){
     NAME=$1
     SOURCE=$2
@@ -103,22 +83,23 @@ do
 done
 
 if [ "$DOTFILES_PATH" != "$EXP_DOTFILES_PATH" ]; then
-    echo_c "error" "You should place the dotfile in \"$EXP_DOTFILES_PATH\"" 
+    echo "You should place the dotfile in \"$EXP_DOTFILES_PATH\"" 
     exit 1
 fi
 
+eval "$(cat ./core/common.sh)"
+
 mkdir -p $BIN_PATH
 mkdir -p $BIN_SYMBOL_PATH
-
-prepare_binary "nvim" "bin/nvim" "https://github.com/neovim/neovim/releases/download/v0.8.3/nvim-linux64.tar.gz" "tar-strip"
-prepare_binary "lazygit" "lazygit" "https://github.com/jesseduffield/lazygit/releases/download/v0.37.0/lazygit_0.37.0_Linux_x86_64.tar.gz"
-prepare_binary "ripgrep" "rg" "https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep-13.0.0-x86_64-unknown-linux-musl.tar.gz" "tar-strip"
-prepare_binary "fd" "fd" "https://github.com/sharkdp/fd/releases/download/v8.7.0/fd-v8.7.0-x86_64-unknown-linux-gnu.tar.gz" "tar-strip"
-prepare_binary "fzf" "fzf" "https://github.com/junegunn/fzf/releases/download/0.38.0/fzf-0.38.0-linux_amd64.tar.gz"
-prepare_binary "zoxide" "zoxide" "https://github.com/ajeetdsouza/zoxide/releases/download/v0.9.0/zoxide-0.9.0-x86_64-unknown-linux-musl.tar.gz"
-prepare_binary "starship" "starship" "https://github.com/starship/starship/releases/download/v1.13.1/starship-x86_64-unknown-linux-gnu.tar.gz"
-prepare_binary "bat" "bat" "https://github.com/sharkdp/bat/releases/download/v0.22.1/bat-v0.22.1-x86_64-unknown-linux-gnu.tar.gz" "tar-strip"
-prepare_binary "exa" "bin/exa" "https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v0.10.1.zip" "unzip"
+prepare_binary "nvim" "bin/nvim" "$NVIM_DOWNLOAD_URL" "tar-strip"
+prepare_binary "lazygit" "lazygit" "$LAZYGIT_DOWNLOAD_URL"
+prepare_binary "ripgrep" "rg" "$RIPGREP_DOWNLOAD_URL" "tar-strip"
+prepare_binary "fd" "fd" "$FD_DOWNLOAD_URL" "tar-strip"
+prepare_binary "fzf" "fzf" "$FZF_DOWNLOAD_URL" 
+prepare_binary "zoxide" "zoxide" "$ZOXIDE_DOWNLOAD_URL" 
+prepare_binary "starship" "starship" "$STARSHIP_DOWNLOAD_URL" 
+prepare_binary "bat" "bat" "$BAT_DOWNLOAD_URL" "tar-strip"
+prepare_binary "exa" "bin/exa" "$EXA_DOWNLOAD_URL" "unzip"
 
 link_file "nvim config" "$DOTFILES_PATH/nvim" "/home/$USER/.config/nvim"
 link_file "Tmux config" "$DOTFILES_PATH/.tmux.conf" "/home/$USER/.tmux.conf"
