@@ -18,6 +18,8 @@ echo_c(){
     echo "$MSG_COLOR$2$NC"
 }
 
+BINARY_LIST=("nvim" "lazygit" "ripgrep" "fd" "fzf" "zoxide" "starship" "bat" "exa")
+
 NVIM_VERSION="v0.8.3"
 LAZYGIT_VERSION="v0.37.0"
 RIPGREP_VERSION="13.0.0"
@@ -38,15 +40,11 @@ STARSHIP_REPO_BASE="https://github.com/starship/starship"
 BAT_REPO_BASE="https://github.com/sharkdp/bat"
 EXA_REPO_BASE="https://github.com/ogham/exa"
 
-NVIM_REPO="$NVIM_REPO_BASE.git"
-LAZYGIT_REPO="$LAZYGIT_REPO_BASE.git"
-RIPGREP_REPO="$RIPGREP_REPO_BASE.git"
-FD_REPO="$FD_REPO_BASE.git"
-FZF_REPO="$FZF_REPO_BASE.git"
-ZOXIDE_REPO="$ZOXIDE_REPO_BASE.git"
-STARSHIP_REPO="$STARSHIP_REPO_BASE.git"
-BAT_REPO="$BAT_REPO_BASE.git"
-EXA_REPO="$EXA_REPO_BASE.git"
+for name in "${BINARY_LIST[@]}"
+do
+    UPPER=`echo $name | tr '[:lower:]' '[:upper:]'`
+    eval ${UPPER}_REPO="\$${UPPER}_REPO_BASE.git"
+done
 
 RD="releases/download"
 rm_prefixv(){
