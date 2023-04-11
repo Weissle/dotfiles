@@ -17,6 +17,9 @@ echo_c(){
     esac
     echo "$MSG_COLOR$2$NC"
 }
+upper(){
+    echo $name | tr '[:lower:]' '[:upper:]'
+}
 
 BINARY_LIST=("nvim" "lazygit" "ripgrep" "fd" "fzf" "zoxide" "starship" "bat" "exa")
 

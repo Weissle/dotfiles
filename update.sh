@@ -1,13 +1,32 @@
 eval "$(cat core/common.sh)"
 
+get_last_tag_by_git(){
+    UPPER=$(upper $1)
+    eval REPO=\$${UPPER}_REPO
+    echo `git ls-remote --refs --sort="version:refname" --tags "$REPO" | cut -d/ -f3- | tail -n1`
+}
+
+get_last_tag_by_github_release(){
+    UPPER=$(upper $1)
+    eval URL=\$${UPPER}_REPO_BASE/releases/latest
+    LATEST_URL=`wget -O /dev/null $URL 2>&1  | grep 'Location' | awk '{print $2}'`
+    echo `basename $LATEST_URL`
+}
+
 get_last_release() {
-    git ls-remote --refs --sort="version:refname" --tags "$1" | cut -d/ -f3- | tail -n1; 
+    GET_FUNC=
+    NAME=$1
+    case $NAME in
+        "nvim") GET_FUNC=get_last_tag_by_git ;;
+        *) GET_FUNC=get_last_tag_by_github_release
+    esac
+    eval $GET_FUNC "$NAME"
 }
 
 for name in "${BINARY_LIST[@]}"
 do
-    UPPER=`echo $name | tr '[:lower:]' '[:upper:]'`
-    LATEST_VERSION=$(eval get_last_release \$${UPPER}_REPO)
+    LATEST_VERSION="$(get_last_release $name)"
+    UPPER=$(upper $name)
     eval CURRENT_VERSION="\$${UPPER}_VERSION"
     if [ "$LATEST_VERSION" != "$CURRENT_VERSION" ]; then
         echo_c "info" "$name: current version is $CURRENT_VERSION, latest version is $LATEST_VERSION"

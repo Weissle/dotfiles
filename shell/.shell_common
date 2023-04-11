@@ -73,4 +73,6 @@ if [[ $(grep "microsoft" /proc/version) ]]; then
 	export ALL_PROXY=http://$windows_host:7501
 	export HTTP_PROXY=$ALL_PROXY
 	export HTTPS_PROXY=$ALL_PROXY
+	export http_proxy=$ALL_PROXY
+	export https_proxy=$ALL_PROXY
 fi

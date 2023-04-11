@@ -22,7 +22,7 @@ error_symbol = '[ X](bold red)'
 format = ' [\($name-$version\)]($style)'
 version_format = '${raw}'
 detect_extensions = []
-detect_files = ['CMakeLists.txt', 'CMakeCache.txt', 'Makefile']
+detect_files = ['CMakeLists.txt', 'CMakeCache.txt']
 
 [conda]
 ignore_base = false
