@@ -1,3 +1,8 @@
+DOTFILES_PATH=`pwd`
+EXP_DOTFILES_PATH="/home/$USER/.config/dotfiles"
+BIN_PATH=/home/$USER/.local/bin/spec
+BIN_SYMBOL_PATH=/home/$USER/.local/bin
+
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
@@ -18,7 +23,7 @@ echo_c(){
     echo "$MSG_COLOR$2$NC"
 }
 upper(){
-    echo $name | tr '[:lower:]' '[:upper:]'
+    echo $1 | tr '[:lower:]' '[:upper:]'
 }
 
 BINARY_LIST=("nvim" "lazygit" "ripgrep" "fd" "fzf" "zoxide" "starship" "bat" "exa")
@@ -47,6 +52,14 @@ for name in "${BINARY_LIST[@]}"
 do
     UPPER=`echo $name | tr '[:lower:]' '[:upper:]'`
     eval ${UPPER}_REPO="\$${UPPER}_REPO_BASE.git"
+    eval ${UPPER}_FOLDER_NAME="${name}_\${${UPPER}_VERSION}"
+    BIN_REL_PATH=$name
+    case "$name" in
+        "nvim") BIN_REL_PATH="bin/nvim" ;;
+        "ripgrep") BIN_REL_PATH="rg" ;;
+        "exa") BIN_REL_PATH="bin/exa" ;;
+    esac
+    eval ${UPPER}_BIN_PATH=$BIN_REL_PATH
 done
 
 RD="releases/download"
@@ -56,13 +69,13 @@ rm_prefixv(){
 
 NVIM_DOWNLOAD_URL="$NVIM_REPO_BASE/$RD/$NVIM_VERSION/nvim-linux64.tar.gz"
 TMP=$(rm_prefixv $LAZYGIT_VERSION)
-LAZYGIT_DOWNLOAD_URL="$NVIM_REPO_BASE/$RD/$LAZYGIT_VERSION/lazygit_${TMP}_Linux_x86_64.tar.gz"
-RIPGREP_DOWNLOAD_URL="https://github.com/BurntSushi/ripgrep/releases/download/$RIPGREP_VERSION/ripgrep-${RIPGREP_VERSION}-x86_64-unknown-linux-musl.tar.gz" 
-FD_DOWNLOAD_URL="https://github.com/sharkdp/fd/releases/download/$FD_VERSION/fd-${FD_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
-FZF_DOWNLOAD_URL="https://github.com/junegunn/fzf/releases/download/$FZF_VERSION/fzf-${FZF_VERSION}-linux_amd64.tar.gz"
+LAZYGIT_DOWNLOAD_URL="$LAZYGIT_REPO_BASE/$RD/$LAZYGIT_VERSION/lazygit_${TMP}_Linux_x86_64.tar.gz"
+RIPGREP_DOWNLOAD_URL="$RIPGREP_REPO_BASE/$RD/$RIPGREP_VERSION/ripgrep-${RIPGREP_VERSION}-x86_64-unknown-linux-musl.tar.gz" 
+FD_DOWNLOAD_URL="$FD_REPO_BASE/$RD/$FD_VERSION/fd-${FD_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+FZF_DOWNLOAD_URL="$FZF_REPO_BASE/$RD/$FZF_VERSION/fzf-${FZF_VERSION}-linux_amd64.tar.gz"
 TMP=$(rm_prefixv $ZOXIDE_VERSION)
-ZOXIDE_DOWNLOAD_URL="https://github.com/ajeetdsouza/zoxide/releases/download/$ZOXIDE_VERSION/zoxide-${TMP}-x86_64-unknown-linux-musl.tar.gz"
-STARSHIP_DOWNLOAD_URL="https://github.com/starship/starship/releases/download/$STARSHIP_VERSION/starship-x86_64-unknown-linux-gnu.tar.gz"
-BAT_DOWNLOAD_URL="https://github.com/sharkdp/bat/releases/download/$BAT_VERSION/bat-${BAT_VERSION}-x86_64-unknown-linux-gnu.tar.gz" 
-EXA_DOWNLOAD_URL="https://github.com/ogham/exa/releases/download/$EXA_VERSION/exa-linux-x86_64-${EXA_VERSION}.zip" 
+ZOXIDE_DOWNLOAD_URL="$ZOXIDE_REPO_BASE/$RD/$ZOXIDE_VERSION/zoxide-${TMP}-x86_64-unknown-linux-musl.tar.gz"
+STARSHIP_DOWNLOAD_URL="$STARSHIP_REPO_BASE/$RD/$STARSHIP_VERSION/starship-x86_64-unknown-linux-gnu.tar.gz"
+BAT_DOWNLOAD_URL="$BAT_REPO_BASE/$RD/$BAT_VERSION/bat-${BAT_VERSION}-x86_64-unknown-linux-gnu.tar.gz" 
+EXA_DOWNLOAD_URL="$EXA_REPO_BASE/$RD/$EXA_VERSION/exa-linux-x86_64-${EXA_VERSION}.zip" 
 

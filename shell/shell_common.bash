@@ -17,7 +17,7 @@ alias v=nvim
 # For tmux
 alias tm=tmux
 alias tma="tmux a"
-alias tmat="tmux a -t "
+alias tmat="tmux attach-session -t "
 alias tmls="tmux list-sessions"
 
 # For git

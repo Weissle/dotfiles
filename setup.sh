@@ -1,8 +1,4 @@
-DOTFILES_PATH=`pwd`
-EXP_DOTFILES_PATH="/home/$USER/.config/dotfiles"
 LOG_SKIP=false
-BIN_PATH=/home/$USER/.local/bin/spec
-BIN_SYMBOL_PATH=/home/$USER/.local/bin
 
 link_file(){
     NAME=$1
@@ -22,7 +18,6 @@ link_file(){
 download_extract(){
     NAME=$1
     FOLDER=$2
-    FOLDER=$BIN_PATH/$NAME
     URL=$3
     FILE_NAME=`basename $URL`
     EXTRACT_OPT=$4
@@ -33,7 +28,7 @@ download_extract(){
     esac
     mkdir -p $FOLDER && cd $FOLDER
     wget $URL &&\
-        $EXTRACT_CMD &&\
+        eval $EXTRACT_CMD &&\
         rm $FILE_NAME &&\
         echo_c "good" "$NAME: Download finished." || \
         echo_c "error" "$NAME: Failed to download."
@@ -42,7 +37,8 @@ download_extract(){
 
 prepare_binary(){
     NAME=$1
-    FOLDER=$BIN_PATH/$NAME
+    UPPER_NAME=$(upper $NAME)
+    eval FOLDER=$BIN_PATH/${NAME}_\${${UPPER_NAME}_VERSION}
     TARGET_RELATIVE_PATH=$2
     TARGET_PATH="$FOLDER/$TARGET_RELATIVE_PATH"
     URL=$3
@@ -104,7 +100,7 @@ prepare_binary "exa" "bin/exa" "$EXA_DOWNLOAD_URL" "unzip"
 link_file "nvim config" "$DOTFILES_PATH/nvim" "/home/$USER/.config/nvim"
 link_file "Tmux config" "$DOTFILES_PATH/.tmux.conf" "/home/$USER/.tmux.conf"
 link_file "starship config" "$DOTFILES_PATH/starship.toml" "/home/$USER/.config/starship.toml"
-link_file ".shell_common" "$DOTFILES_PATH/shell/.shell_common" "/home/$USER/.shell_common"
+link_file ".shell_common" "$DOTFILES_PATH/shell/shell_common.bash" "/home/$USER/.shell_common"
 if [ `wc -l /home/$USER/.config/lazygit/config.yml | awk '{print $1}'` -eq 0 ]; then
     echo_c "info" "lazygit config is empty. Removing it and create a softlink to ./lazygit/config.yml"
     rm /home/$USER/.config/lazygit/config.yml
