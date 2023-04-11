@@ -28,14 +28,14 @@ upper(){
 
 BINARY_LIST=("nvim" "lazygit" "ripgrep" "fd" "fzf" "zoxide" "starship" "bat" "exa")
 
-NVIM_VERSION="v0.8.3"
+NVIM_VERSION="v0.9.0"
 LAZYGIT_VERSION="v0.37.0"
 RIPGREP_VERSION="13.0.0"
 FD_VERSION="v8.7.0"
-FZF_VERSION="0.38.0"
+FZF_VERSION="0.39.0"
 ZOXIDE_VERSION="v0.9.0"
-STARSHIP_VERSION="v1.13.1"
-BAT_VERSION="v0.22.1"
+STARSHIP_VERSION="v1.14.1"
+BAT_VERSION="v0.23.0"
 EXA_VERSION="v0.10.1"
 
 NVIM_REPO_BASE="https://github.com/neovim/neovim"
