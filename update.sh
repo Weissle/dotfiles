@@ -1,5 +1,5 @@
-eval "$(cat core/common.sh)"
-
+eval "$(cat core/functions.sh)"
+eval "$(cat core/variables.sh)"
 get_last_tag_by_git(){
     UPPER=$(upper $1)
     eval REPO=\$${UPPER}_REPO
@@ -29,6 +29,10 @@ do
     UPPER=$(upper $name)
     eval CURRENT_VERSION="\$${UPPER}_VERSION"
     if [ "$LATEST_VERSION" != "$CURRENT_VERSION" ]; then
-        echo_c "info" "$name: current version is $CURRENT_VERSION, latest version is $LATEST_VERSION"
+        echo_c "warn" "$name: current version is $CURRENT_VERSION, latest version is $LATEST_VERSION"
+    else
+        echo_c "info" "$name: current version is $CURRENT_VERSION, this is the latest version."
     fi
 done
+
+

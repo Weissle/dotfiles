@@ -31,7 +31,8 @@ if check_executable "fzf"; then
             source $USER_BIN_PATH/fzf-repo/shell/completion.$SHELL_TYPE
             FZF_CTRL_R_EDIT_KEY=ctrl-e
             FZF_CTRL_R_EXEC_KEY=enter
-            source $USER_BIN_PATH/fzf-exec-history/history-exec.bash ;;
+            source $USER_BIN_PATH/fzf-exec-history/history-exec.bash
+            ;;
     esac
 fi
 
@@ -70,9 +71,9 @@ fi
 # proxy
 if [[ $(grep "microsoft" /proc/version) ]]; then
     export windows_host=`cat /etc/resolv.conf | grep nameserver | awk '{print $2}'`
-	export ALL_PROXY=http://$windows_host:7501
-	export HTTP_PROXY=$ALL_PROXY
-	export HTTPS_PROXY=$ALL_PROXY
-	export http_proxy=$ALL_PROXY
-	export https_proxy=$ALL_PROXY
+    export ALL_PROXY=http://$windows_host:7501
+    export HTTP_PROXY=$ALL_PROXY
+    export HTTPS_PROXY=$ALL_PROXY
+    export http_proxy=$ALL_PROXY
+    export https_proxy=$ALL_PROXY
 fi

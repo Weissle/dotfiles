@@ -134,9 +134,6 @@ return {
 						priority = 1,
 					},
 				},
-				completion = {
-					keyword_length = 2,
-				},
 				sorting = {
 					priority_weight = 2,
 					comparators = {
