@@ -4,9 +4,9 @@ return {
 		lazy = true,
 	},
 	{
-		"kyazdani42/nvim-tree.lua",
+		"nvim-tree/nvim-tree.lua",
 		keys = {
-			{ "<leader>nn", "<cmd>NvimTreeToggle<cr>" },
+			{ "<C-n>", "<cmd>NvimTreeToggle<cr>" },
 			{ "<leader>nm", "<cmd>NvimTreeFindFile<cr>" },
 			{ "<leader>nf", "<cmd>NvimTreeFocus<cr>" },
 		},
@@ -15,18 +15,17 @@ return {
 			git = {
 				ignore = false,
 			},
-			view = {
-				adaptive_size = true,
+			--[[ view = {
+				-- adaptive_size = true,
 				side = "right",
-			},
+			}, ]]
 		},
 	},
 	{
 		"L3MON4D3/LuaSnip",
-        build = "make install_jsregexp",
+		build = "make install_jsregexp",
 		dependencies = { "rafamadriz/friendly-snippets" },
-		event = { "BufRead", "BufNewFile", "InsertEnter" },
-        version = "1.2.1",
+		version = "1.2.1",
 		config = function(_, opts)
 			require("luasnip").setup(opts)
 			require("luasnip.loaders.from_vscode").lazy_load({
@@ -43,6 +42,7 @@ return {
 	{
 		"williamboman/mason.nvim",
 		name = "mason",
+		build = ":MasonUpdate",
 		opts = {},
 	},
 	{
@@ -56,6 +56,7 @@ return {
 			},
 			{ "nvim-telescope/telescope-live-grep-args.nvim" },
 			{ "nvim-telescope/telescope-frecency.nvim", dependencies = { "kkharji/sqlite.lua" } },
+			{ "nvim-lua/plenary.nvim" },
 		},
 		config = function(_, opts)
 			require("telescope").setup(opts)
@@ -112,75 +113,38 @@ return {
 	},
 	{
 		"echasnovski/mini.nvim",
+		event = { "BufRead", "BufNewFile" },
+		keys = {
+			{ "<leader>bd", '<cmd>lua require("mini.bufremove").delete(0,false)<cr>' },
+			{ "<leader>bD", '<cmd>lua require("mini.bufremove").delete(0,true)<cr>' },
+		},
 		config = function()
-			local M = {}
-
-			local function unhighlight_inactivate_buffer()
-				vim.api.nvim_create_augroup("unhighlight_inactivate_buffer", { clear = true })
-				vim.api.nvim_create_autocmd({ "BufLeave" }, {
-					group = "unhighlight_inactivate_buffer",
-					callback = function()
-						require("mini.cursorword").auto_unhighlight()
-					end,
-				})
-			end
-
-			local function disable_cursorword_in_nvimtree()
-				vim.api.nvim_create_augroup("disable_cursorword_in_nvimtree", { clear = true })
-				vim.api.nvim_create_autocmd({ "Filetype" }, {
-					group = "disable_cursorword_in_nvimtree",
-					pattern = "NvimTree",
-					callback = function()
-						vim.b.minicursorword_disable = true
-					end,
-				})
-			end
-
-			local function create_bufremove_command()
-				vim.api.nvim_create_user_command("BufDelete", function()
-					require("mini.bufremove").delete(0, false)
-				end, {})
-				vim.api.nvim_create_user_command("BufDeleteForce", function()
-					require("mini.bufremove").delete(0, true)
-				end, {})
-			end
-
-			M.subplugin_config = {
-				["mini.cursorword"] = {
-					config = { delay = 30 },
-					after = { unhighlight_inactivate_buffer, disable_cursorword_in_nvimtree },
+			vim.api.nvim_create_autocmd({ "BufLeave" }, {
+				callback = function()
+					require("mini.cursorword").auto_unhighlight()
+				end,
+			})
+			vim.api.nvim_create_autocmd({ "Filetype" }, {
+				pattern = "NvimTree",
+				callback = function()
+					vim.b.minicursorword_disable = true
+				end,
+			})
+			require("mini.cursorword").setup({
+				delay = 30,
+			})
+			require("mini.bufremove").setup()
+			require("mini.surround").setup({
+				mappings = {
+					add = "<leader>as",
+					delete = "ds",
+					find = "",
+					find_left = "",
+					highlight = "",
+					replace = "cs",
+					update_n_lines = "",
 				},
-				["mini.bufremove"] = {
-					after = { create_bufremove_command },
-				},
-				["mini.surround"] = {
-					config = {
-						mappings = {
-							add = "<leader>as",
-							delete = "ds",
-							find = "",
-							find_left = "",
-							highlight = "",
-							replace = "cs",
-							update_n_lines = "",
-						},
-					},
-				},
-				["mini.doc"] = {},
-			}
-
-			M.setup = function()
-				for subplugin, cfg in pairs(M.subplugin_config) do
-					require(subplugin).setup(cfg.config or {})
-					if cfg.after then
-						for k, v in ipairs(cfg.after) do
-							v()
-						end
-					end
-				end
-			end
-
-			M.setup()
+			})
 		end,
 	},
 	{
@@ -202,8 +166,6 @@ return {
 			{ "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" } },
 			{ "gp", "<Plug>(YankyGPutAfter)", mode = { "n", "x" } },
 			{ "gP", "<Plug>(YankyGPutBefore)", mode = { "n", "x" } },
-			{ "<c-n>", "<Plug>(YankyCycleForward)" },
-			{ "<c-p>", "<Plug>(YankyCycleBackward)" },
 			{ "<leader>fy", "<cmd>Telescope yank_history<cr>" },
 		},
 		config = function(_, opts)
@@ -211,9 +173,6 @@ return {
 			require("telescope").load_extension("yank_history")
 		end,
 		opts = {
-			ring = {
-				sync_with_numbered_registers = false,
-			},
 			highlight = {
 				on_put = false,
 				on_yank = false,
@@ -241,20 +200,8 @@ return {
 				auto_session_suppress_dirs = { "~/" },
 				pre_save_cmds = {
 					function()
-						for _, win in ipairs(vim.api.nvim_list_wins()) do
-							local config = vim.api.nvim_win_get_config(win)
-							if config.relative ~= "" then
-								vim.api.nvim_win_close(win, true)
-							end
-						end
 						pcall(vim.cmd, "tabdo NvimTreeClose")
 						pcall(vim.cmd, "tabdo SymbolsOutlineClose")
-						local dapui_ext, dapui = pcall(require, "dapui")
-						if dapui_ext == false then
-							return
-						else
-							pcall(dapui.close, {})
-						end
 					end,
 				},
 			})
@@ -284,11 +231,11 @@ return {
 		keys = {
 			{
 				"<leader>bo",
-                "<cmd>Portal jumplist backward<cr>"
+				"<cmd>Portal jumplist backward<cr>",
 			},
 			{
 				"<leader>bi",
-                "<cmd>Portal jumplist forward<cr>"
+				"<cmd>Portal jumplist forward<cr>",
 			},
 		},
 		name = "portal",

@@ -19,14 +19,14 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
+		event = { "BufRead", "BufNewFile" },
 		dependencies = { "williamboman/mason-lspconfig.nvim" },
 		config = function()
 			local M = {}
 
 			local lsp_servers = { "clangd", "pyright", "lua_ls", "bashls" }
-			local clients_format_disabled = { clangd = true, lua_ls = true }
-
 			-- if null-ls provides the format feature.
+			local clients_format_disabled = { clangd = true, lua_ls = true }
 
 			local cmp_nvim_lsp = require("cmp_nvim_lsp")
 			local default_capabilities = cmp_nvim_lsp.default_capabilities()
@@ -101,5 +101,9 @@ return {
 		opts = {
 			automatic_installation = true,
 		},
+	},
+	{
+		"j-hui/fidget.nvim",
+		opts = true,
 	},
 }

@@ -49,11 +49,6 @@ vim.keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<cr>", opts)
 vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions initial_mode=normal<cr>", opts)
 vim.keymap.set("n", "gr", "<cmd>Telescope lsp_references initial_mode=normal<cr>", opts)
 
--- mini.bufremove
-vim.keymap.set("n", "<leader>bd", "<cmd>lua require('mini.bufremove').delete(0)<cr>", opts)
-vim.keymap.set("n", "<leader>bD", "<cmd>lua require('mini.bufremove').delete(0,true)<cr>", opts)
-vim.keymap.set("n", "<leader>mD", "<cmd>lua require('mini.doc').generate()<cr>", opts)
-
 -- telescope
 vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", opts)
 vim.keymap.set("n", "<leader>fg", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>", opts)

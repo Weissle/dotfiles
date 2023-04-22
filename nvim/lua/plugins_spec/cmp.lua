@@ -2,49 +2,20 @@ return {
 	{
 		"hrsh7th/nvim-cmp",
 		dependencies = {
-			{ "hrsh7th/cmp-nvim-lsp", lazy = true },
+			"hrsh7th/cmp-nvim-lsp",
+			"onsails/lspkind.nvim",
 			"saadparwaiz1/cmp_luasnip",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-cmdline",
 			"L3MON4D3/LuaSnip",
 		},
-		keys = { ":", "/", "i" },
 		config = function()
-			local M = {}
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
 			local compare = require("cmp").config.compare
 
-			M.kind_icons = {
-				Text = "",
-				Method = "",
-				Function = "",
-				Constructor = "",
-				Field = "",
-				Variable = "",
-				Class = "ﴯ",
-				Interface = "",
-				Module = "",
-				Property = "ﰠ",
-				Unit = "",
-				Value = "",
-				Enum = "",
-				Keyword = "",
-				Snippet = "",
-				Color = "",
-				File = "",
-				Reference = "",
-				Folder = "",
-				EnumMember = "",
-				Constant = "",
-				Struct = "",
-				Event = "",
-				Operator = "",
-				TypeParameter = "",
-			}
-
-			M.cmp_source = {
+			local cmp_source_abb = {
 				["nvim_lsp"] = "LSP",
 				["luasnip"] = "Snip",
 				["path"] = "Path",
@@ -53,19 +24,19 @@ return {
 			}
 
 			local cmp_item_kind = require("cmp.types").lsp.CompletionItemKind
-
-			M.insert_config = {
-				formatting = {
-					format = function(entry, vim_item)
-						vim_item.kind = string.format("%s %s", M.kind_icons[vim_item.kind], vim_item.kind)
-						vim_item.menu = M.cmp_source[entry.source.name]
-						return vim_item
-					end,
-				},
+			cmp.setup({
 				snippet = {
 					expand = function(args)
 						luasnip.lsp_expand(args.body)
 					end,
+				},
+				formatting = {
+					format = require("lspkind").cmp_format({
+						before = function(entry, vim_item)
+							vim_item.menu = cmp_source_abb[entry.source.name]
+							return vim_item
+						end,
+					}),
 				},
 				mapping = {
 					["<Tab>"] = cmp.mapping(function(fallback)
@@ -149,26 +120,23 @@ return {
 						-- compare.order,
 					},
 				},
-			}
+			})
 
-			M.search_config = {
+			cmp.setup.cmdline(":", {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = cmp.config.sources({
+					-- { name = "cmdline", keyword_pattern = [=[[^[:blank:]\!]*]=], keyword_length = 1 },
+					{ name = "cmdline", option = { ignore_cmds = { "Man", "!" } } },
+					{ name = "buffer" },
+					{ name = "path" },
+				}),
+			})
+			cmp.setup.cmdline({ "/", "?" }, {
 				mapping = cmp.mapping.preset.cmdline(),
 				sources = {
 					{ name = "buffer" },
 				},
-			}
-
-			M.command_config = {
-				mapping = cmp.mapping.preset.cmdline(),
-				sources = cmp.config.sources({
-					{ name = "cmdline", keyword_pattern = [=[[^[:blank:]\!]*]=], keyword_length = 3 },
-					{ name = "path" },
-				}),
-			}
-
-			cmp.setup(M.insert_config)
-			cmp.setup.cmdline(":", M.search_config)
-			cmp.setup.cmdline("/", M.search_config)
+			})
 		end,
 	},
 	{

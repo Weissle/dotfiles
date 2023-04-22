@@ -1,20 +1,5 @@
 return {
 	{
-		"folke/tokyonight.nvim",
-		config = function(_, opts)
-			require("tokyonight").setup(opts)
-			vim.cmd("colorscheme tokyonight")
-		end,
-		opts = {
-			style = "moon",
-			on_highlights = function(highlights, _)
-				highlights.WinSeparator = {
-					fg = "#6699FF",
-				}
-			end,
-		},
-	},
-	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "folke/tokyonight.nvim" },
 		config = function()
@@ -26,16 +11,9 @@ return {
 
 			local config = {
 				options = {
-					theme = "tokyonight",
 					ignore_focus = {
 						"NvimTree",
 						"Outline",
-						"dapui_console",
-						"dap-repl",
-						"dapui_breakpoints",
-						"dapui_stacks",
-						"dapui_scopes",
-						"dapui_watches",
 					},
 				},
 				sections = {
@@ -49,7 +27,7 @@ return {
 	},
 	{
 		"akinsho/bufferline.nvim",
-		tag = "v3.5.0",
+		tag = "v3.7.0",
 		config = function()
 			vim.keymap.set("n", "<leader>bj", "<cmd>BufferLinePick<cr>")
 			vim.keymap.set("n", "<leader>bn", "<cmd>BufferLineCycleNext<cr>")
@@ -84,13 +62,15 @@ return {
 	},
 	{
 		"stevearc/dressing.nvim",
+		lazy = true,
 		opts = {},
 	},
 	{
 		"jinh0/eyeliner.nvim",
+		keys = { "f", "F", "t", "T" },
 		opts = {
 			highlight_on_key = true,
 			dim = true,
-		}
+		},
 	},
 }

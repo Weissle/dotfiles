@@ -8,7 +8,7 @@ return {
 			require("nvim-treesitter.install").prefer_git = true
 		end,
 		opts = {
-			ensure_installed = { "cpp", "c", "lua", "python", "json", "markdown", "bash", "cmake", "vim" },
+			ensure_installed = { "cpp", "c", "lua", "python", "json", "markdown", "bash", "vim" },
 			sync_install = false,
 			highlight = {
 				enable = true,
@@ -153,6 +153,7 @@ return {
 		opts = {},
 	},
 	{
+        -- TODO: revisit
 		"crusj/bookmarks.nvim",
 		branch = "main",
 		name = "bookmarks",
