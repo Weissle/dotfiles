@@ -153,17 +153,16 @@ return {
 		opts = {},
 	},
 	{
-        -- TODO: revisit
 		"crusj/bookmarks.nvim",
-		branch = "main",
 		name = "bookmarks",
-		keys = { "<leader>b" },
 		opts = {
-			toggle = "<leader>bz",
-			add = "<leader>ba",
-			order = "<leader>bS",
-			delete_on_virt = "<leader>bA",
-			show_desc = "<leader>bs",
+			keymap = {
+				toggle = "<leader>bm",
+				add = "<leader>ba",
+				order = "<leader>bS",
+				delete_on_virt = "<leader>bA",
+				show_desc = "<leader>bs",
+			},
 		},
 	},
 }

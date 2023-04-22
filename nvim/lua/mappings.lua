@@ -120,6 +120,3 @@ vim.keymap.set("n", "gcP", "yygccP", {
 	silent = true,
 	unique = true,
 })
-
--- eyeliner
-vim.keymap.set("n", "<leader>te", "<cmd>EyelinerToggle<cr>", opts)

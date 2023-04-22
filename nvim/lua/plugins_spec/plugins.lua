@@ -72,9 +72,6 @@ return {
 						n = {
 							["q"] = action.close,
 						},
-						i = {
-							["<ESC>"] = action.close,
-						},
 					},
 					path_display = {
 						shorten = {
@@ -146,10 +143,6 @@ return {
 				},
 			})
 		end,
-	},
-	{
-		"kevinhwang91/promise-async",
-		lazy = true,
 	},
 	{
 		"mrjones2014/smart-splits.nvim",

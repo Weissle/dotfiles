@@ -64,13 +64,13 @@ download_extract(){
 prepare_binary(){
     NAME=$1
     UPPER_NAME=$(upper $NAME)
-    # TODO:
     eval FOLDER=$BIN_PATH/${NAME}_\${${UPPER_NAME}_VERSION}
     TARGET_RELATIVE_PATH=$2
     TARGET_PATH="$FOLDER/$TARGET_RELATIVE_PATH"
     URL=$3
     EXTRACT_OPT=${4:-"tar"}
     SYMBOL_PATH=$BIN_SYMBOL_PATH/`basename $TARGET_PATH`
+    [ -e "$SYMBOL_PATH" ] && echo_c "info" "$NAME: Symbol exists." && return
     [ ! -e "$TARGET_PATH" ] && echo_c "info" "$NAME: Target file(s) is not found. Downloading ... " && \
         download_extract $NAME $FOLDER $URL $EXTRACT_OPT
     link_file $NAME $TARGET_PATH $SYMBOL_PATH
@@ -93,9 +93,9 @@ clone_repo(){
         elif [ "$THX_REPO_URL" != "$REPO_URL" ]; then
             echo_c "error" "$NAME: $REPO_PATH exists and it's origin URL is not target URL."
         else
-            echo_c "skip" "$NAME: Existing and is skipped."
+            echo_c "skip" "$NAME: Existing and is skipped. Pulling ..."
+            git pull
         fi
         cd $cur_path
     fi
 }
-

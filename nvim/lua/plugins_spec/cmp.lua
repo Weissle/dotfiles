@@ -76,7 +76,7 @@ return {
 						name = "nvim_lsp",
 						entry_filter = function(entry, ctx)
 							local entry_label_length = #entry["completion_item"]["label"]
-							local length_max = M.entry_label_length_max or 80
+							local length_max = 80
 							if entry_label_length > length_max then
 								return false
 							end
@@ -147,6 +147,21 @@ return {
 			config = function(_, opts)
 				require("cmp").event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done)
 			end,
+		},
+	},
+	{
+		"ThePrimeagen/refactoring.nvim",
+		enabled = false,
+		keys = {
+			-- -- Remaps for the refactoring operations currently offered by the plugin
+			{ "<leader>re", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]], "v" },
+			-- { "<leader>rf", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]], "v" },
+			{ "<leader>rv", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]], "v" },
+			{ "<leader>ri", [[ <Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], { "v", "n" } },
+
+			-- Extract block doesn't need visual mode
+			{ "<leader>rb", [[ <Cmd>lua require('refactoring').refactor('Extract Block')<CR>]], "n" },
+			{ "<leader>rbf", [[ <Cmd>lua require('refactoring').refactor('Extract Block To File')<CR>]], "n" },
 		},
 	},
 }

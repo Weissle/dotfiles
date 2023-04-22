@@ -40,21 +40,21 @@ do
             COMPRESS_NAME="nvim-linux64.tar.gz"
             BIN_REL_PATH="bin/nvim" ;;
         "lazygit")
-            COMPRESS_NAME="lazygit_${TMP}_Linux_x86_64.tar.gz";;
+            COMPRESS_NAME="lazygit_${TMP}_Linux_x86_64.tar.gz" ;;
         "ripgrep")
             COMPRESS_NAME="ripgrep-${RIPGREP_VERSION}-x86_64-unknown-linux-musl.tar.gz"
             BIN_REL_PATH="rg" ;;
         "fd")
-            COMPRESS_NAME="fd-${FD_VERSION}-x86_64-unknown-linux-gnu.tar.gz";;
+            COMPRESS_NAME="fd-${FD_VERSION}-x86_64-unknown-linux-gnu.tar.gz" ;;
         "fzf")
-            COMPRESS_NAME="fzf-${FZF_VERSION}-linux_amd64.tar.gz";;
+            COMPRESS_NAME="fzf-${FZF_VERSION}-linux_amd64.tar.gz" ;;
         "zoxide")
-            COMPRESS_NAME="zoxide-${TMP}-x86_64-unknown-linux-musl.tar.gz";;
+            COMPRESS_NAME="zoxide-${TMP}-x86_64-unknown-linux-musl.tar.gz" ;;
         "starship")
-            COMPRESS_NAME="starship-x86_64-unknown-linux-gnu.tar.gz";;
+            COMPRESS_NAME="starship-x86_64-unknown-linux-gnu.tar.gz" ;;
         "bat")
-            COMPRESS_NAME="bat-${BAT_VERSION}-x86_64-unknown-linux-gnu.tar.gz";;
-        "exa") 
+            COMPRESS_NAME="bat-${BAT_VERSION}-x86_64-unknown-linux-gnu.tar.gz" ;;
+        "exa")
             COMPRESS_NAME="exa-linux-x86_64-${EXA_VERSION}.zip"
             BIN_REL_PATH="bin/exa" ;;
     esac
@@ -62,18 +62,6 @@ do
     eval ${UPPER}_BIN_PATH=$BIN_REL_PATH
     eval DOWNLOAD_URL_PREFIX=\$${UPPER}_REPO_BASE/$RD/\$${UPPER}_VERSION
     eval ${UPPER}_DOWNLOAD_URL=${DOWNLOAD_URL_PREFIX}/$COMPRESS_NAME
+
 done
 
-
-# NVIM_DOWNLOAD_URL="$NVIM_REPO_BASE/$RD/$NVIM_VERSION/nvim-linux64.tar.gz"
-# TMP=$(rm_prefixv $LAZYGIT_VERSION)
-# LAZYGIT_DOWNLOAD_URL="$LAZYGIT_REPO_BASE/$RD/$LAZYGIT_VERSION/lazygit_${TMP}_Linux_x86_64.tar.gz"
-# RIPGREP_DOWNLOAD_URL="$RIPGREP_REPO_BASE/$RD/$RIPGREP_VERSION/ripgrep-${RIPGREP_VERSION}-x86_64-unknown-linux-musl.tar.gz" 
-# FD_DOWNLOAD_URL="$FD_REPO_BASE/$RD/$FD_VERSION/fd-${FD_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
-# FZF_DOWNLOAD_URL="$FZF_REPO_BASE/$RD/$FZF_VERSION/fzf-${FZF_VERSION}-linux_amd64.tar.gz"
-# TMP=$(rm_prefixv $ZOXIDE_VERSION)
-# ZOXIDE_DOWNLOAD_URL="$ZOXIDE_REPO_BASE/$RD/$ZOXIDE_VERSION/zoxide-${TMP}-x86_64-unknown-linux-musl.tar.gz"
-# STARSHIP_DOWNLOAD_URL="$STARSHIP_REPO_BASE/$RD/$STARSHIP_VERSION/starship-x86_64-unknown-linux-gnu.tar.gz"
-# BAT_DOWNLOAD_URL="$BAT_REPO_BASE/$RD/$BAT_VERSION/bat-${BAT_VERSION}-x86_64-unknown-linux-gnu.tar.gz" 
-# EXA_DOWNLOAD_URL="$EXA_REPO_BASE/$RD/$EXA_VERSION/exa-linux-x86_64-${EXA_VERSION}.zip" 
-#
