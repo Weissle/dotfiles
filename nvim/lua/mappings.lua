@@ -33,7 +33,7 @@ vim.keymap.set("n", "<C-s>", "<cmd>w<cr>", opts)
 ------------------------------------SPLIT--------------------------------------------------------
 
 -- lspconfig
-vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, opts)
+vim.keymap.set("n", "<leader>la", "<cmd>CodeActionMenu<cr>", opts)
 vim.keymap.set("n", "<leader>lh", vim.lsp.buf.hover, opts)
 vim.keymap.set("n", "<leader>ls", vim.lsp.buf.signature_help, opts)
 vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, opts)

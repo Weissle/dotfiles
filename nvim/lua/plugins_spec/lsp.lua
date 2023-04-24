@@ -7,7 +7,6 @@ return {
 			local builtins = nl.builtins
 			nl.setup({
 				sources = {
-					builtins.formatting.clang_format,
 					builtins.formatting.stylua,
 					builtins.formatting.beautysh,
 				},
@@ -26,7 +25,7 @@ return {
 
 			local lsp_servers = { "clangd", "pyright", "lua_ls", "bashls" }
 			-- if null-ls provides the format feature.
-			local clients_format_disabled = { clangd = true, lua_ls = true }
+			local clients_format_disabled = { lua_ls = true }
 
 			local cmp_nvim_lsp = require("cmp_nvim_lsp")
 			local default_capabilities = cmp_nvim_lsp.default_capabilities()
@@ -105,5 +104,9 @@ return {
 	{
 		"j-hui/fidget.nvim",
 		opts = true,
+	},
+	{
+		"weilbith/nvim-code-action-menu",
+		cmd = "CodeActionMenu",
 	},
 }
