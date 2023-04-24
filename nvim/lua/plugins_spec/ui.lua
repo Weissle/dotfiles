@@ -29,8 +29,8 @@ return {
 		tag = "v3.7.0",
 		config = function()
 			vim.keymap.set("n", "<leader>bj", "<cmd>BufferLinePick<cr>")
-			vim.keymap.set("n", "<leader>bn", "<cmd>BufferLineCycleNext<cr>")
-			vim.keymap.set("n", "<leader>bp", "<cmd>BufferLineCyclePrev<cr>")
+			vim.keymap.set("n", "<Tab>", "<cmd>BufferLineCycleNext<cr>")
+			vim.keymap.set("n", "<S-Tab>", "<cmd>BufferLineCyclePrev<cr>")
 			vim.keymap.set("n", "<leader>bcl", "<cmd>BufferLineCloseLeft<cr><C-L>")
 			vim.keymap.set("n", "<leader>bcr", "<cmd>BufferLineCloseRight<cr><C-L>")
 			vim.keymap.set("n", "<leader>bco", "<cmd>BufferLineCloseRight<cr><bar><cmd>BufferLineCloseLeft<cr><C-L>")
@@ -47,6 +47,9 @@ return {
 								end,
 							},
 						},
+					},
+					indicator = {
+						style = "underline",
 					},
 				},
 			})

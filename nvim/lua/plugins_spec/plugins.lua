@@ -15,10 +15,10 @@ return {
 			git = {
 				ignore = false,
 			},
-			--[[ view = {
+			view = {
 				-- adaptive_size = true,
 				side = "right",
-			}, ]]
+			},
 		},
 	},
 	{
@@ -277,11 +277,11 @@ return {
 				map("n", "<leader>gu", gs.undo_stage_hunk)
 
                 -- DANGER: Remove change
-				map("n", "<leader>gr", gs.reset_hunk)
+				--[[ map("n", "<leader>gr", gs.reset_hunk)
 				map("n", "<leader>gR", gs.reset_buffer)
 				map("v", "<leader>gr", function()
 					gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
-				end)
+				end) ]]
 
 				map("n", "<leader>gp", gs.preview_hunk)
 				map("n", "<leader>gb", function()
