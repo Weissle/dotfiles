@@ -1,7 +1,6 @@
 return {
 	{
 		"nvim-lualine/lualine.nvim",
-		dependencies = { "folke/tokyonight.nvim" },
 		config = function()
 			local function location_info()
 				local total_line = tostring(vim.api.nvim_buf_line_count(0))
@@ -53,7 +52,7 @@ return {
 			})
 		end,
 	},
-	{ "lukas-reineke/indent-blankline.nvim" },
+	{ "lukas-reineke/indent-blankline.nvim", event = { "BufRead", "BufNewFile" } },
 	{
 		"karb94/neoscroll.nvim",
 		name = "neoscroll",
