@@ -1,6 +1,7 @@
 return {
 	{
 		"folke/tokyonight.nvim",
+		lazy = true,
 		opts = {
 			style = "moon",
 			on_highlights = function(highlights, _)
@@ -9,17 +10,10 @@ return {
 				}
 			end,
 		},
-		config = function(_, opts)
-			require("tokyonight").setup(opts)
-			vim.cmd("colorscheme tokyonight")
-		end,
 	},
 	{
 		"sainnhe/gruvbox-material",
-        enabled = false,
+		lazy = true,
 		opts = {},
-		config = function(_, opts)
-			vim.cmd("colorscheme gruvbox-material")
-		end,
 	},
 }

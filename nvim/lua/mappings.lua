@@ -5,11 +5,14 @@ local opts = { remap = false, silent = true, unique = true }
 -- since <space> is the <leader>
 vim.keymap.set("n", " ", "<NOP>", opts)
 vim.keymap.set("i", "jj", "<C-[>", opts)
+-- Move when insert mode
 vim.keymap.set("i", "<C-h>", "<left>", opts)
 vim.keymap.set("i", "<C-l>", "<right>", opts)
 vim.keymap.set("i", "<C-k>", "<up>", opts)
 vim.keymap.set("i", "<C-j>", "<down>", opts)
-vim.keymap.set("i", "<C-a>", "<C-o>A", opts)
+vim.keymap.set("i", "<C-a>", "<C-o>I", opts)
+vim.keymap.set("i", "<C-e>", "<C-o>A", opts)
+
 vim.keymap.set("s", "<BS>", "<Space><BS>", opts)
 vim.keymap.set("n", "<F3>", "<cmd>noh<cr>", opts)
 vim.keymap.set("", "J", "gJ", opts)
@@ -34,6 +37,15 @@ vim.keymap.set("n", "<A-h>", "<C-w>h", opts)
 vim.keymap.set("n", "<A-l>", "<C-w>l", opts)
 vim.keymap.set("n", "<A-j>", "<C-w>j", opts)
 vim.keymap.set("n", "<A-k>", "<C-w>k", opts)
+vim.keymap.set("n", "<leader>mn", function ()
+    if vim.o.number then
+        vim.o.number = false
+        vim.o.relativenumber = false
+    else
+        vim.o.number = true
+            vim.o.relativenumber = true
+    end
+end)
 ------------------------------------SPLIT--------------------------------------------------------
 
 -- lspconfig
@@ -100,16 +112,12 @@ vim.keymap.set({ "n", "x" }, "<leader>de", "<cmd>lua require('dapui').eval()<cr>
 
 -- for terminal mode
 vim.keymap.set("t", "jj", "<C-\\><C-n>", opts)
-vim.keymap.set("t", "<C-w>j", "<C-\\><C-n><C-w>j", opts)
-vim.keymap.set("t", "<C-w>h", "<C-\\><C-n><C-w>h", opts)
-vim.keymap.set("t", "<C-w>k", "<C-\\><C-n><C-w>k", opts)
-vim.keymap.set("t", "<C-w>l", "<C-\\><C-n><C-w>l", opts)
+vim.keymap.set("t", "<A-j>", "<C-\\><C-n><C-w>j", opts)
+vim.keymap.set("t", "<A-h>", "<C-\\><C-n><C-w>h", opts)
+vim.keymap.set("t", "<A-k>", "<C-\\><C-n><C-w>k", opts)
+vim.keymap.set("t", "<A-l>", "<C-\\><C-n><C-w>l", opts)
 vim.keymap.set("t", "gt", "<C-\\><C-n><cmd>tabn<cr>", opts)
 vim.keymap.set("t", "gT", "<C-\\><C-n><cmd>tabN<cr>", opts)
-vim.keymap.set("t", "<C-w><C-j>", "<C-\\><C-n><C-w>j", opts)
-vim.keymap.set("t", "<C-w><C-h>", "<C-\\><C-n><C-w>h", opts)
-vim.keymap.set("t", "<C-w><C-k>", "<C-\\><C-n><C-w>k", opts)
-vim.keymap.set("t", "<C-w><C-l>", "<C-\\><C-n><C-w>l", opts)
 vim.keymap.set("n", "<leader>tt", "<cmd>tabnew<cr><bar><cmd>terminal<cr>i", opts)
 vim.keymap.set("n", "<leader>tx", "<cmd>sp<cr><bar><cmd>terminal<cr>i", opts)
 vim.keymap.set("n", "<leader>tv", "<cmd>vsp<cr><bar><cmd>terminal<cr>i", opts)

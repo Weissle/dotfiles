@@ -96,8 +96,8 @@ return {
 		"phaazon/hop.nvim",
 		name = "hop",
 		keys = {
-			{ "<leader>hl", "<cmd>HopLineStartMW<cr>", mode = { "n", "x", "o" } },
-			{ "<leader>hw", "<cmd>HopWordMW<cr>", mode = { "n", "x", "o" } },
+			{ "L", "<cmd>HopLineStartMW<cr>", mode = { "n", "x", "o" } },
+			{ "<enter>", "<cmd>HopWordMW<cr>", mode = { "n", "x", "o" } },
 			{ "<leader>hc", "<cmd>HopChar2MW<cr>", mode = { "n", "x", "o" } },
 			{ "<leader>hf", "<cmd>HopChar1MW<cr>", mode = { "n", "x", "o" } },
 			{
@@ -177,7 +177,17 @@ return {
 		keys = { { "<leader>e", "<cmd>BasicEasyAction<cr>" } },
 		branch = "dev",
 		dependencies = { "kevinhwang91/promise-async", "hop" },
-		opts = {},
+		opts = {
+			jump_provider_config = {
+				hop = {
+					action_select = {
+						line = {
+							cmd = "HopLineStartMW",
+						},
+					},
+				},
+			},
+		},
 	},
 	{
 		"rmagatti/auto-session",
@@ -273,10 +283,10 @@ return {
 					gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
 				end)
 				map("n", "<leader>gS", gs.stage_buffer)
-                -- Unstage
+				-- Unstage
 				map("n", "<leader>gu", gs.undo_stage_hunk)
 
-                -- DANGER: Remove change
+				-- DANGER: Remove change
 				--[[ map("n", "<leader>gr", gs.reset_hunk)
 				map("n", "<leader>gR", gs.reset_buffer)
 				map("v", "<leader>gr", function()
@@ -287,16 +297,29 @@ return {
 				map("n", "<leader>gb", function()
 					gs.blame_line({ full = true })
 				end)
-				map("n", "<leader>tb", gs.toggle_current_line_blame)
+				map("n", "<leader>gb", gs.toggle_current_line_blame)
 				map("n", "<leader>gd", gs.diffthis)
 				map("n", "<leader>gD", function()
 					gs.diffthis("~")
 				end)
-				map("n", "<leader>td", gs.toggle_deleted)
+				map("n", "<leader>gc", gs.toggle_deleted)
 
 				-- Text object
 				map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
 			end,
 		},
+	},
+	{
+		"takac/vim-hardtime",
+		init = function()
+			vim.keymap.set("n", "<leader>mh", "<cmd>HardTimeToggle<cr>")
+            vim.g.hardtime_ignore_quickfix = 1
+            vim.g.hardtime_motion_with_count_resets = 1
+            vim.g.hardtime_allow_different_key = 1
+			vim.g.hardtime_default_on = 1
+			vim.g.hardtime_showmsg = 1
+			vim.g.hardtime_maxcount = 2
+			vim.g.hardtime_motion_with_count_resets = 1
+		end,
 	},
 }
