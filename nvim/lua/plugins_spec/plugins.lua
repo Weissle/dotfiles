@@ -142,6 +142,7 @@ return {
 					update_n_lines = "",
 				},
 			})
+			require("mini.move").setup({})
 		end,
 	},
 	{
@@ -313,9 +314,9 @@ return {
 		"takac/vim-hardtime",
 		init = function()
 			vim.keymap.set("n", "<leader>mh", "<cmd>HardTimeToggle<cr>")
-            vim.g.hardtime_ignore_quickfix = 1
-            vim.g.hardtime_motion_with_count_resets = 1
-            vim.g.hardtime_allow_different_key = 1
+			vim.g.hardtime_ignore_quickfix = 1
+			vim.g.hardtime_motion_with_count_resets = 1
+			vim.g.hardtime_allow_different_key = 1
 			vim.g.hardtime_default_on = 1
 			vim.g.hardtime_showmsg = 1
 			vim.g.hardtime_maxcount = 2

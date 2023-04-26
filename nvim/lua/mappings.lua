@@ -1,5 +1,5 @@
 vim.g.mapleader = " "
-local opts = { remap = false, silent = true, unique = true }
+local opts = { remap = false, silent = true }
 
 ------------------------------------SPLIT--------------------------------------------------------
 -- since <space> is the <leader>
@@ -33,19 +33,18 @@ vim.keymap.set(
 )
 vim.keymap.set("n", "<C-s>", "<cmd>w<cr>", opts)
 
-vim.keymap.set("n", "<A-h>", "<C-w>h", opts)
-vim.keymap.set("n", "<A-l>", "<C-w>l", opts)
-vim.keymap.set("n", "<A-j>", "<C-w>j", opts)
-vim.keymap.set("n", "<A-k>", "<C-w>k", opts)
+vim.keymap.set("n", "<C-h>", "<C-w>h", opts)
+vim.keymap.set("n", "<C-l>", "<C-w>l", opts)
+vim.keymap.set("n", "<C-j>", "<C-w>j", opts)
+vim.keymap.set("n", "<C-k>", "<C-w>k", opts)
 vim.keymap.set("n", "<leader>mn", function ()
     if vim.o.number then
-        vim.o.number = false
-        vim.o.relativenumber = false
+        vim.cmd([[set nonu nornu]])
     else
-        vim.o.number = true
-            vim.o.relativenumber = true
+        vim.cmd([[set nu rnu]])
     end
 end)
+vim.keymap.set("n","<leader>ml", "<cmd>mode<cr>")
 ------------------------------------SPLIT--------------------------------------------------------
 
 -- lspconfig
