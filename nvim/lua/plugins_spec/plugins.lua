@@ -8,9 +8,7 @@ return {
 		keys = {
 			{ "<C-n>", "<cmd>NvimTreeToggle<cr>" },
 			{ "<leader>nm", "<cmd>NvimTreeFindFile<cr>" },
-			{ "<leader>nf", "<cmd>NvimTreeFocus<cr>" },
 		},
-		name = "nvim-tree",
 		opts = {
 			git = {
 				ignore = false,
@@ -313,7 +311,6 @@ return {
 	{
 		"takac/vim-hardtime",
 		init = function()
-			vim.keymap.set("n", "<leader>mh", "<cmd>HardTimeToggle<cr>")
 			vim.g.hardtime_ignore_quickfix = 1
 			vim.g.hardtime_motion_with_count_resets = 1
 			vim.g.hardtime_allow_different_key = 1

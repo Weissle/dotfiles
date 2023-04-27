@@ -37,14 +37,7 @@ vim.keymap.set("n", "<C-h>", "<C-w>h", opts)
 vim.keymap.set("n", "<C-l>", "<C-w>l", opts)
 vim.keymap.set("n", "<C-j>", "<C-w>j", opts)
 vim.keymap.set("n", "<C-k>", "<C-w>k", opts)
-vim.keymap.set("n", "<leader>mn", function ()
-    if vim.o.number then
-        vim.cmd([[set nonu nornu]])
-    else
-        vim.cmd([[set nu rnu]])
-    end
-end)
-vim.keymap.set("n","<leader>ml", "<cmd>mode<cr>")
+vim.keymap.set("n", "<leader>ml", "<cmd>mode<cr>")
 ------------------------------------SPLIT--------------------------------------------------------
 
 -- lspconfig
@@ -131,3 +124,33 @@ vim.keymap.set("n", "gcP", "yygccP", {
 	silent = true,
 	unique = true,
 })
+
+vim.keymap.set("n", "<leader>mt", function()
+	vim.ui.select({ "HardTimeToggle", "NumberToggle" }, {}, function(item, idx)
+		if item == "HardTimeToggle" then
+			vim.cmd("HardTimeToggle")
+		elseif item == "NumberToggle" then
+			if vim.o.number then
+				vim.o.number = false
+				vim.o.relativenumber = false
+			else
+				vim.o.number = true
+				vim.o.relativenumber = true
+			end
+		end
+	end)
+end)
+
+vim.keymap.set("n", "<leader>ms", function()
+	vim.ui.select({ "Spectre-Global", "Spectre-Cur", "Spectre-Global-Word" }, {}, function(item, idx)
+        -- Want Spectre-Cur-Word
+		local spec = require("spectre")
+		if item == "Spectre-Global" then
+			spec.open()
+		elseif item == "Spectre-Cur" then
+			spec.open_file_search()
+		elseif item == "Spectre-Global-Word" then
+			spec.open_visual({ select_word = true })
+		end
+	end)
+end)

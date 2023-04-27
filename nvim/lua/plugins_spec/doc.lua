@@ -112,16 +112,7 @@ return {
 	},
 	{
 		"windwp/nvim-spectre",
-		keys = {
-			-- spectre
-			{ "<leader>sg", "<esc><cmd>lua require('spectre').open_visual()<cr>", mode = { "x" } },
-			{ "<leader>sg", "<cmd>lua require('spectre').open()<cr>" },
-			{ "<leader>sf", "<cmd>lua require('spectre').open_file_search()<cr>" },
-			{ "<leader>swg", "<cmd>lua require('spectre').open_visual({select_word=true})<cr>" },
-			-- waiting for the new feature in spectre to support below keymaps
-			-- P["x"]["<leader>sf"]
-			-- P["n"]["<leader>swf"]
-		},
+        lazy = true,
 		name = "spectre",
 		opts = {},
 	},

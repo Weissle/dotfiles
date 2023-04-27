@@ -34,7 +34,7 @@ vim.cmd(
 )
 vim.cmd([[autocmd FileType * set formatoptions-=cro]])
 
-vim.api.nvim_create_autocmd({ "TextChanged","TextChangedI","TextChangedP" }, {
+vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI", "TextChangedP" }, {
 	callback = function()
 		vim.b._changed = true
 	end,
