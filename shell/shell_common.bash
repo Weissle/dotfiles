@@ -19,7 +19,7 @@ alias tm=tmux
 alias tma="tmux a"
 alias tmat="tmux attach-session -t "
 alias tmls="tmux list-sessions"
-alias c="cht.sh"
+alias ch="cht.sh"
 # For git
 alias gp="git pull"
 
