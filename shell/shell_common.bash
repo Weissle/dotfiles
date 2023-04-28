@@ -19,9 +19,18 @@ alias tm=tmux
 alias tma="tmux a"
 alias tmat="tmux attach-session -t "
 alias tmls="tmux list-sessions"
-
+alias c="cht.sh"
 # For git
 alias gp="git pull"
+
+case "$SHELL_TYPE" in
+    "zsh")
+        alias s=zsh ;;
+    "bash")
+        alias s=sh ;;
+esac
+
+
 
 if check_executable "fzf"; then
     export FZF_COMPLETION_TRIGGER='\'

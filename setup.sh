@@ -9,7 +9,7 @@
 eval "$(cat ./core/functions.sh)"
 eval "$(cat ./core/variables.sh)"
 if [ "$DOTFILES_PATH" != "$EXP_DOTFILES_PATH" ]; then
-    echo "You should place the dotfile in \"$EXP_DOTFILES_PATH\"" 
+    echo "You should place the dotfile in \"$EXP_DOTFILES_PATH\""
     exit 1
 fi
 
@@ -20,9 +20,9 @@ prepare_binary "nvim" "bin/nvim" "$NVIM_DOWNLOAD_URL" "tar-strip"
 prepare_binary "lazygit" "lazygit" "$LAZYGIT_DOWNLOAD_URL"
 prepare_binary "ripgrep" "rg" "$RIPGREP_DOWNLOAD_URL" "tar-strip"
 prepare_binary "fd" "fd" "$FD_DOWNLOAD_URL" "tar-strip"
-prepare_binary "fzf" "fzf" "$FZF_DOWNLOAD_URL" 
-prepare_binary "zoxide" "zoxide" "$ZOXIDE_DOWNLOAD_URL" 
-prepare_binary "starship" "starship" "$STARSHIP_DOWNLOAD_URL" 
+prepare_binary "fzf" "fzf" "$FZF_DOWNLOAD_URL"
+prepare_binary "zoxide" "zoxide" "$ZOXIDE_DOWNLOAD_URL"
+prepare_binary "starship" "starship" "$STARSHIP_DOWNLOAD_URL"
 prepare_binary "bat" "bat" "$BAT_DOWNLOAD_URL" "tar-strip"
 prepare_binary "exa" "bin/exa" "$EXA_DOWNLOAD_URL" "unzip"
 
@@ -69,3 +69,12 @@ append_if_not_exist(){
 
 append_if_not_exist "source $DOTFILES_PATH/shell/.bashrc" "/home/$USER/.bashrc"
 append_if_not_exist "changeps1: false" "/home/$USER/.condarc"
+
+CHEAT_SHELL_PATH="$BIN_SYMBOL_PATH/cht.sh"
+if [ ! -e  "$CHEAT_SHELL_PATH" ]; then
+    curl https://cht.sh/:cht.sh > "$CHEAT_SHELL_PATH"
+    chmod +x "$CHEAT_SHELL_PATH"
+    echo_c "good" "cheat.sh is installed in $CHEAT_SHELL_PATH."
+else
+    echo_c "skip" "$CHEAT_SHELL_PATH exists, skip."
+fi
