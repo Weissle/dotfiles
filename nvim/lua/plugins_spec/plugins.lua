@@ -47,6 +47,26 @@ return {
 		"nvim-telescope/telescope.nvim",
 		branch = "0.1.x",
 		name = "telescope",
+		keys = {
+			{ "<leader>ff", "<cmd>Telescope find_files<cr>" },
+			{ "<leader>fg", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>" },
+			{ "<leader>fb", "<cmd>Telescope buffers<cr>" },
+			{ "<leader>fh", "<cmd>Telescope help_tags<cr>" },
+			{ "<leader>fc", "<cmd>Telescope commands<cr>" },
+			{ "<leader>ft", "<cmd>Telescope <cr>" },
+			{ "<leader>fa", "<cmd>Telescope find_files no_ignore=true hidden=true<cr>" },
+			{ "<leader>f*", "<cmd>Telescope grep_string<cr>" },
+			{ "<leader>fo", "<cmd>Telescope frecency workspace=CWD<cr>" },
+			{ "<leader>fO", "<cmd>Telescope frecency<cr>" },
+			{ "<leader>fG", "<cmd>Telescope git_status<cr>" },
+			{ "<leader>fr", "<cmd>Telescope resume<cr>" },
+			{ "<leader>f/", "<cmd>Telescope current_buffer_fuzzy_find<cr>" },
+			{ "<leader>fm", "<cmd>Telescope marks<cr>" },
+			{
+				"<leader>fk",
+				"<cmd>lua require('telescope.builtin').keymaps{ modes = {'n','i','c','x','v','o'}}<cr>",
+			},
+		},
 		dependencies = {
 			{
 				"nvim-telescope/telescope-fzf-native.nvim",
@@ -285,12 +305,20 @@ return {
 				-- Unstage
 				map("n", "<leader>gu", gs.undo_stage_hunk)
 
-				-- DANGER: Remove change
-				--[[ map("n", "<leader>gr", gs.reset_hunk)
-				map("n", "<leader>gR", gs.reset_buffer)
+				-- Intend to let the reset operation have a double check
+				map("n", "<leader>gr", function()
+					vim.ui.select({ "Hunk Reset", "Buffer Reset" }, {}, function(item, idx)
+						if item == "Hunk Reset" then
+							gs.reset_hunk()
+						elseif item == "Buffer Reset" then
+							gs.reset_buffer()
+						end
+					end)
+				end)
+
 				map("v", "<leader>gr", function()
 					gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
-				end) ]]
+				end)
 
 				map("n", "<leader>gp", gs.preview_hunk)
 				map("n", "<leader>gb", function()

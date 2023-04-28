@@ -112,7 +112,30 @@ return {
 	},
 	{
 		"windwp/nvim-spectre",
-        lazy = true,
+		keys = {
+			{
+				"<leader>ms",
+				function()
+					vim.keymap.set("n", "<leader>ms", function()
+						vim.ui.select(
+							{ "Spectre-Global", "Spectre-Cur", "Spectre-Global-Word" },
+							{},
+							function(item, idx)
+								-- Want Spectre-Cur-Word
+								local spec = require("spectre")
+								if item == "Spectre-Global" then
+									spec.open()
+								elseif item == "Spectre-Current" then
+									spec.open_file_search()
+								elseif item == "Spectre-Global-Word" then
+									spec.open_visual({ select_word = true })
+								end
+							end
+						)
+					end)
+				end,
+			},
+		},
 		name = "spectre",
 		opts = {},
 	},
