@@ -134,11 +134,6 @@ return {
 			{ "<leader>bD", '<cmd>lua require("mini.bufremove").delete(0,true)<cr>' },
 		},
 		config = function()
-			vim.api.nvim_create_autocmd({ "BufLeave" }, {
-				callback = function()
-					require("mini.cursorword").auto_unhighlight()
-				end,
-			})
 			vim.api.nvim_create_autocmd({ "Filetype" }, {
 				pattern = "NvimTree",
 				callback = function()
@@ -166,8 +161,11 @@ return {
 	{
 		"mrjones2014/smart-splits.nvim",
 		keys = { { "<leader>mr", "<cmd>SmartResizeMode<cr>" } },
-		cmd = "SmartResizeMode",
-		config = true,
+		config = {
+			resize_mode = {
+				silent = true,
+			},
+		},
 	},
 	{
 		"gbprod/yanky.nvim",
@@ -338,6 +336,7 @@ return {
 	},
 	{
 		"takac/vim-hardtime",
+		enabled = false,
 		init = function()
 			vim.g.hardtime_ignore_quickfix = 1
 			vim.g.hardtime_motion_with_count_resets = 1
