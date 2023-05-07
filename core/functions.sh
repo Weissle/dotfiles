@@ -30,6 +30,9 @@ link_file(){
     NAME=$1
     SOURCE=$2
     TARGET=$3
+	if [ ! -e "$SOURCE" ]; then
+		echo_c "error" "$NAME: The linked file not exists." && return;
+	fi
     if [ ! -e "$TARGET" ]; then
         ln -s $SOURCE $TARGET && echo_c "good" "$NAME: Soft link is created." && return;
     fi

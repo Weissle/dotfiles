@@ -32,7 +32,8 @@ do
     UPPER=`echo $name | tr '[:lower:]' '[:upper:]'`
     eval ${UPPER}_REPO="\$${UPPER}_REPO_BASE.git"
     eval ${UPPER}_FOLDER_NAME="${name}_\${${UPPER}_VERSION}"
-    eval TMP=$( rm_prefixv \$${UPPER}_VERSION)
+	eval VERSION="\$${UPPER}_VERSION"
+	VERSION_NV=$(rm_prefixv "${VERSION}")
     # exit 0
     BIN_REL_PATH=$name
     case "$name" in
@@ -40,7 +41,7 @@ do
             COMPRESS_NAME="nvim-linux64.tar.gz"
             BIN_REL_PATH="bin/nvim" ;;
         "lazygit")
-            COMPRESS_NAME="lazygit_${TMP}_Linux_x86_64.tar.gz" ;;
+            COMPRESS_NAME="lazygit_${VERSION_NV}_Linux_x86_64.tar.gz" ;;
         "ripgrep")
             COMPRESS_NAME="ripgrep-${RIPGREP_VERSION}-x86_64-unknown-linux-musl.tar.gz"
             BIN_REL_PATH="rg" ;;
@@ -49,7 +50,7 @@ do
         "fzf")
             COMPRESS_NAME="fzf-${FZF_VERSION}-linux_amd64.tar.gz" ;;
         "zoxide")
-            COMPRESS_NAME="zoxide-${TMP}-x86_64-unknown-linux-musl.tar.gz" ;;
+            COMPRESS_NAME="zoxide-${VERSION_NV}-x86_64-unknown-linux-musl.tar.gz" ;;
         "starship")
             COMPRESS_NAME="starship-x86_64-unknown-linux-gnu.tar.gz" ;;
         "bat")

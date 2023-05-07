@@ -37,12 +37,16 @@ fi
 link_file "lazygit config" "$DOTFILES_PATH/lazygit/config.yml" "/home/$USER/.config/lazygit/config.yml"
 
 # oh my zsh
-if [ ! -e "/home/$USER/.oh-my-zsh" ]; then
-    echo_c "info" "Installing oh-my-zsh"
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    rm ~/.zshrc
+if [ -e "/usr/bin/zsh" ]; then
+	if [ ! -e "/home/$USER/.oh-my-zsh" ]; then
+		echo_c "info" "Installing oh-my-zsh"
+		sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+		rm ~/.zshrc
+	fi
+	link_file ".zshrc" "$DOTFILES_PATH/shell/.zshrc" "/home/$USER/.zshrc"
+else 
+	echo_c "error" "ZSH is not installed. Please install it and run this script again."
 fi
-link_file ".zshrc" "$DOTFILES_PATH/shell/.zshrc" "/home/$USER/.zshrc"
 
 clone_repo "fzf-repo" "https://github.com/junegunn/fzf.git" "$BIN_PATH/fzf-repo"
 clone_repo "fzf-exec-history" "https://github.com/4z3/fzf-plugins.git" "$BIN_PATH/fzf-exec-history"
