@@ -23,7 +23,7 @@ return {
 		config = function()
 			local M = {}
 
-			local lsp_servers = { "clangd", "pyright", "lua_ls", "bashls" }
+			local lsp_servers = { "clangd", "pyright", "lua_ls" }
 			-- if null-ls provides the format feature.
 			local clients_format_disabled = { lua_ls = true }
 

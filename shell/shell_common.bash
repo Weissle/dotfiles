@@ -22,6 +22,7 @@ alias tmls="tmux list-sessions"
 alias ch="cht.sh"
 # For git
 alias gp="git pull"
+alias gs="git status"
 
 case "$SHELL_TYPE" in
     "zsh")
