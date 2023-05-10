@@ -13,6 +13,10 @@ if [ "$DOTFILES_PATH" != "$EXP_DOTFILES_PATH" ]; then
     exit 1
 fi
 
+if ! command_exists "unzip"; then
+    echo_c "error" "unzip is not installed". && return;
+fi
+
 
 mkdir -p $BIN_PATH
 mkdir -p $BIN_SYMBOL_PATH
@@ -34,10 +38,11 @@ if [ `wc -l /home/$USER/.config/lazygit/config.yml | awk '{print $1}'` -eq 0 ]; 
     echo_c "info" "lazygit config is empty. Removing it and create a softlink to ./lazygit/config.yml"
     rm /home/$USER/.config/lazygit/config.yml
 fi
+mkdir -p "/home/$USER/.config/lazygit"
 link_file "lazygit config" "$DOTFILES_PATH/lazygit/config.yml" "/home/$USER/.config/lazygit/config.yml"
 
 # oh my zsh
-if [ -e "/usr/bin/zsh" ]; then
+if command_exists "zsh"; then
 	if [ ! -e "/home/$USER/.oh-my-zsh" ]; then
 		echo_c "info" "Installing oh-my-zsh"
 		sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -55,21 +60,10 @@ OMZ_CUSTOM_PATH=$BIN_PATH/omz-custom
 mkdir -p $OMZ_CUSTOM_PATH/plugins
 clone_repo "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions.git" "$OMZ_CUSTOM_PATH/plugins/zsh-autosuggestions"
 clone_repo "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting.git" "$OMZ_CUSTOM_PATH/plugins/zsh-syntax-highlighting"
-clone_repo "tpm" "https://github.com/tmux-plugins/tpm.git" "/home/$USER/.tmux/plugins/tpm"
+# clone_repo "tpm" "https://github.com/tmux-plugins/tpm.git" "/home/$USER/.tmux/plugins/tpm"
 
 
 cd $DOTFILES_PATH
-append_if_not_exist(){
-    TEXT=$1
-    FILE=$2
-    [ ! -e "$FILE" ] && echo_c "error" "$FILE not exists. Append cancel." && return
-    if ! grep -q "$TEXT" "$FILE"; then
-        echo_c "info" "Append \"$TEXT\" to $FILE"
-        echo "$TEXT" >> $FILE
-    else
-        echo_c "skip" "\"$TEXT\" exists in $FILE, skip"
-    fi
-}
 
 append_if_not_exist "source $DOTFILES_PATH/shell/.bashrc" "/home/$USER/.bashrc"
 append_if_not_exist "changeps1: false" "/home/$USER/.condarc"

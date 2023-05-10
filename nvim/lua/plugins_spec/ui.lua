@@ -1,3 +1,15 @@
+local highstr_keys = {}
+
+for i = 1, 10 do
+	highstr_keys[#highstr_keys + 1] = {
+		"<leader>h" .. tostring(i),
+		":<C-u>HSHighlight " .. tostring(i) .. "<cr>",
+		mode = { "v" },
+		noremap = true,
+		silent = true,
+	}
+end
+
 return {
 	{
 		"nvim-lualine/lualine.nvim",
@@ -65,5 +77,13 @@ return {
 	{
 		"stevearc/dressing.nvim",
 		opts = {},
+	},
+	{
+		"Pocco81/HighStr.nvim",
+		keys = {
+			unpack(highstr_keys),
+			{ "<leader>hc", ":<C-u>HSRmHighlight<cr>", mode = { "n" }, noremap = true },
+		},
+		opts = true,
 	},
 }

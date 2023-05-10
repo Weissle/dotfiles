@@ -18,6 +18,14 @@ echo_c(){
     echo "$MSG_COLOR$2$NC"
 }
 
+command_exists() {
+    if command -v "$1" >/dev/null 2>&1; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 upper(){
     echo $1 | tr '[:lower:]' '[:upper:]'
 }
@@ -30,9 +38,9 @@ link_file(){
     NAME=$1
     SOURCE=$2
     TARGET=$3
-	if [ ! -e "$SOURCE" ]; then
-		echo_c "error" "$NAME: The linked file not exists." && return;
-	fi
+    if [ ! -e "$SOURCE" ]; then
+        echo_c "error" "$NAME: The linked file not exists." && return;
+    fi
     if [ ! -e "$TARGET" ]; then
         ln -s $SOURCE $TARGET && echo_c "good" "$NAME: Soft link is created." && return;
     fi
@@ -100,5 +108,17 @@ clone_repo(){
             git pull
         fi
         cd $cur_path
+    fi
+}
+
+append_if_not_exist(){
+    TEXT=$1
+    FILE=$2
+    [ ! -e "$FILE" ] && echo_c "error" "$FILE not exists. Append cancel." && return
+    if ! grep -q "$TEXT" "$FILE"; then
+        echo_c "info" "Append \"$TEXT\" to $FILE"
+        echo "$TEXT" >> $FILE
+    else
+        echo_c "skip" "\"$TEXT\" exists in $FILE, skip"
     fi
 }

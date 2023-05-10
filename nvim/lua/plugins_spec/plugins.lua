@@ -116,8 +116,8 @@ return {
 		keys = {
 			{ "L", "<cmd>HopLineStartMW<cr>", mode = { "n", "x", "o" } },
 			{ "<enter>", "<cmd>HopWordMW<cr>", mode = { "n", "x", "o" } },
-			{ "<leader>hc", "<cmd>HopChar2MW<cr>", mode = { "n", "x", "o" } },
-			{ "<leader>hf", "<cmd>HopChar1MW<cr>", mode = { "n", "x", "o" } },
+			-- { "<leader>hc", "<cmd>HopChar2MW<cr>", mode = { "n", "x", "o" } },
+			{ "s", "<cmd>HopChar1MW<cr>", mode = { "n", "x", "o" } },
 			{
 				"<leader>he",
 				"<cmd>lua require'hop'.hint_words({ hint_position = require'hop.hint'.HintPosition.END, multi_windows = true })<cr>",
