@@ -82,6 +82,7 @@ return {
 		"Pocco81/HighStr.nvim",
 		keys = {
 			unpack(highstr_keys),
+			{ "<leader>hl", ":<C-u>HSHighlight 1<cr>", mode = { "v" }, noremap = true },
 			{ "<leader>hc", ":<C-u>HSRmHighlight<cr>", mode = { "n" }, noremap = true },
 		},
 		opts = true,

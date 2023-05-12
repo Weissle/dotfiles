@@ -1,11 +1,3 @@
-# LOG_SKIP=false
-# for arg in "$@"
-# do
-#     case "$arg" in
-#         "-s") LOG_SKIP=true && echo "$LOG_SKIP";;
-#     esac
-# done
-#
 eval "$(cat ./core/functions.sh)"
 eval "$(cat ./core/variables.sh)"
 if [ "$DOTFILES_PATH" != "$EXP_DOTFILES_PATH" ]; then
