@@ -161,7 +161,7 @@ return {
 	{
 		"mrjones2014/smart-splits.nvim",
 		keys = { { "<leader>mr", "<cmd>SmartResizeMode<cr>" } },
-		config = {
+		opts = {
 			resize_mode = {
 				silent = true,
 			},
@@ -347,4 +347,7 @@ return {
 			vim.g.hardtime_motion_with_count_resets = 1
 		end,
 	},
+    {
+        "tpope/vim-sleuth"
+    }
 }

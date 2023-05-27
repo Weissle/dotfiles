@@ -81,10 +81,11 @@ vim.keymap.set("n", "gcP", "yygccP", {
 })
 
 vim.keymap.set("n", "<leader>mt", function()
-	vim.ui.select({ "HardTimeToggle", "NumberToggle", "GitLineBlame", "GitShowDeleted" }, {}, function(item, idx)
+	vim.ui.select({ "HardTimeToggle", "CopyToggle", "GitLineBlame", "GitShowDeleted" }, {}, function(item, idx)
 		if item == "HardTimeToggle" then
 			vim.cmd("HardTimeToggle")
-		elseif item == "NumberToggle" then
+		elseif item == "CopyToggle" then
+			vim.cmd("IndentBlanklineToggle")
 			if vim.o.number then
 				vim.o.number = false
 				vim.o.relativenumber = false
@@ -99,4 +100,3 @@ vim.keymap.set("n", "<leader>mt", function()
 		end
 	end)
 end)
-

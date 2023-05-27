@@ -6,7 +6,7 @@ if [ "$DOTFILES_PATH" != "$EXP_DOTFILES_PATH" ]; then
 fi
 
 if ! command_exists "unzip"; then
-    echo_c "error" "unzip is not installed". && return;
+    echo_c "error" "unzip is not installed". && exit;
 fi
 
 
