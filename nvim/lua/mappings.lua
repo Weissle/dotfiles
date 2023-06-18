@@ -81,22 +81,32 @@ vim.keymap.set("n", "gcP", "yygccP", {
 })
 
 vim.keymap.set("n", "<leader>mt", function()
-	vim.ui.select({ "HardTimeToggle", "CopyToggle", "GitLineBlame", "GitShowDeleted" }, {}, function(item, idx)
-		if item == "HardTimeToggle" then
-			vim.cmd("HardTimeToggle")
-		elseif item == "CopyToggle" then
-			vim.cmd("IndentBlanklineToggle")
-			if vim.o.number then
-				vim.o.number = false
-				vim.o.relativenumber = false
-			else
-				vim.o.number = true
-				vim.o.relativenumber = true
+	vim.ui.select(
+		{ "HardTimeToggle", "CopyToggle", "SmartCopyToggle", "GitLineBlame", "GitShowDeleted" },
+		{},
+		function(item, idx)
+			if item == "HardTimeToggle" then
+				vim.cmd("HardTimeToggle")
+			elseif item == "CopyToggle" then
+				vim.cmd("IndentBlanklineToggle")
+				if vim.o.number then
+					vim.o.number = false
+					vim.o.relativenumber = false
+				else
+					vim.o.number = true
+					vim.o.relativenumber = true
+				end
+			elseif item == "SmartCopyToggle" then
+				if vim.o.mouse ~= "" then
+					vim.o.mouse = ""
+				else
+					vim.o.mouse = "a"
+				end
+			elseif item == "GitLineBlame" then
+				package.loaded.gitsigns.toggle_current_line_blame()
+			elseif item == "GitShowDeleted" then
+				package.loaded.gitsigns.toggle_deleted()
 			end
-		elseif item == "GitLineBlame" then
-			package.loaded.gitsigns.toggle_current_line_blame()
-		elseif item == "GitShowDeleted" then
-			package.loaded.gitsigns.toggle_deleted()
 		end
-	end)
+	)
 end)

@@ -3,7 +3,6 @@ return {
 		"hrsh7th/nvim-cmp",
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
-			"onsails/lspkind.nvim",
 			"saadparwaiz1/cmp_luasnip",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
@@ -16,11 +15,11 @@ return {
 			local compare = require("cmp").config.compare
 
 			local cmp_source_abb = {
-				["nvim_lsp"] = "LSP",
-				["luasnip"] = "Snip",
-				["path"] = "Path",
-				["buffer"] = "Buf",
-				["cmdline"] = "Cmd",
+				["nvim_lsp"] = "[LSP]",
+				["luasnip"] = "[Snip]",
+				["path"] = "[Path]",
+				["buffer"] = "[Buf]",
+				["cmdline"] = "[Cmd]",
 			}
 
 			local cmp_item_kind = require("cmp.types").lsp.CompletionItemKind
@@ -31,12 +30,10 @@ return {
 					end,
 				},
 				formatting = {
-					format = require("lspkind").cmp_format({
-						before = function(entry, vim_item)
-							vim_item.menu = cmp_source_abb[entry.source.name]
-							return vim_item
-						end,
-					}),
+					format = function(entry, item)
+						item.menu = cmp_source_abb[entry.source.name]
+						return item
+					end,
 				},
 				mapping = {
 					["<Tab>"] = cmp.mapping(function(fallback)
