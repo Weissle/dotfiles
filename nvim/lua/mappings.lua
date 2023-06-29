@@ -88,13 +88,10 @@ vim.keymap.set("n", "<leader>mt", function()
 			if item == "HardTimeToggle" then
 				vim.cmd("HardTimeToggle")
 			elseif item == "CopyToggle" then
-				vim.cmd("IndentBlanklineToggle")
-				if vim.o.number then
-					vim.o.number = false
-					vim.o.relativenumber = false
+				if vim.o.mouse == "a" then
+					vim.o.mouse = ""
 				else
-					vim.o.number = true
-					vim.o.relativenumber = true
+					vim.o.mouse = "a"
 				end
 			elseif item == "SmartCopyToggle" then
 				if vim.o.mouse ~= "" then
