@@ -116,8 +116,8 @@ return {
 		keys = {
 			{ "L", "<cmd>HopLineStartMW<cr>", mode = { "n", "x", "o" } },
 			{ "<enter>", "<cmd>HopWordMW<cr>", mode = { "n", "x", "o" } },
-			-- { "<leader>hc", "<cmd>HopChar2MW<cr>", mode = { "n", "x", "o" } },
-			{ "s", "<cmd>HopChar1MW<cr>", mode = { "n", "x", "o" } },
+			-- { "leader>hc", "<cmd>HopChar2MW<cr>", mode = { "n", "x", "o" } },
+			-- { "s", "<cmd>HopChar1MW<cr>", mode = { "n", "x", "o" } },
 			{
 				"<leader>he",
 				"<cmd>lua require'hop'.hint_words({ hint_position = require'hop.hint'.HintPosition.END, multi_windows = true })<cr>",
@@ -224,6 +224,7 @@ return {
 						pcall(vim.cmd, "tabdo SymbolsOutlineClose")
 					end,
 				},
+				auto_session_use_git_branch = true,
 			})
 		end,
 	},
@@ -347,7 +348,7 @@ return {
 			vim.g.hardtime_motion_with_count_resets = 1
 		end,
 	},
-    {
-        "tpope/vim-sleuth"
-    }
+	{
+		"tpope/vim-sleuth",
+	},
 }
