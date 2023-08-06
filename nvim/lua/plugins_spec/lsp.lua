@@ -1,14 +1,29 @@
 return {
 	{
 		"jose-elias-alvarez/null-ls.nvim",
-		dependencies = { "williamboman/mason.nvim" },
+		dependencies = { "williamboman/mason.nvim", "davidmh/cspell.nvim" },
 		config = function()
 			local nl = require("null-ls")
+			local cspell = require("cspell")
 			local builtins = nl.builtins
 			nl.setup({
 				sources = {
 					builtins.formatting.stylua,
 					builtins.formatting.beautysh,
+					cspell.diagnostics.with({
+						config = {
+							find_json = function(cwd)
+								return "/home/weissle/.config/nvim/cspell.json"
+							end,
+						},
+					}),
+					cspell.code_actions.with({
+						config = {
+							find_json = function(cwd)
+								return "/home/weissle/.config/nvim/cspell.json"
+							end,
+						},
+					}),
 				},
 				on_attach = function(client, bufnr)
 					client.server_capabilities.completionProvider = false
