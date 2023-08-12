@@ -23,7 +23,7 @@ return {
 		"L3MON4D3/LuaSnip",
 		build = "make install_jsregexp",
 		dependencies = { "rafamadriz/friendly-snippets" },
-		version = "1.2.1",
+		version = "2.*",
 		config = function(_, opts)
 			require("luasnip").setup(opts)
 			require("luasnip.loaders.from_vscode").lazy_load({
@@ -224,7 +224,6 @@ return {
 						pcall(vim.cmd, "tabdo SymbolsOutlineClose")
 					end,
 				},
-				auto_session_use_git_branch = true,
 			})
 		end,
 	},

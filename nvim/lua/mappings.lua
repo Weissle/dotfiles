@@ -107,3 +107,6 @@ vim.keymap.set("n", "<leader>mt", function()
 		end
 	)
 end)
+
+vim.keymap.set("n", "<leader>mp", "<cmd>set paste<cr>", opts)
+vim.keymap.set("n", "<leader>mP", "<cmd>set nopaste<cr>", opts)

@@ -1,3 +1,14 @@
+cspell_config = {
+	config = {
+		find_json = function(cwd)
+			return "/home/weissle/.config/nvim/ext_config/cspell.json"
+		end,
+	},
+	diagnostics_postprocess = function(diagnostic)
+		diagnostic.severity = vim.diagnostic.severity["HINT"]
+	end,
+	filetypes = { "cpp", "markdown", "python" },
+}
 return {
 	{
 		"jose-elias-alvarez/null-ls.nvim",
@@ -10,20 +21,8 @@ return {
 				sources = {
 					builtins.formatting.stylua,
 					builtins.formatting.beautysh,
-					cspell.diagnostics.with({
-						config = {
-							find_json = function(cwd)
-								return "/home/weissle/.config/nvim/cspell.json"
-							end,
-						},
-					}),
-					cspell.code_actions.with({
-						config = {
-							find_json = function(cwd)
-								return "/home/weissle/.config/nvim/cspell.json"
-							end,
-						},
-					}),
+					cspell.diagnostics.with(cspell_config),
+					cspell.code_actions.with(cspell_config),
 				},
 				on_attach = function(client, bufnr)
 					client.server_capabilities.completionProvider = false
