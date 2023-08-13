@@ -2,8 +2,8 @@
 local opt = vim.o
 opt.relativenumber = true
 opt.number = true
-opt.tabstop = 4
-opt.shiftwidth = 4
+opt.tabstop = 2
+opt.shiftwidth = 2
 opt.cursorline = true
 opt.termguicolors = true
 opt.smartcase = true
