@@ -146,7 +146,7 @@ return {
 			require("mini.bufremove").setup()
 			require("mini.surround").setup({
 				mappings = {
-					add = "<leader>as",
+					add = "S",
 					delete = "ds",
 					find = "",
 					find_left = "",
@@ -313,7 +313,6 @@ return {
 						end
 					end)
 				end)
-
 				map("v", "<leader>gr", function()
 					gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
 				end)
