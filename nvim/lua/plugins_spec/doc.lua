@@ -165,6 +165,7 @@ return {
 		opts = {},
 	},
 	{
+		enabled = false,
 		"crusj/bookmarks.nvim",
 		name = "bookmarks",
 		opts = {

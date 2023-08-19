@@ -82,7 +82,7 @@ return {
 			M.clangd_config.cmd = {
 				"clangd",
 				"--header-insertion=never",
-				"--clang-tidy"
+				"--clang-tidy",
 			}
 
 			local lspconfig = require("lspconfig")

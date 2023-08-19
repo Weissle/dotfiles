@@ -62,6 +62,7 @@ return {
 			{ "<leader>fr", "<cmd>Telescope resume<cr>" },
 			{ "<leader>f/", "<cmd>Telescope current_buffer_fuzzy_find<cr>" },
 			{ "<leader>fm", "<cmd>Telescope marks<cr>" },
+			{ "<leader>fj", "<cmd>Telescope jumplist<cr>" },
 			{
 				"<leader>fk",
 				"<cmd>lua require('telescope.builtin').keymaps{ modes = {'n','i','c','x','v','o'}}<cr>",
@@ -156,6 +157,7 @@ return {
 				},
 			})
 			require("mini.move").setup({})
+			require("mini.align").setup({})
 		end,
 	},
 	{
@@ -224,10 +226,12 @@ return {
 						pcall(vim.cmd, "tabdo SymbolsOutlineClose")
 					end,
 				},
+				auto_session_use_git_branch = true,
 			})
 		end,
 	},
 	{
+		enabled = false,
 		"rmagatti/session-lens",
 		keys = { { "<leader>fs", "<cmd>Telescope session-lens search_session<cr>" } },
 		dependencies = { "telescope", "rmagatti/auto-session" },

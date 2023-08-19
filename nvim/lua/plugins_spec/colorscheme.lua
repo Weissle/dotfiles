@@ -1,5 +1,6 @@
 return {
 	{
+		enabled = false,
 		"folke/tokyonight.nvim",
 		lazy = true,
 		opts = {
