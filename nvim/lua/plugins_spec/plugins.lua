@@ -85,11 +85,12 @@ return {
 		end,
 		opts = function()
 			local action = require("telescope.actions")
+			local lga = require("telescope-live-grep-args.actions")
 			return {
 				defaults = {
 					mappings = {
 						n = {
-							["q"] = action.close,
+							["<C-c>"] = action.close,
 						},
 					},
 					path_display = {
@@ -102,6 +103,15 @@ return {
 				extensions = {
 					frecency = {
 						show_unindexed = false,
+					},
+					live_grep_args = {
+						auto_quoting = true,
+						mappings = {
+							i = {
+								["<C-k>"] = lga.quote_prompt(),
+								["<C-t>"] = lga.quote_prompt({ postfix = " -t" }),
+							},
+						},
 					},
 				},
 			}
@@ -251,6 +261,7 @@ return {
 		end,
 	},
 	{
+		enabled = false,
 		"cbochs/portal.nvim",
 		keys = {
 			{

@@ -148,17 +148,26 @@ return {
 	},
 	{
 		"ThePrimeagen/refactoring.nvim",
-		enabled = false,
+		name = "refactoring",
+		-- enabled = false,
 		keys = {
 			-- -- Remaps for the refactoring operations currently offered by the plugin
-			{ "<leader>re", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]], "v" },
+			{ "<leader>re", "<cmd>Refactor extract <cr>", mode = { "x" } },
 			-- { "<leader>rf", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]], "v" },
-			{ "<leader>rv", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]], "v" },
-			{ "<leader>ri", [[ <Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], { "v", "n" } },
+			{ "<leader>rv", "<cmd>Refactor extract_var <cr>", mode = { "x" } },
+			{ "<leader>ri", "<cmd>Refactor inline_var <cr>", mode = { "x", "n" } },
 
 			-- Extract block doesn't need visual mode
-			{ "<leader>rb", [[ <Cmd>lua require('refactoring').refactor('Extract Block')<CR>]], "n" },
-			{ "<leader>rbf", [[ <Cmd>lua require('refactoring').refactor('Extract Block To File')<CR>]], "n" },
+			{ "<leader>rb", "<cmd>Refactor extract_block <cr>", mode = { "n" } },
+			{
+				"<leader>rr",
+				function()
+					require("refactoring").select_refactor()
+				end,
+				mode = { "x", "n" },
+			},
+			-- { "<leader>rbf", "<cmd>Refactor extract_b", "n" },
 		},
+		opts = {},
 	},
 }

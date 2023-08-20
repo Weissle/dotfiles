@@ -18,6 +18,7 @@ opt.expandtab = true
 opt.ff = "unix"
 opt.mouse = ""
 opt.signcolumn = "yes"
+vim.o.fileencodings = "utf-8,gb2312,default,latin1"
 ------------------------------------SPLIT--------------------------------------------------------
 local global = vim.g
 global.loaded_netrw = 1
