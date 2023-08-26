@@ -26,6 +26,7 @@ return {
 						"NvimTree",
 						"Outline",
 					},
+					theme = "dracula",
 				},
 				sections = {
 					lualine_c = { "filename" },

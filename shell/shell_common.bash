@@ -78,12 +78,22 @@ else
 fi
 
 
+export windows_host=`cat /etc/resolv.conf | grep nameserver | awk '{print $2}'`
 # proxy
-if [[ $(grep "microsoft" /proc/version) ]]; then
-    export windows_host=`cat /etc/resolv.conf | grep nameserver | awk '{print $2}'`
-    export ALL_PROXY=http://$windows_host:7501
-    export HTTP_PROXY=$ALL_PROXY
-    export HTTPS_PROXY=$ALL_PROXY
-    export http_proxy=$ALL_PROXY
-    export https_proxy=$ALL_PROXY
-fi
+proxy(){
+    if [[ $(grep "microsoft" /proc/version) ]]; then
+        export ALL_PROXY=http://$windows_host:30120
+        export HTTP_PROXY=$ALL_PROXY
+        export HTTPS_PROXY=$ALL_PROXY
+        export http_proxy=$ALL_PROXY
+        export https_proxy=$ALL_PROXY
+    fi
+}
+
+unproxy(){
+    export ALL_PROXY=""
+    export HTTP_PROXY=""
+    export HTTPS_PROXY=""
+    export http_proxy=""
+    export https_proxy=""
+}
