@@ -1,6 +1,17 @@
 local dap_plugins_spec = {
 	{
 		"mfussenegger/nvim-dap",
+		keys = {
+			{ "<leader>dt", "<cmd>lua require('dap').run_to_cursor()<cr>" },
+			{ "<leader>dp", "<cmd>lua require('dap').pause()<cr>" },
+			{ "<leader>dT", "<cmd>lua require('dap').terminate(); require('dapui').close()<cr>" },
+			{ "<F4>", "<cmd>lua require'dap'.terminate()<cr>" },
+			{ "<F5>", "<cmd>lua require'dap'.continue()<cr>" },
+			{ "<F6>", "<cmd>lua require'dap'.step_into()<cr>" },
+			{ "<F7>", "<cmd>lua require'dap'.step_over()<cr>" },
+			{ "<F8>", "<cmd>lua require'dap'.step_out()<cr>" },
+			{ "<F9>", "<cmd>lua require'dap'.run_last()<cr>" },
+		},
 		dependencies = { "williamboman/mason.nvim" },
 		config = function()
 			local dap_breakpoint_highlight = {
@@ -55,20 +66,30 @@ local dap_plugins_spec = {
 
 			require("dap").adapters.python = {
 				type = "executable",
-				command = require("mason-registry").get_package("debugpy"):get_install_path() .. "/venv/bin/python",
+				command = "python",
 				args = { "-m", "debugpy.adapter" },
 			}
 		end,
 	},
 	{
 		"Weissle/persistent-breakpoints.nvim",
+		keys = {
+			{ "<leader>da", "<cmd>lua require('persistent-breakpoints.api').toggle_breakpoint()<cr>" },
+			{ "<leader>dA", "<cmd>lua require('persistent-breakpoints.api').set_conditional_breakpoint()<cr>" },
+			{ "<leader>dC", "<cmd>lua require('persistent-breakpoints.api').clear_all_breakpoints()<cr>" },
+		},
 		dependencies = { "mfussenegger/nvim-dap" },
 		opts = { load_breakpoints_event = { "BufReadPost" } },
+		lazy = false,
 	},
 	{
 		"rcarriga/nvim-dap-ui",
 		dependencies = { "mfussenegger/nvim-dap" },
-		keys = { "<leader>dr" },
+		keys = {
+			"<leader>dr",
+			{ "<leader>du", "<cmd>lua require('dapui').toggle()<cr>" },
+			{ "<leader>de", "<cmd>lua require('dapui').eval()<cr>" },
+		},
 		config = function()
 			require("dapui").setup()
 			require("dap").listeners.after.event_initialized["dapui_config"] = require("dapui").open
@@ -95,30 +116,6 @@ local dap_plugins_spec = {
 		opts = {},
 	},
 }
---[[
--- dap
-vim.keymap.set("n", "<leader>dt", "<cmd>lua require('dap').run_to_cursor()<cr>", opts)
-vim.keymap.set("n", "<leader>dp", "<cmd>lua require('dap').pause()<cr>", opts)
-vim.keymap.set("n", "<leader>dT", "<cmd>lua require('dap').terminate(); require('dapui').close()<cr>", opts)
-vim.keymap.set("n", "<F4>", "<cmd>lua require'dap'.terminate()<cr>", opts)
-vim.keymap.set("n", "<F5>", "<cmd>lua require'dap'.continue()<cr>", opts)
-vim.keymap.set("n", "<F6>", "<cmd>lua require'dap'.step_into()<cr>", opts)
-vim.keymap.set("n", "<F7>", "<cmd>lua require'dap'.step_over()<cr>", opts)
-vim.keymap.set("n", "<F8>", "<cmd>lua require'dap'.step_out()<cr>", opts)
-vim.keymap.set("n", "<F9>", "<cmd>lua require'dap'.run_last()<cr>", opts)
-vim.keymap.set("n", "<leader>da", "<cmd>lua require('persistent-breakpoints.api').toggle_breakpoint()<cr>", opts)
-vim.keymap.set(
-	"n",
-	"<leader>dA",
-	"<cmd>lua require('persistent-breakpoints.api').set_conditional_breakpoint()<cr>",
-	opts
-)
-vim.keymap.set("n", "<leader>dC", "<cmd>lua require('persistent-breakpoints.api').clear_all_breakpoints()<cr>", opts)
 
--- dapui
-vim.keymap.set("n", "<leader>du", "<cmd>lua require('dapui').toggle()<cr>", opts)
-vim.keymap.set({ "n", "x" }, "<leader>de", "<cmd>lua require('dapui').eval()<cr>", opts)
-
---]]
--- disable all dap
+-- return dap_plugins_spec
 return {}
