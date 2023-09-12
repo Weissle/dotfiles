@@ -184,7 +184,8 @@ return {
 		dependencies = { "telescope" },
 		keys = {
 			{ "y", "<Plug>(YankyYank)", mode = { "n", "x" } },
-			{ "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" } },
+			{ "p", "<Plug>(YankyPutAfter)", mode = { "n" } },
+			{ "p", '"_d<Plug>(YankyPutBefore)', mode = { "x" } },
 			{ "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" } },
 			{ "gp", "<Plug>(YankyGPutAfter)", mode = { "n", "x" } },
 			{ "gP", "<Plug>(YankyGPutBefore)", mode = { "n", "x" } },
@@ -261,7 +262,6 @@ return {
 		end,
 	},
 	{
-		enabled = false,
 		"cbochs/portal.nvim",
 		keys = {
 			{
