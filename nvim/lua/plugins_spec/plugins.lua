@@ -122,11 +122,13 @@ return {
 		lazy = true,
 	},
 	{
-		"phaazon/hop.nvim",
+		"smoka7/hop.nvim",
+		version = "*",
 		name = "hop",
 		keys = {
 			{ "L", "<cmd>HopLineStartMW<cr>", mode = { "n", "x", "o" } },
 			{ "<enter>", "<cmd>HopWordMW<cr>", mode = { "n", "x", "o" } },
+			{ "<leader>h/", "<cmd>HopPattern<cr>", mode = { "n" } },
 			-- { "leader>hc", "<cmd>HopChar2MW<cr>", mode = { "n", "x", "o" } },
 			-- { "s", "<cmd>HopChar1MW<cr>", mode = { "n", "x", "o" } },
 			{
