@@ -92,6 +92,9 @@ return {
 						n = {
 							["<C-c>"] = action.close,
 						},
+						i = {
+							["<Esc>"] = action.close,
+						},
 					},
 					path_display = {
 						shorten = {
@@ -234,6 +237,7 @@ return {
 				function()
 					pcall(vim.cmd, "tabdo NvimTreeClose")
 					pcall(vim.cmd, "tabdo SymbolsOutlineClose")
+					pcall(vim.cmd, "tabdo DiffviewClose")
 				end,
 			},
 			auto_session_use_git_branch = true,
@@ -332,10 +336,10 @@ return {
 					gs.blame_line({ full = true })
 				end)
 				map("n", "<leader>gl", gs.toggle_current_line_blame)
-				map("n", "<leader>gd", gs.diffthis)
-				map("n", "<leader>gD", function()
-					gs.diffthis("~")
-				end)
+				-- map("n", "<leader>gd", gs.diffthis)
+				-- map("n", "<leader>gD", function()
+				-- 	gs.diffthis("~")
+				-- end)
 				map("n", "<leader>gc", gs.toggle_deleted)
 
 				-- Text object
@@ -344,7 +348,18 @@ return {
 		},
 	},
 	{
-		"sindrets/diffview.nvim"
+		"sindrets/diffview.nvim",
+		opts = {},
+		config = function(_, opts)
+			vim.keymap.set("n", "<leader>gd", "<cmd>DiffviewOpen<cr>")
+			vim.keymap.set("n", "<leader>gD", function()
+				vim.ui.select({ "CurrentFileHistory" }, {}, function(item, idx)
+					if item == "CurrentFileHistory" then
+						vim.cmd("DiffviewFileHistory %")
+					end
+				end)
+			end)
+		end,
 	},
 	{
 		"takac/vim-hardtime",
