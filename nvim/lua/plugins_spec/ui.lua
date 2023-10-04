@@ -50,7 +50,12 @@ return {
 			require("bufferline").setup()
 		end,
 	},
-	{ "lukas-reineke/indent-blankline.nvim", event = { "BufRead", "BufNewFile" } },
+	{
+		"lukas-reineke/indent-blankline.nvim",
+		main = "ibl",
+		opts = { scope = { enabled = false } },
+		event = { "BufRead", "BufNewFile" },
+	},
 	{
 		"karb94/neoscroll.nvim",
 		name = "neoscroll",

@@ -39,8 +39,6 @@ return {
 	},
 	{
 		"williamboman/mason.nvim",
-		name = "mason",
-		build = ":MasonUpdate",
 		opts = {},
 	},
 	{
@@ -74,7 +72,9 @@ return {
 				build = "make",
 			},
 			{ "nvim-telescope/telescope-live-grep-args.nvim" },
-			{ "nvim-telescope/telescope-frecency.nvim", dependencies = { "kkharji/sqlite.lua" } },
+			{
+				"nvim-telescope/telescope-frecency.nvim",
+			},
 			{ "nvim-lua/plenary.nvim" },
 		},
 		config = function(_, opts)
@@ -103,6 +103,8 @@ return {
 				extensions = {
 					frecency = {
 						show_unindexed = false,
+						use_sqlite = false,
+						auto_validate = false,
 					},
 					live_grep_args = {
 						auto_quoting = true,
@@ -129,8 +131,6 @@ return {
 			{ "L", "<cmd>HopLineStartMW<cr>", mode = { "n", "x", "o" } },
 			{ "<enter>", "<cmd>HopWordMW<cr>", mode = { "n", "x", "o" } },
 			{ "<leader>h/", "<cmd>HopPattern<cr>", mode = { "n" } },
-			-- { "leader>hc", "<cmd>HopChar2MW<cr>", mode = { "n", "x", "o" } },
-			-- { "s", "<cmd>HopChar1MW<cr>", mode = { "n", "x", "o" } },
 			{
 				"<leader>he",
 				"<cmd>lua require'hop'.hint_words({ hint_position = require'hop.hint'.HintPosition.END, multi_windows = true })<cr>",
@@ -227,29 +227,22 @@ return {
 		cond = function()
 			return vim.g.auto_session_enabled ~= false
 		end,
-		config = function()
+		opts = {
+			log_level = "error",
+			auto_session_suppress_dirs = { "~/" },
+			pre_save_cmds = {
+				function()
+					pcall(vim.cmd, "tabdo NvimTreeClose")
+					pcall(vim.cmd, "tabdo SymbolsOutlineClose")
+				end,
+			},
+			auto_session_use_git_branch = true,
+		},
+		config = function(_, opts)
 			-- NOTE: folds options is exclusive. Due to ufo is not loaded at startup.
 			vim.o.sessionoptions = "blank,buffers,curdir,help,tabpages,winsize,winpos,terminal"
-			require("auto-session").setup({
-				log_level = "error",
-				auto_session_suppress_dirs = { "~/" },
-				pre_save_cmds = {
-					function()
-						pcall(vim.cmd, "tabdo NvimTreeClose")
-						pcall(vim.cmd, "tabdo SymbolsOutlineClose")
-					end,
-				},
-				auto_session_use_git_branch = true,
-			})
+			require("auto-session").setup(opts)
 		end,
-	},
-	{
-		enabled = false,
-		"rmagatti/session-lens",
-		keys = { { "<leader>fs", "<cmd>Telescope session-lens search_session<cr>" } },
-		dependencies = { "telescope", "rmagatti/auto-session" },
-		name = "session-lens",
-		opts = {},
 	},
 	{
 		"iamcco/markdown-preview.nvim",
@@ -338,7 +331,7 @@ return {
 				map("n", "<leader>gb", function()
 					gs.blame_line({ full = true })
 				end)
-				map("n", "<leader>gb", gs.toggle_current_line_blame)
+				map("n", "<leader>gl", gs.toggle_current_line_blame)
 				map("n", "<leader>gd", gs.diffthis)
 				map("n", "<leader>gD", function()
 					gs.diffthis("~")
@@ -349,6 +342,9 @@ return {
 				map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
 			end,
 		},
+	},
+	{
+		"sindrets/diffview.nvim"
 	},
 	{
 		"takac/vim-hardtime",

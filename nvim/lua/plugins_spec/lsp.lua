@@ -9,6 +9,7 @@ cspell_config = {
 	end,
 	filetypes = { "cpp", "markdown", "python" },
 }
+
 return {
 	{
 		"jose-elias-alvarez/null-ls.nvim",
@@ -33,7 +34,6 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		event = { "BufRead", "BufNewFile" },
-		dependencies = { "williamboman/mason-lspconfig.nvim" },
 		config = function()
 			local M = {}
 
@@ -82,6 +82,7 @@ return {
 			M.clangd_config.cmd = {
 				"clangd",
 				"--header-insertion=never",
+				"--offset-encoding=utf-16",
 				"--clang-tidy",
 			}
 
@@ -96,31 +97,12 @@ return {
 		end,
 	},
 	{
-		"jayp0521/mason-null-ls.nvim",
-		dependencies = { "jose-elias-alvarez/null-ls.nvim" },
-		name = "mason-null-ls",
-		opts = { automatic_installation = true },
-	},
-	{
 		"simrat39/symbols-outline.nvim",
 		keys = {
 			{ "<leader>lS", "<cmd>SymbolsOutline<cr>" },
 		},
 		name = "symbols-outline",
 		opts = {},
-	},
-	{
-		"williamboman/mason-lspconfig.nvim",
-		dependencies = { "williamboman/mason.nvim" },
-		opts = {
-			automatic_installation = true,
-		},
-	},
-	{
-		"j-hui/fidget.nvim",
-		enabled = false,
-		branch = "legacy",
-		opts = true,
 	},
 	{
 		"weilbith/nvim-code-action-menu",

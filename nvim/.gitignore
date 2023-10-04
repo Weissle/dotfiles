@@ -2,3 +2,4 @@ plugin/
 time.log
 lazy-lock.json
 .luarc.json
+cspell.json

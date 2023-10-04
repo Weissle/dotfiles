@@ -17,6 +17,7 @@ vim.keymap.set("s", "<BS>", "<Space><BS>", opts)
 vim.keymap.set("n", "<F3>", "<cmd>noh<cr>", opts)
 vim.keymap.set("", "J", "gJ", opts)
 vim.keymap.set({ "t", "n" }, "<leader>qt", "<cmd>q<cr>", opts)
+vim.keymap.set({ "t", "n" }, "<leader>qT", "<cmd>tabclose<cr>", opts)
 vim.keymap.set("n", "<leader>qa", "<cmd>qa<cr>", opts)
 -- copy from mini.basic
 vim.keymap.set(
@@ -86,31 +87,15 @@ vim.keymap.set("n", "gcP", "yygccP", {
 })
 
 vim.keymap.set("n", "<leader>mt", function()
-	vim.ui.select(
-		{ "HardTimeToggle", "CopyToggle", "SmartCopyToggle", "GitLineBlame", "GitShowDeleted" },
-		{},
-		function(item, idx)
-			if item == "HardTimeToggle" then
-				vim.cmd("HardTimeToggle")
-			elseif item == "CopyToggle" then
-				if vim.o.mouse == "a" then
-					vim.o.mouse = ""
-				else
-					vim.o.mouse = "a"
-				end
-			elseif item == "SmartCopyToggle" then
-				if vim.o.mouse ~= "" then
-					vim.o.mouse = ""
-				else
-					vim.o.mouse = "a"
-				end
-			elseif item == "GitLineBlame" then
-				package.loaded.gitsigns.toggle_current_line_blame()
-			elseif item == "GitShowDeleted" then
-				package.loaded.gitsigns.toggle_deleted()
-			end
+	vim.ui.select({ "HardTimeToggle", "MouseMode", "NoMouseMode" }, {}, function(item, idx)
+		if item == "HardTimeToggle" then
+			vim.cmd("HardTimeToggle")
+		elseif item == "MouseMode" then
+			vim.o.mouse = "a"
+		elseif item == "NoMouseMode" then
+			vim.o.mouse = ""
 		end
-	)
+	end)
 end)
 
 vim.keymap.set("n", "<leader>mp", "<cmd>set paste<cr>", opts)
