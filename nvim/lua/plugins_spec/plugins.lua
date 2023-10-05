@@ -14,7 +14,7 @@ return {
 				ignore = false,
 			},
 			view = {
-				-- adaptive_size = true,
+				adaptive_size = true,
 				side = "right",
 			},
 		},
@@ -114,7 +114,6 @@ return {
 						mappings = {
 							i = {
 								["<C-k>"] = lga.quote_prompt(),
-								["<C-t>"] = lga.quote_prompt({ postfix = " -t" }),
 							},
 						},
 					},
