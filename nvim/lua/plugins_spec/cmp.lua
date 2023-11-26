@@ -23,6 +23,22 @@ return {
 			}
 
 			local cmp_item_kind = require("cmp.types").lsp.CompletionItemKind
+			local cmp_buffer_source = {
+				name = "buffer",
+				option = {
+					-- PERF: It may slows down you paste and delete motion.
+					get_bufnrs = function()
+						local ret = {}
+						for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+							if vim.api.nvim_buf_line_count(buf) <= 5000 then
+								table.insert(ret, buf)
+							end
+						end
+						return ret
+					end,
+				},
+				priority = 1,
+			}
 			cmp.setup({
 				snippet = {
 					expand = function(args)
@@ -85,22 +101,7 @@ return {
 					},
 					{ name = "luasnip", priority = 1.5 },
 					{ name = "path", priority = 1 },
-					{
-						name = "buffer",
-						option = {
-							-- PERF: It may slows down you paste and delete motion.
-							get_bufnrs = function()
-								local ret = {}
-								for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-									if vim.api.nvim_buf_line_count(buf) <= 5000 then
-										table.insert(ret, buf)
-									end
-								end
-								return ret
-							end,
-						},
-						priority = 1,
-					},
+					cmp_buffer_source,
 				},
 				sorting = {
 					priority_weight = 2,
@@ -122,16 +123,15 @@ return {
 			cmp.setup.cmdline(":", {
 				mapping = cmp.mapping.preset.cmdline(),
 				sources = cmp.config.sources({
-					-- { name = "cmdline", keyword_pattern = [=[[^[:blank:]\!]*]=], keyword_length = 1 },
 					{ name = "cmdline", option = { ignore_cmds = { "Man", "!" } } },
-					{ name = "buffer" },
+					cmp_buffer_source,
 					{ name = "path" },
 				}),
 			})
 			cmp.setup.cmdline({ "/", "?" }, {
 				mapping = cmp.mapping.preset.cmdline(),
 				sources = {
-					{ name = "buffer" },
+					cmp_buffer_source,
 				},
 			})
 		end,

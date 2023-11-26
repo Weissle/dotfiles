@@ -1,6 +1,6 @@
 return {
 	{
-		enabled = false,
+		-- enabled = false,
 		"folke/tokyonight.nvim",
 		lazy = true,
 		opts = {
@@ -14,7 +14,7 @@ return {
 	},
 	{
 		"sainnhe/gruvbox-material",
-		lazy = true,
+		-- lazy = true,
 		opts = {},
 	},
 }

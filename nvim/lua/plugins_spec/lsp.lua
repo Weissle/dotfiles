@@ -12,7 +12,7 @@ cspell_config = {
 
 return {
 	{
-		"jose-elias-alvarez/null-ls.nvim",
+		"nvimtools/none-ls.nvim",
 		dependencies = { "williamboman/mason.nvim", "davidmh/cspell.nvim" },
 		config = function()
 			local nl = require("null-ls")
@@ -22,6 +22,7 @@ return {
 				sources = {
 					builtins.formatting.stylua,
 					builtins.formatting.beautysh,
+					builtins.formatting.rustfmt,
 					cspell.diagnostics.with(cspell_config),
 					cspell.code_actions.with(cspell_config),
 				},
@@ -37,7 +38,7 @@ return {
 		config = function()
 			local M = {}
 
-			local lsp_servers = { "clangd", "pyright", "lua_ls" }
+			local lsp_servers = { "clangd", "pyright", "lua_ls", "rust_analyzer" }
 			-- if null-ls provides the format feature.
 			local clients_format_disabled = { lua_ls = true }
 
