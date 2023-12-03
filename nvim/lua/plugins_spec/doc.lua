@@ -160,7 +160,12 @@ return {
 	},
 	{
 		"numToStr/Comment.nvim",
-		keys = { { "gc", mode = { "x", "n", "v" } }, { "gb", mode = { "x", "n", "v" } } },
+		keys = {
+			{ "gc", mode = { "x", "n", "v" } },
+			{ "gb", mode = { "x", "n", "v" } },
+			{ "gcp", "yygccp", remap = true },
+			{ "gcP", "yygccP", remap = true },
+		},
 		name = "Comment",
 		opts = {},
 	},

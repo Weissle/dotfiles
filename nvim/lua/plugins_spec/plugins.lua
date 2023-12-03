@@ -8,6 +8,7 @@ return {
 		keys = {
 			{ "<C-n>", "<cmd>NvimTreeToggle<cr>" },
 			{ "<leader>nm", "<cmd>NvimTreeFindFile<cr>" },
+			{ "<leader>nf", "<cmd>NvimTreeFocus<cr>" },
 		},
 		opts = {
 			git = {
@@ -149,15 +150,6 @@ return {
 			{ "<leader>bD", '<cmd>lua require("mini.bufremove").delete(0,true)<cr>' },
 		},
 		config = function()
-			vim.api.nvim_create_autocmd({ "Filetype" }, {
-				pattern = "NvimTree",
-				callback = function()
-					vim.b.minicursorword_disable = true
-				end,
-			})
-			require("mini.cursorword").setup({
-				delay = 30,
-			})
 			require("mini.bufremove").setup()
 			require("mini.surround").setup({
 				mappings = {
@@ -172,6 +164,15 @@ return {
 			})
 			require("mini.move").setup({})
 			require("mini.align").setup({})
+		end,
+	},
+	{
+		"RRethy/vim-illuminate",
+		opts = {
+			delay = 50,
+		},
+		config = function(_, opts)
+			require("illuminate").configure(opts)
 		end,
 	},
 	{
@@ -261,6 +262,7 @@ return {
 	},
 	{
 		"cbochs/portal.nvim",
+		enabled = false,
 		keys = {
 			{
 				"<leader>bo",

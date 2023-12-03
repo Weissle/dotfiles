@@ -50,11 +50,23 @@ vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, opts)
 vim.keymap.set("n", "<leader>lt", "<cmd>Telescope lsp_type_definitions<cr>", opts)
 vim.keymap.set("n", "<leader>ld", "<cmd>Telescope diagnostics<cr>", opts)
 -- diagnostic
-vim.keymap.set("n", "[d", function()
+vim.keymap.set("n", "[w", function()
 	vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.WARN } })
 end, opts)
+vim.keymap.set("n", "]w", function()
+	vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.WARN } })
+end, opts)
+vim.keymap.set("n", "[e", function()
+	vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.ERROR } })
+end, opts)
+vim.keymap.set("n", "]e", function()
+	vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.ERROR } })
+end, opts)
+vim.keymap.set("n", "[d", function()
+	vim.diagnostic.goto_prev()
+end, opts)
 vim.keymap.set("n", "]d", function()
-	vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.WARN } })
+	vim.diagnostic.goto_prev()
 end, opts)
 
 vim.keymap.set("n", "<leader>lo", vim.diagnostic.open_float, opts)
@@ -74,17 +86,6 @@ vim.keymap.set("t", "gT", "<C-\\><C-n><cmd>tabN<cr>", opts)
 vim.keymap.set("n", "<leader>tt", "<cmd>tabnew<cr><bar><cmd>terminal<cr>i", opts)
 vim.keymap.set("n", "<leader>tx", "<cmd>sp<cr><bar><cmd>terminal<cr>i", opts)
 vim.keymap.set("n", "<leader>tv", "<cmd>vsp<cr><bar><cmd>terminal<cr>i", opts)
-
-vim.keymap.set("n", "gcp", "yygccp", {
-	remap = true,
-	silent = true,
-	unique = true,
-})
-vim.keymap.set("n", "gcP", "yygccP", {
-	remap = true,
-	silent = true,
-	unique = true,
-})
 
 vim.keymap.set("n", "<leader>mt", function()
 	vim.ui.select({ "HardTimeToggle", "MouseMode", "NoMouseMode" }, {}, function(item, idx)
