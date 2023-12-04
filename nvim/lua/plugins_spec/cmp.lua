@@ -30,7 +30,8 @@ return {
 					get_bufnrs = function()
 						local ret = {}
 						for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-							if vim.api.nvim_buf_line_count(buf) <= 5000 then
+							local file_line = vim.api.nvim_buf_line_count(buf)
+							if file_line <= 5000 and vim.api.nvim_buf_get_offset(buf, file_line) < 1024 * 1024 then
 								table.insert(ret, buf)
 							end
 						end
@@ -138,6 +139,7 @@ return {
 	},
 	{
 		"windwp/nvim-autopairs",
+		event = "InsertEnter",
 		opts = {
 			fast_wrap = {},
 			disable_filetype = { "TelescopePrompt", "vim" },

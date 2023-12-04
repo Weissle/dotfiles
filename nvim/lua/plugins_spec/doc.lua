@@ -170,20 +170,6 @@ return {
 		opts = {},
 	},
 	{
-		enabled = false,
-		"crusj/bookmarks.nvim",
-		name = "bookmarks",
-		opts = {
-			keymap = {
-				toggle = "<leader>bm",
-				add = "<leader>ba",
-				order = "<leader>bS",
-				delete_on_virt = "<leader>bA",
-				show_desc = "<leader>bs",
-			},
-		},
-	},
-	{
 		"mechatroner/rainbow_csv",
 		ft = { "csv" },
 	},

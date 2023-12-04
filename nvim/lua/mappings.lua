@@ -42,7 +42,6 @@ vim.keymap.set("n", "<leader>ml", "<cmd>mode<cr>")
 ------------------------------------SPLIT--------------------------------------------------------
 
 -- lspconfig
-vim.keymap.set("n", "<leader>la", "<cmd>CodeActionMenu<cr>", opts)
 vim.keymap.set("n", "<leader>lh", vim.lsp.buf.hover, opts)
 vim.keymap.set("n", "<leader>ls", vim.lsp.buf.signature_help, opts)
 vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, opts)
@@ -68,12 +67,7 @@ end, opts)
 vim.keymap.set("n", "]d", function()
 	vim.diagnostic.goto_prev()
 end, opts)
-
 vim.keymap.set("n", "<leader>lo", vim.diagnostic.open_float, opts)
--- frequently use
-vim.keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<cr>", opts)
-vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions initial_mode=normal<cr>", opts)
-vim.keymap.set("n", "gr", "<cmd>Telescope lsp_references initial_mode=normal<cr>", opts)
 
 -- for terminal mode
 vim.keymap.set("t", "jj", "<C-\\><C-n>", opts)

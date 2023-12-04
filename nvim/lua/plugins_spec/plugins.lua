@@ -5,6 +5,7 @@ return {
 	},
 	{
 		"nvim-tree/nvim-tree.lua",
+		lazy = false,
 		keys = {
 			{ "<C-n>", "<cmd>NvimTreeToggle<cr>" },
 			{ "<leader>nm", "<cmd>NvimTreeFindFile<cr>" },
@@ -62,6 +63,9 @@ return {
 			{ "<leader>f/", "<cmd>Telescope current_buffer_fuzzy_find<cr>" },
 			{ "<leader>fm", "<cmd>Telescope marks<cr>" },
 			{ "<leader>fj", "<cmd>Telescope jumplist<cr>" },
+			{ "gi", "<cmd>Telescope lsp_implementations<cr>" },
+			{ "gd", "<cmd>Telescope lsp_definitions initial_mode=normal<cr>" },
+			{ "gr", "<cmd>Telescope lsp_references initial_mode=normal<cr>" },
 			{
 				"<leader>fk",
 				"<cmd>lua require('telescope.builtin').keymaps{ modes = {'n','i','c','x','v','o'}}<cr>",
@@ -235,9 +239,17 @@ return {
 			auto_session_suppress_dirs = { "~/" },
 			pre_save_cmds = {
 				function()
-					pcall(vim.cmd, "tabdo NvimTreeClose")
-					pcall(vim.cmd, "tabdo SymbolsOutlineClose")
-					pcall(vim.cmd, "tabdo DiffviewClose")
+					vim.tbl_map(function(win_id)
+						local buf_id = vim.api.nvim_win_get_buf(win_id)
+						local file_name = vim.api.nvim_buf_get_name(buf_id)
+						if
+							string.find(file_name, "NvimTree")
+							or string.find(file_name, "OUTLINE")
+							or string.find(file_name, "diffview")
+						then
+							vim.api.nvim_win_close(win_id, true)
+						end
+					end, vim.api.nvim_list_wins())
 				end,
 			},
 			auto_session_use_git_branch = true,
@@ -360,19 +372,6 @@ return {
 					end
 				end)
 			end)
-		end,
-	},
-	{
-		"takac/vim-hardtime",
-		enabled = false,
-		init = function()
-			vim.g.hardtime_ignore_quickfix = 1
-			vim.g.hardtime_motion_with_count_resets = 1
-			vim.g.hardtime_allow_different_key = 1
-			vim.g.hardtime_default_on = 1
-			vim.g.hardtime_showmsg = 1
-			vim.g.hardtime_maxcount = 2
-			vim.g.hardtime_motion_with_count_resets = 1
 		end,
 	},
 	{
