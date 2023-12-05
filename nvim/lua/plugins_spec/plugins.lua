@@ -242,12 +242,11 @@ return {
 					vim.tbl_map(function(win_id)
 						local buf_id = vim.api.nvim_win_get_buf(win_id)
 						local file_name = vim.api.nvim_buf_get_name(buf_id)
-						if
-							string.find(file_name, "NvimTree")
-							or string.find(file_name, "OUTLINE")
-							or string.find(file_name, "diffview")
-						then
-							vim.api.nvim_win_close(win_id, true)
+						for _, fname in ipairs({ "NvimTree_", "OUTLINE", "diffview", "health://" }) do
+							if string.find(file_name, fname) then
+								vim.api.nvim_win_close(win_id, true)
+								return
+							end
 						end
 					end, vim.api.nvim_list_wins())
 				end,
