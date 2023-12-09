@@ -94,6 +94,8 @@ return {
 	},
 	{
 		"ray-x/lsp_signature.nvim",
-		opts = {},
+		opts = {
+			hint_prefix = "",
+		},
 	},
 }

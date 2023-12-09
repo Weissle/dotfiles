@@ -238,6 +238,7 @@ return {
 			log_level = "error",
 			auto_session_suppress_dirs = { "~/" },
 			pre_save_cmds = {
+
 				function()
 					function IsDroppedBuf(buf_id)
 						local file_name = vim.api.nvim_buf_get_name(buf_id)
@@ -253,9 +254,13 @@ return {
 						local buf_id = vim.api.nvim_win_get_buf(win_id)
 						if IsDroppedBuf(buf_id) then
 							vim.api.nvim_win_close(win_id, true)
-							vim.api.nvim_buf_delete(buf_id, { force = true })
 						end
 					end, vim.api.nvim_list_wins())
+					vim.tbl_map(function(buf_id)
+						if IsDroppedBuf(buf_id) then
+							vim.api.nvim_buf_delete(buf_id, { force = true })
+						end
+					end, vim.api.nvim_list_bufs())
 				end,
 			},
 			auto_session_use_git_branch = true,

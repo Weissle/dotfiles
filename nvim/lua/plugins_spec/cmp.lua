@@ -142,11 +142,11 @@ return {
 		event = "InsertEnter",
 		opts = {
 			fast_wrap = {},
-			disable_filetype = { "TelescopePrompt", "vim" },
-			config = function(_, opts)
-				require("cmp").event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done)
-			end,
 		},
+		config = function(_, opts)
+			require("nvim-autopairs").setup(opts)
+			require("cmp").event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
+		end,
 	},
 	{
 		"ThePrimeagen/refactoring.nvim",
