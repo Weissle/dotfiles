@@ -43,9 +43,10 @@ vim.keymap.set("n", "<leader>ml", "<cmd>mode<cr>")
 
 -- lspconfig
 vim.keymap.set("n", "<leader>lh", vim.lsp.buf.hover, opts)
+vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 vim.keymap.set("n", "<leader>ls", vim.lsp.buf.signature_help, opts)
 vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, opts)
-vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, opts)
+-- vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, opts)
 vim.keymap.set("n", "<leader>lt", "<cmd>Telescope lsp_type_definitions<cr>", opts)
 vim.keymap.set("n", "<leader>ld", "<cmd>Telescope diagnostics<cr>", opts)
 -- diagnostic

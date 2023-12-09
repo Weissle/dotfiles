@@ -1,33 +1,46 @@
-cspell_config = {
-	config = {
-		find_json = function(cwd)
-			return "/home/weissle/.config/nvim/ext_config/cspell.json"
-		end,
-	},
-	diagnostics_postprocess = function(diagnostic)
-		diagnostic.severity = vim.diagnostic.severity["HINT"]
-	end,
-	filetypes = { "cpp", "markdown", "python" },
-}
-
 return {
 	{
-		"nvimtools/none-ls.nvim",
-		dependencies = { "williamboman/mason.nvim", "davidmh/cspell.nvim" },
+		"stevearc/conform.nvim",
+		keys = {
+			{
+				"<leader>lf",
+				function()
+					require("conform").format({ lsp_fallback = true })
+				end,
+			},
+		},
+		opts = {
+			formatters_by_ft = {
+				python = { "black" },
+				lua = { "stylua" },
+				sh = { "beautysh" },
+				json = { "jq" },
+			},
+			format_on_save = {
+				lsp_fallback = true,
+				timeout_ms = 500,
+			},
+		},
+	},
+	{
+		"mfussenegger/nvim-lint",
+		name = "lint",
 		config = function()
-			local nl = require("null-ls")
-			local cspell = require("cspell")
-			local builtins = nl.builtins
-			nl.setup({
-				sources = {
-					builtins.formatting.stylua,
-					builtins.formatting.beautysh,
-					builtins.formatting.rustfmt,
-					cspell.diagnostics.with(cspell_config),
-					cspell.code_actions.with(cspell_config),
-				},
-				on_attach = function(client, bufnr)
-					client.server_capabilities.completionProvider = false
+			local lint = require("lint")
+			lint.linters_by_ft = {
+				markdown = { "cspell" },
+				cpp = { "cspell" },
+				c = { "cspell" },
+				python = { "cspell" },
+				sh = { "cspell" },
+				lua = { "cspell" },
+			}
+			local cspell = lint.linters.cspell
+			table.insert(cspell.args, "-c")
+			table.insert(cspell.args, "~/.config/dotfiles/nvim/ext_config/cspell.json")
+			vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
+				callback = function()
+					require("lint").try_lint()
 				end,
 			})
 		end,
@@ -39,46 +52,14 @@ return {
 			local M = {}
 
 			local lsp_servers = { "clangd", "pyright", "lua_ls", "rust_analyzer" }
-			-- if null-ls provides the format feature.
-			local clients_format_disabled = { lua_ls = true }
 
 			local cmp_nvim_lsp = require("cmp_nvim_lsp")
 			local default_capabilities = cmp_nvim_lsp.default_capabilities()
 
 			local default_lsp_config = {
 				capabilities = default_capabilities,
-				on_attach = function(client, bufnr)
-					if clients_format_disabled[client.name] then
-						client.server_capabilities.documentFormattingProvider = false
-						client.server_capabilities.documentRangeFormattingProvider = false
-					end
-				end,
 			}
 
-			M.lua_ls_config = vim.deepcopy(default_lsp_config)
-			M.lua_ls_config.settings = {
-				Lua = {
-					runtime = {
-						version = "LuaJIT",
-					},
-					diagnostics = {
-						globals = { "vim" },
-						disable = { "param-type-mismatch" },
-					},
-					workspace = {
-						library = vim.api.nvim_get_runtime_file("", true),
-						checkThirdParty = false,
-					},
-					telemetry = {
-						enable = false,
-					},
-					completion = {
-						autoRequire = false,
-						keywordSnippet = "Disable",
-						callSnippet = "Replace",
-					},
-				},
-			}
 			M.clangd_config = vim.deepcopy(default_lsp_config)
 			M.clangd_config.cmd = {
 				"clangd",
@@ -102,7 +83,6 @@ return {
 		keys = {
 			{ "<leader>lS", "<cmd>SymbolsOutline<cr>" },
 		},
-		name = "symbols-outline",
 		opts = {},
 	},
 	{
@@ -111,5 +91,9 @@ return {
 			{ "<leader>la", "<cmd>CodeActionMenu<cr>" },
 		},
 		cmd = "CodeActionMenu",
+	},
+	{
+		"ray-x/lsp_signature.nvim",
+		opts = {},
 	},
 }

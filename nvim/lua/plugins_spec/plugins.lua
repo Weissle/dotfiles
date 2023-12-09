@@ -239,14 +239,21 @@ return {
 			auto_session_suppress_dirs = { "~/" },
 			pre_save_cmds = {
 				function()
-					vim.tbl_map(function(win_id)
-						local buf_id = vim.api.nvim_win_get_buf(win_id)
+					function IsDroppedBuf(buf_id)
 						local file_name = vim.api.nvim_buf_get_name(buf_id)
 						for _, fname in ipairs({ "NvimTree_", "OUTLINE", "diffview", "health://" }) do
 							if string.find(file_name, fname) then
-								vim.api.nvim_win_close(win_id, true)
-								return
+								return true
 							end
+						end
+						return false
+					end
+
+					vim.tbl_map(function(win_id)
+						local buf_id = vim.api.nvim_win_get_buf(win_id)
+						if IsDroppedBuf(buf_id) then
+							vim.api.nvim_win_close(win_id, true)
+							vim.api.nvim_buf_delete(buf_id, { force = true })
 						end
 					end, vim.api.nvim_list_wins())
 				end,
@@ -270,22 +277,6 @@ return {
 			vim.g.mkdp_auto_close = 0
 			vim.g.mkdp_open_to_the_world = 1
 		end,
-	},
-	{
-		"cbochs/portal.nvim",
-		enabled = false,
-		keys = {
-			{
-				"<leader>bo",
-				"<cmd>Portal jumplist backward<cr>",
-			},
-			{
-				"<leader>bi",
-				"<cmd>Portal jumplist forward<cr>",
-			},
-		},
-		name = "portal",
-		opts = {},
 	},
 	{
 		"lewis6991/gitsigns.nvim",
