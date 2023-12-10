@@ -1,15 +1,3 @@
-local highstr_keys = {}
-
-for i = 1, 10 do
-	highstr_keys[#highstr_keys + 1] = {
-		"<leader>h" .. tostring(i),
-		":<C-u>HSHighlight " .. tostring(i) .. "<cr>",
-		mode = { "v" },
-		noremap = true,
-		silent = true,
-	}
-end
-
 return {
 	{
 		"nvim-lualine/lualine.nvim",
@@ -69,9 +57,18 @@ return {
 	{
 		"Pocco81/HighStr.nvim",
 		keys = {
-			unpack(highstr_keys),
+			{ "<leader>h0", ":<C-u>HSHighlight 0<cr>", mode = { "v" }, noremap = true },
+			{ "<leader>h1", ":<C-u>HSHighlight 1<cr>", mode = { "v" }, noremap = true },
+			{ "<leader>h2", ":<C-u>HSHighlight 2<cr>", mode = { "v" }, noremap = true },
+			{ "<leader>h3", ":<C-u>HSHighlight 3<cr>", mode = { "v" }, noremap = true },
+			{ "<leader>h4", ":<C-u>HSHighlight 4<cr>", mode = { "v" }, noremap = true },
+			{ "<leader>h5", ":<C-u>HSHighlight 5<cr>", mode = { "v" }, noremap = true },
+			{ "<leader>h6", ":<C-u>HSHighlight 6<cr>", mode = { "v" }, noremap = true },
+			{ "<leader>h7", ":<C-u>HSHighlight 7<cr>", mode = { "v" }, noremap = true },
+			{ "<leader>h8", ":<C-u>HSHighlight 8<cr>", mode = { "v" }, noremap = true },
+			{ "<leader>h9", ":<C-u>HSHighlight 9<cr>", mode = { "v" }, noremap = true },
 			{ "<leader>hl", ":<C-u>HSHighlight 1<cr>", mode = { "v" }, noremap = true },
-			{ "<leader>hc", ":<C-u>HSRmHighlight<cr>", mode = { "n" }, noremap = true },
+			{ "<leader>hc", ":<C-u>HSRmHighlight<cr>", mode = { "v" }, noremap = true },
 		},
 		opts = true,
 	},

@@ -174,6 +174,9 @@ return {
 		"RRethy/vim-illuminate",
 		opts = {
 			delay = 50,
+			filetypes_denylist = {
+				"NvimTree",
+			},
 		},
 		config = function(_, opts)
 			require("illuminate").configure(opts)
@@ -344,10 +347,6 @@ return {
 					gs.blame_line({ full = true })
 				end)
 				map("n", "<leader>gl", gs.toggle_current_line_blame)
-				-- map("n", "<leader>gd", gs.diffthis)
-				-- map("n", "<leader>gD", function()
-				-- 	gs.diffthis("~")
-				-- end)
 				map("n", "<leader>gc", gs.toggle_deleted)
 
 				-- Text object

@@ -29,8 +29,8 @@ return {
 			local lint = require("lint")
 			lint.linters_by_ft = {
 				markdown = { "cspell" },
-				cpp = { "cspell" },
-				c = { "cspell" },
+				cpp = { "cspell", "clangtidy" },
+				c = { "cspell", "clangtidy" },
 				python = { "cspell" },
 				sh = { "cspell" },
 				lua = { "cspell" },
@@ -64,8 +64,6 @@ return {
 			M.clangd_config.cmd = {
 				"clangd",
 				"--header-insertion=never",
-				"--offset-encoding=utf-16",
-				"--clang-tidy",
 			}
 
 			local lspconfig = require("lspconfig")

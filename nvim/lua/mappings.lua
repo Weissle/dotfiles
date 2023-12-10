@@ -83,10 +83,8 @@ vim.keymap.set("n", "<leader>tx", "<cmd>sp<cr><bar><cmd>terminal<cr>i", opts)
 vim.keymap.set("n", "<leader>tv", "<cmd>vsp<cr><bar><cmd>terminal<cr>i", opts)
 
 vim.keymap.set("n", "<leader>mt", function()
-	vim.ui.select({ "HardTimeToggle", "MouseMode", "NoMouseMode" }, {}, function(item, idx)
-		if item == "HardTimeToggle" then
-			vim.cmd("HardTimeToggle")
-		elseif item == "MouseMode" then
+	vim.ui.select({ "MouseMode", "NoMouseMode" }, {}, function(item, idx)
+		if item == "MouseMode" then
 			vim.o.mouse = "a"
 		elseif item == "NoMouseMode" then
 			vim.o.mouse = ""
