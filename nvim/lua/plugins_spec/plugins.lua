@@ -19,6 +19,9 @@ return {
 				adaptive_size = true,
 				side = "right",
 			},
+			on_attach = function()
+				vim.keymap.del("n", "<C-e>")
+			end,
 		},
 	},
 	{
@@ -346,6 +349,10 @@ return {
 				map("n", "<leader>gb", function()
 					gs.blame_line({ full = true })
 				end)
+				map("n", "<leader>gb", function()
+					require("gitsigns").blame_line({ full = true })
+				end)
+				map("n", "<leader>gB", "<cmd>Gitsigns toggle_current_line_blame<cr>")
 				map("n", "<leader>gl", gs.toggle_current_line_blame)
 				map("n", "<leader>gc", gs.toggle_deleted)
 
