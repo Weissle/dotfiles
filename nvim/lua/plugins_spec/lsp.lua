@@ -29,8 +29,8 @@ return {
 			local lint = require("lint")
 			lint.linters_by_ft = {
 				markdown = { "cspell" },
-				cpp = { "cspell", "clangtidy" },
-				c = { "cspell", "clangtidy" },
+				cpp = { "cspell" },
+				c = { "cspell" },
 				python = { "cspell" },
 				sh = { "cspell" },
 				lua = { "cspell" },
@@ -38,7 +38,7 @@ return {
 			local cspell = lint.linters.cspell
 			table.insert(cspell.args, "-c")
 			table.insert(cspell.args, "~/.config/dotfiles/nvim/ext_config/cspell.json")
-			vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
+			vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost" }, {
 				callback = function()
 					require("lint").try_lint()
 				end,
@@ -64,6 +64,7 @@ return {
 			M.clangd_config.cmd = {
 				"clangd",
 				"--header-insertion=never",
+				"--clang-tidy",
 			}
 
 			local lspconfig = require("lspconfig")
