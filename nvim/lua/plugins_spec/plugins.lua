@@ -61,8 +61,8 @@ return {
 			{ "<leader>ft", "<cmd>Telescope <cr>" },
 			{ "<leader>fa", "<cmd>Telescope find_files no_ignore=true hidden=true<cr>" },
 			{ "<leader>f*", "<cmd>Telescope grep_string<cr>" },
-			{ "<leader>fo", "<cmd>Telescope frecency workspace=CWD<cr>" },
-			{ "<leader>fO", "<cmd>Telescope frecency<cr>" },
+			{ "<leader>fo", "<cmd>Telescope oldfiles only_cwd=true<cr>" },
+			{ "<leader>fO", "<cmd>Telescope oldfiles <cr>" },
 			{ "<leader>fG", "<cmd>Telescope git_status<cr>" },
 			{ "<leader>fr", "<cmd>Telescope resume<cr>" },
 			{ "<leader>f/", "<cmd>Telescope current_buffer_fuzzy_find<cr>" },
@@ -82,16 +82,12 @@ return {
 				build = "make",
 			},
 			{ "nvim-telescope/telescope-live-grep-args.nvim" },
-			{
-				"nvim-telescope/telescope-frecency.nvim",
-			},
 			{ "nvim-lua/plenary.nvim" },
 		},
 		config = function(_, opts)
 			require("telescope").setup(opts)
 			require("telescope").load_extension("fzf")
 			require("telescope").load_extension("live_grep_args")
-			require("telescope").load_extension("frecency")
 		end,
 		opts = function()
 			local action = require("telescope.actions")
@@ -182,6 +178,14 @@ return {
 			filetypes_denylist = {
 				"NvimTree",
 			},
+			should_enable = function(buf)
+				local max_filesize = 100 * 1024
+				local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+				if ok and stats and stats.size > max_filesize then
+					return false
+				end
+				return true
+			end,
 		},
 		config = function(_, opts)
 			require("illuminate").configure(opts)

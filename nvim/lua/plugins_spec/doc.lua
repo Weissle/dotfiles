@@ -84,7 +84,7 @@ return {
 			end,
 			fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
 				local newVirtText = {}
-				local suffix = ("  %d "):format(endLnum - lnum)
+				local suffix = (" ↓ %d "):format(endLnum - lnum)
 				local sufWidth = vim.fn.strdisplaywidth(suffix)
 				local targetWidth = width - sufWidth
 				local curWidth = 0
@@ -173,34 +173,5 @@ return {
 	{
 		"mechatroner/rainbow_csv",
 		ft = { "csv" },
-	},
-	{
-		"monaqa/dial.nvim",
-		keys = {
-			{ "<C-a>", "<Plug>(dial-increment)" },
-			{ "<C-x>", "<Plug>(dial-decrement)" },
-			{ "g<C-a>", "g<Plug>(dial-increment)" },
-			{ "g<C-x>", "g<Plug>(dial-decrement)" },
-			{ "<C-a>", "<Plug>(dial-increment)" },
-			{ "<C-x>", "<Plug>(dial-decrement)" },
-			{ "g<C-a>", "g<Plug>(dial-increment)" },
-			{ "g<C-x>", "g<Plug>(dial-decrement)" },
-		},
-		config = function()
-			local augend = require("dial.augend")
-			require("dial.config").augends:register_group({
-				default = {
-					augend.integer.alias.decimal_int,
-					augend.integer.alias.hex,
-					augend.semver.alias.semver,
-					augend.constant.new({
-						elements = { "true", "false" },
-						word = true,
-						cyclic = true,
-						preserve_case = true,
-					}),
-				},
-			})
-		end,
 	},
 }

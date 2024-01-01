@@ -30,8 +30,11 @@ return {
 					get_bufnrs = function()
 						local ret = {}
 						for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-							local file_line = vim.api.nvim_buf_line_count(buf)
-							if file_line <= 5000 and vim.api.nvim_buf_get_offset(buf, file_line) < 1024 * 1024 then
+							local max_filesize = 100 * 1024
+							local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+							if ok and stats and stats.size > max_filesize then
+								-- ignore big file
+							else
 								table.insert(ret, buf)
 							end
 						end
