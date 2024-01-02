@@ -1,8 +1,10 @@
-[ ] (perf) neovim still slow when open large file. Need to improve.
+[X] (perf) neovim still slow when open large file. Need to improve.
 
     Priority: 4
 
     Report: 2024-01-01 22:52
+    
+    Solution: nvim-ufo is slow on large file. Disable it.
 
 [X] (perf) Large file is slow. (like 1e7 tcpdump) 
 

@@ -15,11 +15,7 @@ return {
 				enable = true,
 				additional_vim_regex_highlighting = false,
 				disable = function(lang, buf)
-					local max_filesize = 100 * 1024 -- 100 KB
-					local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-					if ok and stats and stats.size > max_filesize then
-						return true
-					end
+					return Util.is_big_file(buf)
 				end,
 			},
 			textobjects = {
@@ -80,7 +76,11 @@ return {
 		end,
 		opts = {
 			provider_selector = function(bufnr, filetype, buftype)
-				return { "treesitter", "indent" }
+				if Util.is_big_file(bufnr) then
+					return ""
+				else
+					return { "treesitter", "indent" }
+				end
 			end,
 			fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
 				local newVirtText = {}

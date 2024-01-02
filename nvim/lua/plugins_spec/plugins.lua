@@ -178,6 +178,9 @@ return {
 			filetypes_denylist = {
 				"NvimTree",
 			},
+			providers = {
+				"regex",
+			},
 			should_enable = function(buf)
 				local max_filesize = 100 * 1024
 				local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
