@@ -14,5 +14,9 @@ return {
 	},
 	{
 		"sainnhe/gruvbox-material",
+		init = function()
+			vim.g.gruvbox_material_enable_italic = 0
+			vim.g.gruvbox_material_disable_italic_comment = 1
+		end,
 	},
 }

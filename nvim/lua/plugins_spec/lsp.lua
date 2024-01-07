@@ -85,11 +85,11 @@ return {
 		opts = {},
 	},
 	{
-		"weilbith/nvim-code-action-menu",
+		"aznhe21/actions-preview.nvim",
 		keys = {
-			{ "<leader>la", "<cmd>CodeActionMenu<cr>" },
+			{ "<leader>la", "<cmd>lua require('actions-preview').code_actions()<cr>" },
 		},
-		cmd = "CodeActionMenu",
+		opts = {},
 	},
 	{
 		"ray-x/lsp_signature.nvim",

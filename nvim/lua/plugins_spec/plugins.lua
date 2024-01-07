@@ -30,7 +30,7 @@ return {
 		"L3MON4D3/LuaSnip",
 		build = "make install_jsregexp",
 		dependencies = { "rafamadriz/friendly-snippets" },
-		version = "2.*",
+		version = "v2.*",
 		config = function(_, opts)
 			require("luasnip").setup(opts)
 			require("luasnip.loaders.from_vscode").lazy_load({
@@ -138,6 +138,7 @@ return {
 		keys = {
 			{ "L", "<cmd>HopLineStartMW<cr>", mode = { "n", "x", "o" } },
 			{ "<enter>", "<cmd>HopWordMW<cr>", mode = { "n", "x", "o" } },
+			{ "s", "<cmd>HopChar2MW<cr>", mode = { "n", "x", "o" } },
 			{ "<leader>h/", "<cmd>HopPattern<cr>", mode = { "n" } },
 			{
 				"<leader>he",
@@ -258,7 +259,7 @@ return {
 					function IsDroppedBuf(buf_id)
 						local file_name = vim.api.nvim_buf_get_name(buf_id)
 						for _, fname in ipairs({ "NvimTree_", "OUTLINE", "diffview", "health://" }) do
-							if string.find(file_name, fname) then
+							if string.find(file_name, fname) or #file_name == 0 then
 								return true
 							end
 						end
@@ -386,5 +387,11 @@ return {
 	},
 	{
 		"tpope/vim-sleuth",
+	},
+	{
+		"skywind3000/asyncrun.vim",
+		init = function()
+			vim.g.asyncrun_open = 15
+		end,
 	},
 }

@@ -31,6 +31,10 @@ global.loaded_netrwPlugin = 1
 
 ------------------------------------SPLIT--------------------------------------------------------
 
+vim.cmd(
+	[[autocmd BufRead * autocmd FileType <buffer> ++once if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif]]
+)
+
 vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI", "TextChangedP" }, {
 	callback = function()
 		vim.b._changed = true
@@ -58,4 +62,7 @@ end, 500)
 
 vim.cmd([[autocmd TermOpen * setlocal nonumber norelativenumber]])
 vim.cmd("autocmd Filetype markdown setlocal spell")
+
 vim.cmd("autocmd Filetype qf nnoremap <buffer> q <cmd>q<cr>")
+-- for hop
+vim.cmd("autocmd Filetype qf nnoremap <buffer> <cr> <cr>")
