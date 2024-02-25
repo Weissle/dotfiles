@@ -22,6 +22,7 @@ opt.fileencodings = "utf-8,gb2312,default,latin1"
 opt.undolevels = 2000
 opt.showmode = false
 opt.clipboard = "unnamedplus"
+opt.swapfile = false
 
 ------------------------------------SPLIT--------------------------------------------------------
 local global = vim.g

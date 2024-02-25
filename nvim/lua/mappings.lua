@@ -47,7 +47,9 @@ vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 vim.keymap.set("n", "<leader>ls", vim.lsp.buf.signature_help, opts)
 vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, opts)
 vim.keymap.set("n", "<leader>lt", "<cmd>Telescope lsp_type_definitions<cr>", opts)
-vim.keymap.set("n", "<leader>ld", "<cmd>Telescope diagnostics<cr>", opts)
+vim.keymap.set("n", "<leader>ld", "<cmd>Telescope diagnostics severity_limit=WARN<cr>", opts)
+vim.keymap.set("n", "<leader>lD", "<cmd>Telescope diagnostics<cr>", opts)
+
 -- diagnostic
 vim.keymap.set("n", "[w", function()
 	vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.WARN } })

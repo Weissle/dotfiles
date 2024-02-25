@@ -137,8 +137,7 @@ return {
 		name = "hop",
 		keys = {
 			{ "L", "<cmd>HopLineStartMW<cr>", mode = { "n", "x", "o" } },
-			{ "<enter>", "<cmd>HopWordMW<cr>", mode = { "n", "x", "o" } },
-			{ "s", "<cmd>HopChar2MW<cr>", mode = { "n", "x", "o" } },
+			{ "s", "<cmd>HopWordMW<cr>", mode = { "n", "x", "o" } },
 			{ "<leader>h/", "<cmd>HopPattern<cr>", mode = { "n" } },
 			{
 				"<leader>he",
@@ -394,4 +393,5 @@ return {
 			vim.g.asyncrun_open = 15
 		end,
 	},
+	{ "kevinhwang91/nvim-bqf", enabled = true },
 }

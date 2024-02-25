@@ -15,6 +15,7 @@ return {
 				lua = { "stylua" },
 				sh = { "beautysh" },
 				json = { "jq" },
+				cmake = { "cmake_format" },
 			},
 			format_on_save = {
 				lsp_fallback = true,
