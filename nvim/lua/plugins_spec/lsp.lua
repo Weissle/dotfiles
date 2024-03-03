@@ -16,6 +16,7 @@ return {
 				sh = { "beautysh" },
 				json = { "jq" },
 				cmake = { "cmake_format" },
+				proto = { "clang_format" },
 			},
 			format_on_save = {
 				lsp_fallback = true,
@@ -62,6 +63,7 @@ return {
 			}
 
 			M.clangd_config = vim.deepcopy(default_lsp_config)
+			M.clangd_config.filetypes = { "c", "cpp", "objc", "objcpp", "cuda" }
 			M.clangd_config.cmd = {
 				"clangd",
 				"--header-insertion=never",
