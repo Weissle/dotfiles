@@ -61,23 +61,6 @@ if check_executable "starship"; then
     eval "$(starship init $SHELL_TYPE)"
 fi
 
-if check_executable "bat"; then
-    alias cat=bat
-    alias cata="bat --paging=never"
-fi
-
-if check_executable "exa"; then
-    alias ls="exa"
-    alias la="exa -a"
-    alias ll="exa -alF"
-    alias l='exa -F'
-else
-    alias la='ls -A'
-    alias ll='ls -alF'
-    alias l='ls -CF'
-fi
-
-
 export windows_host=`cat /etc/resolv.conf | grep nameserver | awk '{print $2}'`
 # proxy
 proxy(){

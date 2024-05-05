@@ -17,11 +17,13 @@ return {
 				json = { "jq" },
 				cmake = { "cmake_format" },
 				proto = { "clang_format" },
+				rust = { "rustfmt" },
 			},
 			format_on_save = {
 				lsp_fallback = true,
 				timeout_ms = 500,
 			},
+			notify_on_error = false,
 		},
 	},
 	{
@@ -36,6 +38,7 @@ return {
 				python = { "cspell" },
 				sh = { "cspell" },
 				lua = { "cspell" },
+				rust = { "cspell" },
 			}
 			local cspell = lint.linters.cspell
 			table.insert(cspell.args, "-c")
@@ -53,7 +56,7 @@ return {
 		config = function()
 			local M = {}
 
-			local lsp_servers = { "clangd", "pyright", "lua_ls", "rust_analyzer" }
+			local lsp_servers = { "clangd", "pyright", "lua_ls" }
 
 			local cmp_nvim_lsp = require("cmp_nvim_lsp")
 			local default_capabilities = cmp_nvim_lsp.default_capabilities()
@@ -78,7 +81,15 @@ return {
 					lspconfig[lsp].setup(M[lsp .. "_config"])
 				end
 			end
+
+			-- lspconfig["rust_analyzer"].setup({})
 		end,
+	},
+	{
+		"mrcjkb/rustaceanvim",
+		enabled = true,
+		version = "^4",
+		ft = { "rust" },
 	},
 	{
 		"simrat39/symbols-outline.nvim",

@@ -103,10 +103,7 @@ return {
 						},
 					},
 					path_display = {
-						shorten = {
-							len = 5,
-							exclude = { 1, -1 },
-						},
+						truncate = {},
 					},
 				},
 				extensions = {
