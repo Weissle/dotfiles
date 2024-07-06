@@ -8,6 +8,7 @@ return {
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-cmdline",
 			"L3MON4D3/LuaSnip",
+			{ "p00f/clangd_extensions.nvim", opts = {}, name = "clangd_extensions" },
 		},
 		config = function()
 			local cmp = require("cmp")
@@ -106,11 +107,12 @@ return {
 				sorting = {
 					priority_weight = 2,
 					comparators = {
-						compare.exact,
 						compare.score,
+						compare.exact,
+						compare.recently_used,
+						-- require("clangd_extensions.cmp_scores"),
 						compare.offset,
 						-- -- compare.scopes,
-						compare.recently_used,
 						-- compare.locality,
 						compare.kind,
 						-- compare.sort_text,
