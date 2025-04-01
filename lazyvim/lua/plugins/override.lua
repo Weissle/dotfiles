@@ -76,6 +76,10 @@ return {
   },
   {
     "ibhagwan/fzf-lua",
+    keys = {
+      { "<leader>fF", LazyVim.pick("files"), desc = "Find Files (Root Dir)" },
+      { "<leader>ff", LazyVim.pick("files", { root = false }), desc = "Find Files (cwd)" },
+    },
     opts = function(_, opts)
       local config = require("fzf-lua.config")
       local actions = require("fzf-lua.actions")

@@ -5,3 +5,5 @@ vim.o.mouse = ""
 vim.o.wrap = true
 vim.o.timeoutlen = 1000
 vim.o.swapfile = false
+
+vim.g.snacks_scroll = false
