@@ -28,4 +28,10 @@ return {
       hint = "floating-big-letter",
     },
   },
+  {
+    "karb94/neoscroll.nvim",
+    name = "neoscroll",
+    keys = { "<C-u>", "<C-d>", "<C-y>", "<C-e>", "<C-b>", "<C-f>" },
+    opts = { mappings = { "<C-u>", "<C-d>", "<C-y>", "<C-e>", "<C-b>", "<C-f>" }, hide_cursor = false },
+  },
 }
