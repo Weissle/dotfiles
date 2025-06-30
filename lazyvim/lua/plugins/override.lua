@@ -5,6 +5,17 @@ return {
       keymap = {
         preset = "super-tab",
       },
+      sources = {
+        providers = {
+          snippets = {
+            opts = {
+              filter_snippets = function(ft, file)
+                return not (string.match(file, "friendly.snippets") and string.match(file, "framework"))
+              end,
+            },
+          },
+        },
+      },
     },
   },
   {
@@ -79,11 +90,32 @@ return {
     keys = {
       { "<leader>fF", LazyVim.pick("files"), desc = "Find Files (Root Dir)" },
       { "<leader>ff", LazyVim.pick("files", { root = false }), desc = "Find Files (cwd)" },
+      { "<leader>sG", LazyVim.pick("live_grep"), desc = "Grep (Root Dir)" },
+      { "<leader>sg", LazyVim.pick("live_grep", { root = false }), desc = "Grep (cwd)" },
+      { "<leader>sW", LazyVim.pick("grep_cword"), desc = "Word (Root Dir)" },
+      { "<leader>sw", LazyVim.pick("grep_cword", { root = false }), desc = "Word (cwd)" },
+      { "<leader>sW", LazyVim.pick("grep_visual"), mode = "v", desc = "Selection (Root Dir)" },
+      { "<leader>sw", LazyVim.pick("grep_visual", { root = false }), mode = "v", desc = "Selection (cwd)" },
     },
     opts = function(_, opts)
       local config = require("fzf-lua.config")
       local actions = require("fzf-lua.actions")
       config.defaults.actions.files["ctrl-t"] = actions.file_tabedit
     end,
+  },
+  {
+    "neovim/nvim-lspconfig",
+    opts = function()
+      local keys = require("lazyvim.plugins.lsp.keymaps").get()
+      keys[#keys + 1] = { "<c-k>", false, mode = { "i" } }
+    end,
+  },
+  {
+    "mason-org/mason-lspconfig.nvim",
+    branch = "v1.x",
+  },
+  {
+    "mason-org/mason.nvim",
+    branch = "v1.x",
   },
 }
