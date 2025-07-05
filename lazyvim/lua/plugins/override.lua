@@ -1,9 +1,15 @@
 return {
   {
     "saghen/blink.cmp",
+    tag = "v1.4.1",
     opts = {
       keymap = {
         preset = "super-tab",
+        ["<Tab>"] = {
+          require("blink.cmp.keymap.presets").get("super-tab")["<Tab>"][1],
+          LazyVim.cmp.map({ "snippet_forward", "ai_accept" }),
+          "fallback",
+        },
       },
       sources = {
         providers = {
@@ -31,7 +37,7 @@ return {
         end,
       },
       {
-        "<C-m>",
+        "<leader>n",
         function()
           require("neo-tree.command").execute({
             action = "focus",
@@ -111,11 +117,22 @@ return {
     end,
   },
   {
-    "mason-org/mason-lspconfig.nvim",
-    branch = "v1.x",
+    "folke/snacks.nvim",
+    keys = {
+      { "<leader>n", mode = { "n" }, false },
+      {
+        "<leader>N",
+        function()
+          Snacks.picker.notifications()
+        end,
+        desc = "Notification History",
+      },
+    },
   },
   {
-    "mason-org/mason.nvim",
-    branch = "v1.x",
+    "RRethy/vim-illuminate",
+    opts = {
+      delay = 50,
+    },
   },
 }
