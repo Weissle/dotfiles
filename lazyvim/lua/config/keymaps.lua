@@ -31,3 +31,13 @@ vim.keymap.set(
   "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>",
   { desc = "Put empty line below" }
 )
+
+vim.keymap.set("n", "<leader>mp", "<cmd>set paste<cr>", opts)
+vim.keymap.set("n", "<leader>mP", "<cmd>set nopaste<cr>", opts)
+vim.keymap.set("n", "<leader>mc", "<cmd>set clipboard=<cr>", opts)
+vim.keymap.set("n", "<leader>mC", "<cmd>set clipboard=unnamedplus<cr>", opts)
+vim.keymap.set("n", "<leader>mm", "<cmd>set mouse=<cr>", opts)
+vim.keymap.set("n", "<leader>mM", "<cmd>set mouse=a<cr>", opts)
+
+vim.keymap.set("n", "gcp", "yygccp", { remap = true })
+vim.keymap.set("n", "gcP", "yygccP", { remap = true })

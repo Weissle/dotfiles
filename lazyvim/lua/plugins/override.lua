@@ -1,7 +1,6 @@
 return {
   {
     "saghen/blink.cmp",
-    tag = "v1.4.1",
     opts = {
       keymap = {
         preset = "super-tab",
@@ -52,15 +51,26 @@ return {
           ["<C-s>"] = "split_with_window_picker",
           ["<C-v>"] = "vsplit_with_window_picker",
           ["<cr>"] = "open_with_window_picker",
-          ["o"] = {
-            command = "open_with_window_picker",
-            nowait = true,
+          ["z"] = "none",
+          ["Z"] = "close_all_nodes",
+          ["s"] = "none",
+          ["Y"] = {
+            function(state)
+              local node = state.tree:get_node()
+              local path = node:get_id()
+              path = vim.fn.fnamemodify(path, ":.")
+              vim.fn.setreg("+", path, "c")
+            end,
+            desc = "Copy Path to Clipboard",
           },
         },
       },
       filesystem = {
         follow_current_file = {
           enabled = false,
+        },
+        filtered_items = {
+          visible = true,
         },
       },
     },
@@ -117,6 +127,17 @@ return {
     end,
   },
   {
+
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        clangd = {
+          filetypes = { "c", "cpp" },
+        },
+      },
+    },
+  },
+  {
     "folke/snacks.nvim",
     keys = {
       { "<leader>n", mode = { "n" }, false },
@@ -141,6 +162,20 @@ return {
       linters_by_ft = {
         ["*"] = { "typos" },
       },
+    },
+  },
+  {
+    "stevearc/conform.nvim",
+    opts = {
+      formatters_by_ft = {
+        proto = { "clang_format" },
+      },
+    },
+  },
+  {
+    "akinsho/bufferline.nvim",
+    keys = {
+      { "<leader>bj", "<cmd>BufferLinePick<cr>" },
     },
   },
 }
