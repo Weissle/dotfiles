@@ -31,7 +31,7 @@ return {
         function()
           require("neo-tree.command").execute({
             toggle = true,
-            dir = LazyVim.root(),
+            dir = vim.uv.cwd(),
           })
         end,
       },
@@ -41,19 +41,30 @@ return {
           require("neo-tree.command").execute({
             action = "focus",
             reveal = true,
+            dir = vim.uv.cwd(),
           })
         end,
       },
     },
     opts = {
       window = {
+        auto_expand_width = true,
         mappings = {
           ["<C-s>"] = "split_with_window_picker",
+          ["<C-t>"] = "open_tabnew",
           ["<C-v>"] = "vsplit_with_window_picker",
           ["<cr>"] = "open_with_window_picker",
           ["z"] = "none",
           ["Z"] = "close_all_nodes",
           ["s"] = "none",
+          ["c"] = "copy_to_clipboard",
+          ["y"] = {
+            function(state)
+              local node = state.tree:get_node()
+              vim.fn.setreg("+", node.name, "c")
+            end,
+            desc = "Copy Path to Clipboard",
+          },
           ["Y"] = {
             function(state)
               local node = state.tree:get_node()

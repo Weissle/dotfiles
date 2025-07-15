@@ -55,5 +55,9 @@ return {
   },
   {
     "sindrets/diffview.nvim",
+    keys = {
+      { "<leader>gd", "<cmd>DiffviewOpen<cr>" },
+      { "<leader>gD", "<cmd>DiffviewFileHistory %<cr>" },
+    },
   },
 }
