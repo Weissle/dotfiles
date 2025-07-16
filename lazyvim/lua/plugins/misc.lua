@@ -31,7 +31,7 @@ return {
   {
     "mechatroner/rainbow_csv",
     ft = { "csv" },
-    setup = function()
+    config = function()
       vim.g.rbql_with_headers = 1
     end,
   },

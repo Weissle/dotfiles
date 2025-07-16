@@ -57,6 +57,7 @@ return {
           ["z"] = "none",
           ["Z"] = "close_all_nodes",
           ["s"] = "none",
+          ["/"] = "none",
           ["c"] = "copy_to_clipboard",
           ["y"] = {
             function(state)
@@ -114,16 +115,6 @@ return {
   },
   {
     "ibhagwan/fzf-lua",
-    keys = {
-      { "<leader>fF", LazyVim.pick("files"), desc = "Find Files (Root Dir)" },
-      { "<leader>ff", LazyVim.pick("files", { root = false }), desc = "Find Files (cwd)" },
-      { "<leader>sG", LazyVim.pick("live_grep"), desc = "Grep (Root Dir)" },
-      { "<leader>sg", LazyVim.pick("live_grep", { root = false }), desc = "Grep (cwd)" },
-      { "<leader>sW", LazyVim.pick("grep_cword"), desc = "Word (Root Dir)" },
-      { "<leader>sw", LazyVim.pick("grep_cword", { root = false }), desc = "Word (cwd)" },
-      { "<leader>sW", LazyVim.pick("grep_visual"), mode = "v", desc = "Selection (Root Dir)" },
-      { "<leader>sw", LazyVim.pick("grep_visual", { root = false }), mode = "v", desc = "Selection (cwd)" },
-    },
     opts = function(_, opts)
       local config = require("fzf-lua.config")
       local actions = require("fzf-lua.actions")
@@ -180,6 +171,7 @@ return {
     opts = {
       formatters_by_ft = {
         proto = { "clang_format" },
+        xml = { "xmllint" },
       },
     },
   },
