@@ -1,0 +1,97 @@
+{
+  "f3": {
+    "prefix": "f3",
+    "body": [
+      "for (${1:size_t} ${2:i} = ${3:0}; $2 < ${4:length}; $2++) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Code snippet for 'for' loop"
+  },
+  "f3r": {
+    "prefix": "f3r",
+    "body": [
+      "for (${1:size_t} ${2:i} = ${3:length} - 1; $2 >= ${4:0}; $2--) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Code snippet for reverse 'for' loop"
+  },
+  "f3i": {
+    "prefix": "f3i",
+    "body": [
+      "for (${1:auto} ${2:it} = ${3:container}.begin(); $2 != $3.end(); $2++) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Code snippet for iterator 'for' loop"
+  },
+  "f3ir": {
+    "prefix": "f3ir",
+    "body": [
+      "for (${1:auto} ${2:it} = ${3:container}.rbegin(); $2 != $3.rend(); $2++) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Code snippet for iterator 'for' loop"
+  },
+  "frc": {
+    "prefix": "frc",
+    "body": [
+      "for (const ${1:auto} &${2:var} : ${3:variable}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Code snippet for reverse 'for(const auto &v : c)' loop"
+  },
+  "fr": {
+    "prefix": "fr",
+    "body": [
+      "for (${1:auto} &${2:var} : ${3:variable}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Code snippet for reverse 'for(auto &v : c )' loop"
+  },
+  "f2": {
+    "prefix": "f2",
+    "body": [
+      "for (${1:auto} ${2:var} : ${3:variable}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Code snippet for 'for(auto v : c )' loop"
+  },
+  "inc": {
+    "prefix": "inc",
+    "body": [
+      "#include \"$0\""
+    ],
+    "description": "Code snippet for #include \" \""
+  },
+  "incl": {
+    "prefix": "incl",
+    "body": [
+      "#include <$0>"
+    ],
+    "description": "Code snippet for #include < >"
+  },
+  "Main function template": {
+    "prefix": "main",
+    "body": [
+      "int main (int argc, char *argv[])",
+      "{",
+      "\t$1",
+      "\treturn 0;",
+      "}"
+    ],
+    "description": "A standard main function for a C++ program"
+  },
+  "ben": {
+    "prefix": "ben",
+    "body": [
+      "${1}.begin(),$1.end()${0}"
+    ],
+    "description": "A.begin(),A.end()"
+  }
+}

@@ -57,8 +57,16 @@ return {
           ["z"] = "none",
           ["Z"] = "close_all_nodes",
           ["s"] = "none",
-          ["/"] = "none",
           ["c"] = "copy_to_clipboard",
+          ["/"] = "none",
+          ["D"] = {
+            function()
+              local path = state.tree:get_node():get_id()
+              path = vim.fn.fnamemodify(path, ":.")
+              local cmd = string.format("DiffviewFileHistory %s", path)
+              vim.cmd(cmd)
+            end,
+          },
           ["y"] = {
             function(state)
               local node = state.tree:get_node()
@@ -68,8 +76,7 @@ return {
           },
           ["Y"] = {
             function(state)
-              local node = state.tree:get_node()
-              local path = node:get_id()
+              local path = state.tree:get_node():get_id()
               path = vim.fn.fnamemodify(path, ":.")
               vim.fn.setreg("+", path, "c")
             end,
@@ -179,6 +186,16 @@ return {
     "akinsho/bufferline.nvim",
     keys = {
       { "<leader>bj", "<cmd>BufferLinePick<cr>" },
+    },
+  },
+  {
+    "echasnovski/mini.surround",
+    opts = {
+      mappings = {
+        add = "as",
+        delete = "ds",
+        replace = "cs",
+      },
     },
   },
 }
