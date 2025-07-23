@@ -10,17 +10,6 @@ return {
           "fallback",
         },
       },
-      sources = {
-        providers = {
-          snippets = {
-            opts = {
-              filter_snippets = function(ft, file)
-                return not (string.match(file, "friendly.snippets") and string.match(file, "framework"))
-              end,
-            },
-          },
-        },
-      },
     },
   },
   {
@@ -60,7 +49,7 @@ return {
           ["c"] = "copy_to_clipboard",
           ["/"] = "none",
           ["D"] = {
-            function()
+            function(state)
               local path = state.tree:get_node():get_id()
               path = vim.fn.fnamemodify(path, ":.")
               local cmd = string.format("DiffviewFileHistory %s", path)
@@ -192,10 +181,15 @@ return {
     "echasnovski/mini.surround",
     opts = {
       mappings = {
-        add = "as",
         delete = "ds",
         replace = "cs",
       },
+    },
+  },
+  {
+    "echasnovski/mini.pairs",
+    opts = {
+      modes = { command = false },
     },
   },
 }
