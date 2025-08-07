@@ -12,6 +12,7 @@ vim.o.guicursor = "n-v-c-sm:blinkon01,i-ci-ve:ver25-blinkon01,r-cr-o:hor20"
 vim.o.fileencodings = "utf-8,gb2312,default,latin1"
 vim.o.laststatus = 2
 vim.o.confirm = false
+vim.o.conceallevel = 0
 
 vim.g.root_spec = { "cwd" }
 -- vim.g.lazyvim_blink_main = true
