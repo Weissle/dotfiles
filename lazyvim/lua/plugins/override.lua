@@ -176,6 +176,11 @@ return {
     keys = {
       { "<leader>bj", "<cmd>BufferLinePick<cr>" },
     },
+    opts = {
+      options = {
+        always_show_bufferline = false,
+      },
+    },
   },
   {
     "echasnovski/mini.surround",
@@ -190,6 +195,12 @@ return {
     "echasnovski/mini.pairs",
     opts = {
       modes = { command = false },
+    },
+  },
+  {
+    "L3MON4D3/LuaSnip",
+    opts = {
+      region_check_events = "InsertEnter",
     },
   },
 }
