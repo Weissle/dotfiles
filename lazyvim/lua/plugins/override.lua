@@ -75,7 +75,7 @@ return {
       },
       filesystem = {
         follow_current_file = {
-          enabled = false,
+          enabled = true,
         },
         filtered_items = {
           visible = true,
@@ -178,7 +178,7 @@ return {
     },
     opts = {
       options = {
-        always_show_bufferline = false,
+        always_show_bufferline = true,
       },
     },
   },
@@ -202,5 +202,19 @@ return {
     opts = {
       region_check_events = "InsertEnter",
     },
+  },
+  {
+    "snacks.nvim",
+    opts = { dashboard = { enabled = false } },
+  },
+  {
+    "folke/persistence.nvim",
+    lazy = false,
+    config = function(_, opts)
+      require("persistence").setup(opts)
+      if vim.fn.argc() == 0 and not vim.g.started_with_stdin then
+        require("persistence").load()
+      end
+    end,
   },
 }
