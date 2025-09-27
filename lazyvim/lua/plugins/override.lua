@@ -1,16 +1,22 @@
 return {
   {
     "saghen/blink.cmp",
-    opts = {
-      keymap = {
-        preset = "super-tab",
-        ["<Tab>"] = {
-          require("blink.cmp.keymap.presets").get("super-tab")["<Tab>"][1],
-          LazyVim.cmp.map({ "snippet_forward", "ai_accept" }),
-          "fallback",
-        },
-      },
-    },
+    opts = function(_, opts)
+      local keymap = opts.keymap
+      keymap["preset"] = "super-tab"
+      keymap["<Tab>"] = {
+        require("blink.cmp.keymap.presets").get("super-tab")["<Tab>"][1],
+        LazyVim.cmp.map({ "snippet_forward", "ai_accept" }),
+        "fallback",
+      }
+      for i = 1, 5, 1 do
+        keymap["<A-" .. i .. ">"] = {
+          function(cmp)
+            cmp.accept({ index = i + 1 })
+          end,
+        }
+      end
+    end,
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -183,7 +189,7 @@ return {
     },
   },
   {
-    "echasnovski/mini.surround",
+    "nvim-mini/mini.surround",
     opts = {
       mappings = {
         delete = "ds",
@@ -192,7 +198,7 @@ return {
     },
   },
   {
-    "echasnovski/mini.pairs",
+    "nvim-mini/mini.pairs",
     opts = {
       modes = { command = false },
     },
@@ -201,6 +207,7 @@ return {
     "L3MON4D3/LuaSnip",
     opts = {
       region_check_events = "InsertEnter",
+      store_selection_keys = "<Tab>",
     },
   },
   {
