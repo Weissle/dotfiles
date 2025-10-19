@@ -212,7 +212,7 @@ return {
   },
   {
     "snacks.nvim",
-    opts = { dashboard = { enabled = false } },
+    opts = { dashboard = { enabled = false }, image = { enabled = false } },
   },
   {
     "folke/persistence.nvim",

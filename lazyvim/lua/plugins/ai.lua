@@ -4,7 +4,6 @@ if provider == "deepseek" then
   strategies = {
     chat = {
       adapter = "deepseek",
-      model = "deepseek-chat",
     },
     inline = {
       adapter = "deepseek",
@@ -14,7 +13,7 @@ elseif provider == "copilot" then
   strategies = {}
 end
 
-return {
+local codecompanion = {
   {
     "olimorris/codecompanion.nvim",
     keys = {
@@ -30,3 +29,26 @@ return {
     },
   },
 }
+
+local sidekick = {
+  {
+    "folke/sidekick.nvim",
+    keys = {
+      {
+        "<leader>af",
+        function()
+          require("sidekick.cli").send({ msg = "{file}" })
+        end,
+        desc = "Send File",
+      },
+    },
+    opts = {
+      mux = {
+        backend = "tmux",
+        enable = true,
+      },
+    },
+  },
+}
+
+return sidekick
