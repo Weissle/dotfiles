@@ -1,34 +1,5 @@
 return {
   {
-    "s1n7ax/nvim-window-picker",
-    name = "window-picker",
-    event = "VeryLazy",
-    opts = {
-      filter_rules = {
-        bo = {
-          filetype = {
-            "blink-cmp-documentation",
-            "blink-cmp-menu",
-            "blink-cmp-signature",
-            "edgy",
-            "neo-tree",
-            "noice",
-            "notify",
-            "nvimtree",
-            "smear-cursor",
-            "snacks_dashboard",
-            "snacks_notif",
-            "snacks_terminal",
-            "toggleterm",
-            "trouble",
-            "tutor",
-          },
-        },
-      },
-      hint = "floating-big-letter",
-    },
-  },
-  {
     "mechatroner/rainbow_csv",
     ft = { "csv" },
     config = function()
@@ -97,6 +68,14 @@ return {
         mc.matchSkipCursor(-1)
       end)
 
+      -- Split visual selections by regex.
+      set("x", "cs", mc.splitCursors)
+
+      -- match new cursors within visual selections by regex.
+      set("x", "cm", mc.matchCursors)
+
+      set("x", "I", mc.insertVisual)
+      set("x", "A", mc.appendVisual)
       -- Add and remove cursors with control + left click.
       set("n", "<c-leftmouse>", mc.handleMouse)
       set("n", "<c-leftdrag>", mc.handleMouseDrag)

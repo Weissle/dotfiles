@@ -7,9 +7,12 @@ return {
       local palette = gruvbox.palette
       local bg = palette.dark1
       opts.overrides = opts.overrides or {}
-      opts.overrides["IlluminatedWordText"] = { bold = false, bg = bg }
-      opts.overrides["IlluminatedWordRead"] = { bold = false, bg = bg }
-      opts.overrides["IlluminatedWordWrite"] = { bold = false, bg = bg }
+      -- opts.overrides["IlluminatedWordText"] = { bold = false, bg = bg }
+      -- opts.overrides["IlluminatedWordRead"] = { bold = false, bg = bg }
+      -- opts.overrides["IlluminatedWordWrite"] = { bold = false, bg = bg }
+      opts.overrides["LspReferenceText"] = { bold = false, bg = bg }
+      opts.overrides["LspReferenceRead"] = { bold = false, bg = bg }
+      opts.overrides["LspReferenceTarget"] = { bold = false, bg = bg }
     end,
   },
 
