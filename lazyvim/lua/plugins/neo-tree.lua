@@ -1,7 +1,6 @@
 return {
   {
     "s1n7ax/nvim-window-picker",
-    enabled = false,
     name = "window-picker",
     event = "VeryLazy",
     opts = {
@@ -31,7 +30,6 @@ return {
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
-    enabled = false,
     keys = {
       {
         "<C-n>",
@@ -61,6 +59,7 @@ return {
           ["<C-t>"] = "open_tabnew",
           ["<C-v>"] = "vsplit_with_window_picker",
           ["<cr>"] = "open_with_window_picker",
+          ["o"] = "open_with_window_picker",
           ["z"] = "none",
           ["Z"] = "close_all_nodes",
           ["s"] = "none",

@@ -43,6 +43,7 @@ local sidekick = {
       },
     },
     opts = {
+      nes = { enabled = false },
       mux = {
         backend = "tmux",
         enable = true,
