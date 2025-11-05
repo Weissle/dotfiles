@@ -27,13 +27,12 @@ return {
   {
     "sindrets/diffview.nvim",
     keys = {
-      { "<leader>gd", "<cmd>DiffviewOpen<cr>" },
-      { "<leader>gD", "<cmd>DiffviewFileHistory %<cr>" },
+      { "<leader>dd", "<cmd>DiffviewOpen<cr>" },
+      { "<leader>dD", "<cmd>DiffviewFileHistory %<cr>" },
     },
   },
   {
     "jake-stewart/multicursor.nvim",
-    enabled = true,
     config = function()
       local mc = require("multicursor-nvim")
       mc.setup()
@@ -58,18 +57,18 @@ return {
       set({ "n", "x" }, "cn", function()
         mc.matchAddCursor(1)
       end)
-      set({ "n", "x" }, "cs", function()
-        mc.matchSkipCursor(1)
-      end)
       set({ "n", "x" }, "cN", function()
         mc.matchAddCursor(-1)
       end)
-      set({ "n", "x" }, "cS", function()
-        mc.matchSkipCursor(-1)
-      end)
+      -- set({ "n", "x" }, "ci", function()
+      --   mc.matchSkipCursor(1)
+      -- end)
+      -- set({ "n", "x" }, "cI", function()
+      --   mc.matchSkipCursor(-1)
+      -- end)
 
       -- Split visual selections by regex.
-      set("x", "cs", mc.splitCursors)
+      -- set("x", "cs", mc.splitCursors)
 
       -- match new cursors within visual selections by regex.
       set("x", "cm", mc.matchCursors)

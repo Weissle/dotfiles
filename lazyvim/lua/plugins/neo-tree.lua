@@ -35,15 +35,6 @@ return {
         "<C-n>",
         function()
           require("neo-tree.command").execute({
-            toggle = true,
-            dir = vim.uv.cwd(),
-          })
-        end,
-      },
-      {
-        "<leader>n",
-        function()
-          require("neo-tree.command").execute({
             action = "focus",
             reveal = true,
             dir = vim.uv.cwd(),
