@@ -7,6 +7,7 @@ return {
       bigfile = { enabled = false },
       image = { enabled = false },
       words = { enabled = true, debounce = 50 },
+      scroll = { enabled = false },
       picker = {
         sources = {
           explorer = {
