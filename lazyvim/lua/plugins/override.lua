@@ -30,6 +30,20 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    keys = {
+      {
+        "<leader>tn",
+        function()
+          require("nvim-treesitter-textobjects.swap").swap_next("@parameter.inner")
+        end,
+      },
+      {
+        "<leader>tp",
+        function()
+          require("nvim-treesitter-textobjects.swap").swap_previous("@parameter.inner")
+        end,
+      },
+    },
     opts = {
       textobjects = {
         swap = {
