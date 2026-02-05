@@ -8,6 +8,23 @@ return {
       image = { enabled = false },
       words = { enabled = true, debounce = 50 },
       scroll = { enabled = false },
+      win = {
+        list = {
+          keys = {
+            ["<C-c>"] = "close",
+          },
+        },
+        input = {
+          keys = {
+            ["<C-c>"] = "close",
+          },
+        },
+        preview = {
+          keys = {
+            ["<C-c>"] = "close",
+          },
+        },
+      },
       picker = {
         sources = {
           explorer = {

@@ -41,3 +41,5 @@ vim.keymap.set("n", "<leader>mM", "<cmd>set mouse=a<cr>", opts)
 
 vim.keymap.set("n", "gcp", "yygccp", { remap = true })
 vim.keymap.set("n", "gcP", "yygccP", { remap = true })
+
+vim.keymap.set("t", "jj", "<C-\\><C-n>", opts)

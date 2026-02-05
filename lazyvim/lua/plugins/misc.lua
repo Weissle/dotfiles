@@ -54,10 +54,10 @@ return {
       end)
 
       -- Add or skip adding a new cursor by matching word/selection
-      set({ "n", "x" }, "cn", function()
+      set({ "n", "x" }, "mn", function()
         mc.matchAddCursor(1)
       end)
-      set({ "n", "x" }, "cN", function()
+      set({ "n", "x" }, "mN", function()
         mc.matchAddCursor(-1)
       end)
       -- set({ "n", "x" }, "ci", function()
@@ -71,7 +71,7 @@ return {
       -- set("x", "cs", mc.splitCursors)
 
       -- match new cursors within visual selections by regex.
-      set("x", "cm", mc.matchCursors)
+      set("x", "mm", mc.matchCursors)
 
       set("x", "I", mc.insertVisual)
       set("x", "A", mc.appendVisual)
