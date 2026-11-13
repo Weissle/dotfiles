@@ -2,6 +2,7 @@ add_newline = false
 
 format="""
 $time\
+$python\
 $conda\
 $username\
 $hostname\
@@ -10,7 +11,6 @@ $git_branch\
 $git_commit\
 $git_state\
 $c\
-$python\
 $character
 """
 
@@ -55,9 +55,10 @@ format='@[$hostname]($style)'
 style = 'green'
 
 [python]
-format = '[ \(python-${version}(-$virtualenv)\)]($style)'
+# format = '[ \(python-${version}(-$virtualenv)\)]($style)'
+format = '[\($virtualenv\)]($style)'
 version_format = '${raw}'
-disabled = true
+disabled = false
 
 [time]
 disabled = false

@@ -1,3 +1,0 @@
-return {
-  { "olimorris/codecompanion.nvim" },
-}
