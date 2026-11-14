@@ -37,6 +37,14 @@ The reviewer model can be selected in the task request using a model supported b
 
 `--plan` or an explicit request to approve the plan pauses before implementation. Approve through Claude Code's plan flow to continue the same workflow. If native plan tools are unavailable, the workflow presents the plan and waits for explicit user approval. The plan records the remaining review and repair stages, including when context is cleared. Complex tasks get a full plan; simple tasks get a short one.
 
+Plans and task cards distinguish user requirements from implementation assumptions. Proposed public interfaces and added core constraints need a concrete use case and a gap in existing behavior. Routine local choices remain with the implementer.
+
+Long tasks use independently verifiable scopes or intermediate milestones. Implementers use `SendMessage` to report completed milestones, material assumptions, and blockers to their coordinating parent. The coordinator relays meaningful progress and continues through review and repair before final handoff.
+
+Acceptance commands have explicit owners: implementers normally run focused checks, and the coordinator runs integration and required full-project checks. Results include the checked code state, configuration, and log or output evidence. Verified results can be reused for unchanged relevant code and inputs; edits, integration, environment changes, failures, and project requirements determine what must run again.
+
+Code and design questions receive direct answers. Explicit requirement changes update the affected decisions in an active workflow. After final handoff, a requested small follow-up can be implemented directly with its related checks; another workflow starts only when the user invokes it.
+
 Each workflow ends after one independent review, finding assessment, repairs, and relevant checks, with a report for human review. Commits, pushes, and publication require a separate request. See [the shared workflow](references/workflow.md) for scope, continuation, and finding-disposition rules.
 
 ## Components and migration
