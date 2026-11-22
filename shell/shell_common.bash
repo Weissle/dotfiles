@@ -17,7 +17,9 @@ alias v=nvim
 # For tmux
 alias tm=tmux
 alias tma="tmux a"
-alias tmat="tmux attach-session -t "
+function tmat(){
+  tmux attach-session -t "$1"
+}
 alias tmls="tmux list-sessions"
 alias ch="cht.sh"
 # For git
@@ -46,7 +48,7 @@ if check_executable "fzf"; then
     esac
 fi
 
-if check_executable "zoxide"; then
+if check_executable "zoxide" && [ -z "$DISABLE_ZOXIDE" ]; then
     cdi() {
         local dir
         dir="$(zoxide query -i | fzf --height 40% --reverse --preview 'ls -la {}' --preview-window right:60%)"
