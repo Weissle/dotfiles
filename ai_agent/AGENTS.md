@@ -2,14 +2,6 @@
 
 1. Use uv to manage Python environments and packages: `uv run` to execute, `uv add` to install; `pip install` and bare `python` are not used.
 
-# Development workflow
-
-Develop in a git worktree on a new branch named `<agent>/<topic>`, where `<agent>` is your own agent name in lowercase (`claude`, `codex`), unless the user explicitly asks to change files in the current directory.
-
-- **Worktree (default)**: when done, rebase the branch onto the latest target branch, commit, push it, and open an MR on Gitea from that branch. The user reviews and merges the MR.
-- **After the user says the MR is merged**: fast-forward the local target branch (usually `main`) to its latest remote state, then remove the worktree and delete its local branch.
-- **Current directory (only when the user says so)**: work on the current local branch. Create no branch and make no commit unless asked.
-
 # Gitea access
 
 The Gitea server is at `$ALI_GITEA_URL`. Agents act as the bot account and use only the bot tokens; `ALI_GITEA_TOKEN` and `ALI_GITEA_READONLY_TOKEN` belong to the user and are off-limits.
